@@ -3,6 +3,9 @@
 #include "expressionFactory.hpp"
 #include "expression.hpp"
 
+#define M_PI 3.14
+
+using namespace ExpressionFactory;
 
 int main()
 {
@@ -10,22 +13,25 @@ int main()
 	double x = 2;
 	double y = 3;
 
-
-	Expression * ux = ExpressionFactory::constant(x);
-	Expression * uy = ExpressionFactory::constant(y);
-
-
-	Expression * cons = ExpressionFactory::constant(val);
-	Expression * cosi = ExpressionFactory::cosinus(cons);
-	Expression * sinu = ExpressionFactory::sinus(cons);
-	Expression * expo = ExpressionFactory::exponantial(ux, uy);
+	Expression * s = sum(constant(1.0),
+					product(constant(2.0),
+					sinus(constant(M_PI/6.0))
+					));
 
 
-	std::cout << *cons << " = " << cons->eval() << std::endl;
-	std::cout << *cosi << " = " << cosi->eval() << std::endl;
-	std::cout << *sinu << " = " << sinu->eval() << std::endl;
-	std::cout << *expo << " = " << expo->eval() << std::endl;
+	Expression * var = variable("y", 3.0);
+	Expression * var1 = variable("y");
 
+	std::cout << *var << " = "<< var->eval() << std::endl;
+	std::cout << *var1 << " = "<< var1->eval() << std::endl;
+	
+	Expression * b = affect(s, s);
+
+	std::cout << *b << " = " << b->eval() << std::endl;
+
+
+	delete var;
+	delete var1;
 
 	// std::cout << *s << std::endl;
 	// std::cout << *e << std::endl;

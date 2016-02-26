@@ -17,6 +17,12 @@ Expression * Constant::constant(double value)
 		[=] () 
 		{ 
 			return value; 
+		},
+		[=] () {},
+		[=] ()
+		{
+			return "constant";
 		}
 	);	
 }
+

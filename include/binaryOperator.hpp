@@ -10,13 +10,14 @@
 class BinaryOperator 
 {
 public:
-	static Expression * sum(Expression * leftExpression, Expression * rightExpression);
-	static Expression * difference(Expression * leftExpression, Expression * rightExpression);
-	static Expression * product(Expression * leftExpression, Expression * rightExpression);
-	static Expression * quotient(Expression * leftExpression, Expression * rightExpression);
+	static Expression * sum(Expression *, Expression *);
+	static Expression * difference(Expression *, Expression *);
+	static Expression * product(Expression *, Expression *);
+	static Expression * quotient(Expression *, Expression *);
 
 private:
-	static const std::string display(Operator::Binary binaryOperator, Expression * leftExpression, Expression * rightExpression);
+	static const std::string display(Operator::Binary, Expression *, Expression *);
+	static void free(Expression *, Expression *);
 };
 
 #endif

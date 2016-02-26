@@ -5,6 +5,8 @@
 #include "expressionFactory.hpp"
 #include "expression.hpp"
 #include "constant.hpp"
+#include "variable.hpp"
+#include "affect.hpp"
 #include "unaryOperator.hpp"
 #include "binaryOperator.hpp"
 
@@ -14,6 +16,21 @@ namespace ExpressionFactory
 	Expression * constant(double value)
 	{
 		return Constant::constant(value);	
+	}
+
+	Expression * variable(std::string id)
+	{
+		return Variable::variable(id);	
+	}
+
+	Expression * variable(std::string id, double value)
+	{
+		return Variable::variable(id, value);
+	}
+
+	Expression * affect(Expression * variable, Expression * value)
+	{
+		return Affect::affect(variable, value);	
 	}
 
 	Expression * cosinus(Expression * expression)

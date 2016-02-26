@@ -10,12 +10,12 @@
 class UnaryOperator
 {
 public:
-	static Expression * cosinus(Expression * expression);
-	static Expression * sinus(Expression * expression);
-	static Expression * exponantial(Expression * expression, Expression * power);
+	static Expression * cosinus(Expression *);
+	static Expression * sinus(Expression *);
+	static Expression * exponantial(Expression *, Expression *);
 
 private:
-	static const std::string display(Operator::Unary unaryOperator, Expression * expression);
+	static const std::string display(Operator::Unary, Expression *);
 };
 
 #endif

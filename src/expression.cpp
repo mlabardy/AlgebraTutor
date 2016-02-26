@@ -4,11 +4,16 @@
 #include "expressionFactory.hpp"
 
 
-Expression::Expression(DisplayCallback displayCallback, EvalCallback evalCallback) : _displayCallback(displayCallback), _evalCallback(evalCallback) 
+Expression::Expression()
+{}
+
+Expression::Expression(DisplayCallback displayCallback, EvalCallback evalCallback, DeleteCallback deleteCallback, TypeCallback typeCallback) : _displayCallback(displayCallback), _evalCallback(evalCallback), _deleteCallback(deleteCallback), _typeCallback(typeCallback) 
 {}
 
 Expression::~Expression() 
-{}
+{
+	_deleteCallback();
+}
 
 double Expression::eval() 
 {
@@ -18,6 +23,11 @@ double Expression::eval()
 std::string Expression::display() const
 {
 	return _displayCallback();
+}
+
+std::string Expression::type() 
+{
+	return _typeCallback();
 }
 
 std::ostream & operator << (std::ostream & os, const Expression & expression) 

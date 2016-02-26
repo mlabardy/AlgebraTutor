@@ -11,7 +11,15 @@ const std::string BinaryOperator::display(Binary binaryOperator, Expression * le
 {
 	std::ostringstream stringOfValue;
 	stringOfValue << '(' << leftExpression->display() << ' ' << name(binaryOperator) << ' ' << rightExpression->display() << ')';
-	return stringOfValue.str(); 
+	return stringOfValue.str();
+}
+
+void BinaryOperator::free(Expression * leftExpression, Expression * rightExpression) 
+{
+	if (leftExpression != NULL)
+		delete leftExpression;
+	if (rightExpression != NULL)
+		delete rightExpression;
 }
 
 Expression * BinaryOperator::sum(Expression * leftExpression, Expression * rightExpression)
@@ -24,6 +32,14 @@ Expression * BinaryOperator::sum(Expression * leftExpression, Expression * right
 		[=] () 
 		{ 
 			return leftExpression->eval() + rightExpression->eval(); 
+		},
+		[=] () 
+		{ 
+			BinaryOperator::free(leftExpression, rightExpression);
+		},
+		[=] ()
+		{
+			return "binary";
 		}
 	); 
 }
@@ -38,6 +54,14 @@ Expression * BinaryOperator::difference(Expression * leftExpression, Expression 
 		[=] () 
 		{ 
 			return leftExpression->eval() - rightExpression->eval(); 
+		},
+		[=] () 
+		{ 
+			BinaryOperator::free(leftExpression, rightExpression);
+		},
+		[=] ()
+		{
+			return "binary";
 		}
 	);  
 }
@@ -52,6 +76,14 @@ Expression * BinaryOperator::product(Expression * leftExpression, Expression * r
 		[=] () 
 		{ 
 			return leftExpression->eval() * rightExpression->eval(); 
+		},
+		[=] () 
+		{ 
+			BinaryOperator::free(leftExpression, rightExpression);
+		},
+		[=] ()
+		{
+			return "binary";
 		}
 	);
 }
@@ -66,6 +98,16 @@ Expression * BinaryOperator::quotient(Expression * leftExpression, Expression * 
 		[=] () 
 		{ 
 			return leftExpression->eval() / rightExpression->eval(); 
+		},
+		[=] () 
+		{ 
+			BinaryOperator::free(leftExpression, rightExpression);
+		},
+		[=] ()
+		{
+			return "binary";
 		}
 	);
 }
+
+

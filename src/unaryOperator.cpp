@@ -26,6 +26,15 @@ Expression * UnaryOperator::cosinus(Expression * expression)
 		[=] () 
 		{ 
 			return cos(expression->eval()); 
+		},
+		[=] () 
+		{ 
+			if (expression != NULL)
+				delete expression; 
+		},
+		[=] ()
+		{
+			return "unary";
 		}
 	);	
 }
@@ -40,6 +49,15 @@ Expression * UnaryOperator::sinus(Expression * expression)
 		[=] () 
 		{ 
 			return sin(expression->eval()); 
+		},
+		[=] () 
+		{ 
+			if (expression != NULL)
+				delete expression;  
+		},
+		[=] ()
+		{
+			return "unary";
 		}
 	);	
 }
@@ -56,6 +74,17 @@ Expression * UnaryOperator::exponantial(Expression * expression, Expression * po
 		[=] () 
 		{ 
 			return pow(expression->eval(), power->eval()); 
+		},
+		[=] () 
+		{ 
+			if (expression != NULL)
+				delete expression; 
+			if (power != NULL)
+				delete power;
+		},
+		[=] ()
+		{
+			return "unary";
 		}
 	);	
 }

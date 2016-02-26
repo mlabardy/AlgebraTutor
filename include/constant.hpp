@@ -6,11 +6,11 @@
 #include "expression.hpp"
 
 
-class Constant 
+class Constant
 {
 public:
-	static Expression * constant(double value);
-
+	static Expression * constant(double);
+	
 };
 
 #endif

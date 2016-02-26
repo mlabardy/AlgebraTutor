@@ -5,7 +5,7 @@ LDFLAGS=
 EXEC= project.exe
 SRC= ./src/
 INCL= -I./include/$(wildcard *.h)
-OBJ= operator.o binaryOperator.o unaryOperator.o constant.o expressionFactory.o expression.o main.o  
+OBJ= operator.o binaryOperator.o unaryOperator.o constant.o variable.o affect.o expressionFactory.o expression.o main.o  
 
 
 all: $(EXEC) clean
@@ -20,6 +20,7 @@ $(EXEC): $(OBJ)
 
 clean: 	
 	@rm -rf *.o
+	@rm -rf $(EXEC).dSYM
 
 mrproper: clean 
 	@rm -rf $(EXEC)

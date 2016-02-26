@@ -6,7 +6,7 @@ EXEC= unary.exe
 EXEC2= binary.exe
 SRC= ./../src/
 INCL= -I./../include/$(wildcard *.h)
-OBJ= operator.o binaryOperator.o unaryOperator.o constant.o expressionFactory.o expression.o 
+OBJ= operator.o binaryOperator.o unaryOperator.o constant.o variable.o affect.o expressionFactory.o expression.o 
 OBJ_TESTS= unaryOperatorTests.o binaryOperatorTests.o
 
 

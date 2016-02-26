@@ -25,8 +25,8 @@ namespace Operator
 		MUL
 	} Binary;
 	
-	const std::string name(Binary binaryOperator);
-	const std::string name(Unary unaryOperator);
+	const std::string name(Binary);
+	const std::string name(Unary);
 }
 
 #endif
