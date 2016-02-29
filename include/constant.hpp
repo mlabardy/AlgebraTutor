@@ -6,11 +6,21 @@
 #include "expression.hpp"
 
 
-class Constant
+class Constant: public Expression
 {
 public:
-	static Expression * constant(double);
+	Constant(double);
+
+	~Constant();
+
+	double eval();
+
+	std::string display() const;
+
+	friend std::ostream & operator << (std::ostream & os, const Constant & constant);
 	
+private:
+	const double _value;
 };
 
 #endif

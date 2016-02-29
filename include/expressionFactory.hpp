@@ -4,16 +4,17 @@
 #include <iostream>
 
 #include "expression.hpp"
-#include "unaryOperator.hpp"
+#include "variable.hpp" 
+#include "affectation.hpp"
 
 
 namespace ExpressionFactory
 {
 	// UNARY OPERATORS
 	Expression * constant(double);
-	Expression * variable(std::string);
-	Expression * variable(std::string, double);
-	Expression * affect(Expression *, Expression *);
+	Variable * variable(const std::string &);
+	Variable * variable(const std::string &, double);
+	Affectation * affectation(Variable *, Expression *);
 	Expression * cosinus(Expression *);
 	Expression * sinus(Expression *);
 	Expression * exponantial(Expression *, Expression *);
@@ -23,6 +24,9 @@ namespace ExpressionFactory
 	Expression * difference(Expression *, Expression *);
 	Expression * product(Expression *, Expression *);
 	Expression * quotient(Expression *, Expression *);
+
+	Expression * lessOrEqual(Expression *, Expression *);
+	Expression * greaterOrEqual(Expression *, Expression *);
 }
 
 #endif

@@ -22,7 +22,13 @@ namespace Operator
 		ADD,
 		SUB,
 		DIV,
-		MUL
+		MUL,
+		LOE,
+		GOE,
+		LT,
+		GT,
+		EQ,
+		DIF
 	} Binary;
 	
 	const std::string name(Binary);

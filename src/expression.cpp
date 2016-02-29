@@ -1,33 +1,33 @@
 #include <iostream>
+#include <set>
+#include <typeinfo>
 
 #include "expression.hpp"
-#include "expressionFactory.hpp"
+#include "variable.hpp"
 
+
+std::set<Expression *> _pool;
 
 Expression::Expression()
+{
+	_pool.insert(this);
+}
+
+Expression::~Expression()
 {}
 
-Expression::Expression(DisplayCallback displayCallback, EvalCallback evalCallback, DeleteCallback deleteCallback, TypeCallback typeCallback) : _displayCallback(displayCallback), _evalCallback(evalCallback), _deleteCallback(deleteCallback), _typeCallback(typeCallback) 
-{}
-
-Expression::~Expression() 
+void Expression::deleteAll()
 {
-	_deleteCallback();
-}
+	std::set<Expression *>::iterator it = _pool.begin();
 
-double Expression::eval() 
-{
-	return _evalCallback();
-}
+	while (it != _pool.end()) 
+	{
+		Expression * tmp = *it;
+    	delete tmp;
+        it = _pool.erase(it);
+	}
 
-std::string Expression::display() const
-{
-	return _displayCallback();
-}
-
-std::string Expression::type() 
-{
-	return _typeCallback();
+	_pool.clear();
 }
 
 std::ostream & operator << (std::ostream & os, const Expression & expression) 

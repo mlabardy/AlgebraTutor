@@ -4,32 +4,21 @@
 #include <iostream>
 
 
-class Expression 
+class Expression
 {
 public:
-	typedef std::function<std::string(void)> DisplayCallback;
-	typedef std::function<double(void)> EvalCallback;
-	typedef std::function<void(void)> DeleteCallback;
-	typedef std::function<std::string(void)> TypeCallback;
+	Expression();
 
-	Expression(DisplayCallback, EvalCallback, DeleteCallback, TypeCallback);
+	virtual ~Expression();
 
-	~Expression();
+	virtual double eval() = 0;
 
-	double eval();
+	virtual std::string display() const = 0;
 
-	std::string type();
-
-	std::string display() const;
+	static void deleteAll();
 
 	friend std::ostream & operator << (std::ostream & os, const Expression & expression);
 
-private:
-	DisplayCallback _displayCallback;
-	EvalCallback _evalCallback;
-	DeleteCallback _deleteCallback;
-	TypeCallback _typeCallback;
-	
 };
 
 #endif

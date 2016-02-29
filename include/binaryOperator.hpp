@@ -15,9 +15,13 @@ public:
 	static Expression * product(Expression *, Expression *);
 	static Expression * quotient(Expression *, Expression *);
 
+	static Expression * lessOrEqual(Expression *, Expression *);
+	static Expression * greaterOrEqual(Expression *, Expression *);
+
 private:
 	static const std::string display(Operator::Binary, Expression *, Expression *);
 	static void free(Expression *, Expression *);
+	
 };
 
 #endif

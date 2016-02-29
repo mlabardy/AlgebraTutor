@@ -1,43 +1,53 @@
 #include <iostream>
+#include <map>
 
 #include "variable.hpp"
 #include "expression.hpp"
 
 
-Expression * Variable::variable(std::string id, double value) 
+std::map<std::string, double> _variables;
+
+Variable::Variable(const std::string & id, double value = 0): _id(id)
 {
-	return new Expression (
-		[=] () 
-		{ 
-			return id; 
-		},
-		[=] () 
-		{ 
-			return value; 
-		},
-		[=] () {},
-		[=] ()
-		{
-			return "variable";
-		}
-	);
+	if (_variables.find(_id) == _variables.end())
+	{
+		_variables[_id] = value;
+	}
 }
 
-Expression * Variable::variable(std::string id) 
+Variable::Variable(const std::string & id): _id(id)
 {
-	return new Expression (
-		[=] () 
-		{
-			return id; 
-		},
-		[=] () 
-		{ 
-			return 0; 
-		},
-		[=] () {},
-		[=] ()
-		{
-			return "variable";
-		}
-	);
+	if (_variables.find(_id) == _variables.end())
+	{
+		_variables[_id] = 0;
+	}
+}
+
+Variable::~Variable()
+{}
+
+double Variable::eval()
+{
+	return _variables[_id];
+}
+
+std::string Variable::display() const
+{
+	return _id;
+}
+
+void Variable::set(double value)
+{
+	_variables[_id] = value;
+}
+
+void Variable::deleteAll()
+{
+	_variables.clear();
+}
+
+std::ostream & operator << (std::ostream & os, const Variable & variable)
+{
+	os << variable.display();
+	return os;
 }

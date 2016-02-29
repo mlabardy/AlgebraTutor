@@ -16,6 +16,7 @@ public:
 
 private:
 	static const std::string display(Operator::Unary, Expression *);
+	static void free(Expression * expression);
 };
 
 #endif

@@ -16,6 +16,18 @@ namespace Operator
 			return "/";
 			case MUL:
 			return "*";
+			case LOE:
+			return "<=";
+			case GOE:
+			return ">=";
+			case LT:
+			return "<";
+			case GT:
+			return ">";
+			case EQ:
+			return "==";
+			case DIF:
+			return "!=";
 		}
 		return "";
 	}

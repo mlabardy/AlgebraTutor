@@ -6,7 +6,7 @@
 #include "expression.hpp"
 #include "constant.hpp"
 #include "variable.hpp"
-#include "affect.hpp"
+#include "affectation.hpp"
 #include "unaryOperator.hpp"
 #include "binaryOperator.hpp"
 
@@ -15,22 +15,22 @@ namespace ExpressionFactory
 {
 	Expression * constant(double value)
 	{
-		return Constant::constant(value);	
+		return new Constant(value);
 	}
 
-	Expression * variable(std::string id)
+	Variable * variable(const std::string & id)
 	{
-		return Variable::variable(id);	
+		return new Variable(id);	
 	}
 
-	Expression * variable(std::string id, double value)
+	Variable * variable(const std::string & id, double value)
 	{
-		return Variable::variable(id, value);
+		return new Variable(id, value);
 	}
 
-	Expression * affect(Expression * variable, Expression * value)
+	Affectation * affectation(Variable * variable, Expression * value)
 	{
-		return Affect::affect(variable, value);	
+		return new Affectation(variable, value);	
 	}
 
 	Expression * cosinus(Expression * expression)
@@ -66,5 +66,15 @@ namespace ExpressionFactory
 	Expression * quotient(Expression * leftExpression, Expression * rightExpression)
 	{
 		return BinaryOperator::quotient(leftExpression, rightExpression);
+	}
+
+	Expression * lessOrEqual(Expression * leftExpression, Expression * rightExpression)
+	{
+		return BinaryOperator::lessOrEqual(leftExpression, rightExpression);
+	}
+
+	Expression * greaterOrEqual(Expression * leftExpression, Expression * rightExpression)
+	{
+		return BinaryOperator::greaterOrEqual(leftExpression, rightExpression);
 	}
 }
