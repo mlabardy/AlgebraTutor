@@ -1,3 +1,12 @@
+/*!
+ * \file affectation.cpp
+ * \brief Gère les affectations de variables.
+ * \version 0.1
+ *
+ * Module gérant l'affectation d'une expression à une variable.
+ *
+ */
+
 #include <stdio.h>
 #include <iostream>
 #include <string>
