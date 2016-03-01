@@ -3,6 +3,7 @@
 
 #include "variable.hpp"
 #include "expression.hpp"
+#include "debugger.hpp"
 
 
 std::map<std::string, double> _variables;

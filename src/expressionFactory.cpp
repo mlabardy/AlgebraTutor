@@ -1,7 +1,3 @@
-#include <iostream>
-#include <cmath>
-#include <sstream>
-
 #include "expressionFactory.hpp"
 #include "expression.hpp"
 #include "constant.hpp"

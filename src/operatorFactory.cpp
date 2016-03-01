@@ -1,5 +1,3 @@
-#include <iostream>
-
 #include "operatorFactory.hpp"
 #include "expression.hpp"
 

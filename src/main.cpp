@@ -3,6 +3,7 @@
 #include "expressionFactory.hpp"
 #include "expression.hpp"
 #include "variable.hpp"
+#include "debugger.hpp"
 
 #define M_PI 3.14
 

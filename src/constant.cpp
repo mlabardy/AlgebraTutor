@@ -4,6 +4,7 @@
 
 #include "constant.hpp"
 #include "expression.hpp"
+#include "debugger.hpp"
 
 
 Constant::Constant(double value): _value(value)

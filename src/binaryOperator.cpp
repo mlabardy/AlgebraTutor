@@ -4,6 +4,7 @@
 #include "expression.hpp"
 #include "operator.hpp"
 #include "operatorFactory.hpp"
+#include "debugger.hpp"
 
 using namespace Operator;
 

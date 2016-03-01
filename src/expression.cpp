@@ -3,7 +3,7 @@
 #include <typeinfo>
 
 #include "expression.hpp"
-#include "variable.hpp"
+#include "debugger.hpp"
 
 
 std::set<Expression *> _pool;

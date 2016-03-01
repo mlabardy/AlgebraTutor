@@ -1,3 +1,4 @@
+#include <cstdlib>
 #include <iostream>
 #include <getopt.h> // for options
 
@@ -13,49 +14,11 @@ using namespace std;
 using namespace ExpressionFactory;
 
 
-void unaryTests()
-{
-	// Expression * c = sum(constant(M_PI/3), constant(2.0));
-	Expression * c = constant(2);
-	cerr << *c << " = " << c->eval() << endl;
-	Expression::deleteAll();
-}
+void unaryTests();
+void binaryTests();
+void variableTests();
 
-void binaryTests()
-{
-	Expression * s = sum(constant(1.0), product(constant(2.0), sinus(constant(M_PI/6.0))));
-	cerr << *s << " = " << s->eval() << endl; 
-
-	Expression * comp = greaterOrEqual(s, constant(1.8));
-	cerr << *comp << " = " << comp->eval() << endl;
-
-	Expression::deleteAll();
-}
-
-void variableTests() 
-{
-
-	Variable * x = variable("x", 3.0);
-	Variable * y = variable("y");
-
-	cerr << *x << " = " << x->eval() << endl;
-	cerr << *y << " = " << y->eval() << endl;
-
-	Expression * exp = sum(constant(1.0), sum(constant(2.0), variable("x"))); 
-
-	Expression * a = affectation(variable("y"), exp);
-
-	cerr << *a << " = " << a->eval() << endl; 
-	cerr << *y << " = " << y->eval() << endl; 
-
-	Variable::deleteAll();
-	Expression::deleteAll();
-
-	// plante ici -> c'est normal 
-	// cout << *y << " = " << y->eval() << endl;
-}
-
-int main(int argc, char **argv)
+int main(int argc, char *argv[])
 {
 	Debugger & d = Debugger::instance();
 
@@ -97,5 +60,48 @@ int main(int argc, char **argv)
 	// variableTests();
 
 
-	return 0;
+	return EXIT_SUCCESS;
 }
+
+void unaryTests()
+{
+	// Expression * c = sum(constant(M_PI/3), constant(2.0));
+	Expression * c = constant(2);
+	cerr << *c << " = " << c->eval() << endl;
+	Expression::deleteAll();
+}
+
+void binaryTests()
+{
+	Expression * s = sum(constant(1.0), product(constant(2.0), sinus(constant(M_PI/6.0))));
+	cerr << *s << " = " << s->eval() << endl;
+
+	Expression * comp = greaterOrEqual(s, constant(1.8));
+	cerr << *comp << " = " << comp->eval() << endl;
+
+	Expression::deleteAll();
+}
+
+void variableTests()
+{
+
+	Variable * x = variable("x", 3.0);
+	Variable * y = variable("y");
+
+	cerr << *x << " = " << x->eval() << endl;
+	cerr << *y << " = " << y->eval() << endl;
+
+	Expression * exp = sum(constant(1.0), sum(constant(2.0), variable("x")));
+
+	Expression * a = affectation(variable("y"), exp);
+
+	cerr << *a << " = " << a->eval() << endl;
+	cerr << *y << " = " << y->eval() << endl;
+
+	Variable::deleteAll();
+	Expression::deleteAll();
+
+	// plante ici -> c'est normal
+	// cout << *y << " = " << y->eval() << endl;
+}
+
