@@ -21,3 +21,12 @@
 
 # UML
 *.mdj
+
+# Eclipse files
+.cproject
+.project
+.settings
+
+# Mac 
+.DS_Store
+*.pages
