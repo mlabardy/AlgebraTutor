@@ -5,6 +5,7 @@
 #include "affectation.hpp"
 #include "unaryOperator.hpp"
 #include "binaryOperator.hpp"
+#include "conditional.hpp"
 
 
 namespace ExpressionFactory 
@@ -14,14 +15,14 @@ namespace ExpressionFactory
 		return new Constant(value);
 	}
 
-	Variable * variable(const std::string & id)
-	{
-		return new Variable(id);
-	}
-
 	Variable * variable(const std::string & id, double value)
 	{
 		return new Variable(id, value);
+	}
+
+	Variable * variable(const std::string & id)
+	{
+		return new Variable(id);
 	}
 
 	Affectation * affectation(Variable * variable, Expression * value)
@@ -72,5 +73,10 @@ namespace ExpressionFactory
 	Expression * greaterOrEqual(Expression * leftExpression, Expression * rightExpression)
 	{
 		return BinaryOperator::greaterOrEqual(leftExpression, rightExpression);
+	}
+
+	Expression * ternary(Expression * comparator, Expression * expression, Expression * otherExpression)
+	{
+		return new Conditional(comparator, expression, otherExpression);
 	}
 }

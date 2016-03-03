@@ -17,8 +17,9 @@ using namespace ExpressionFactory;
 void unaryTests();
 void binaryTests();
 void variableTests();
+void conditionalTests();
 
-int main(int argc, char * argv [])
+int main(int argc, char **argv)
 {
 	Debugger & d = Debugger::instance();
 
@@ -54,19 +55,20 @@ int main(int argc, char * argv [])
 
     } while (option != -1);
 
-	
-	
-	unaryTests();
+
+	// unaryTests();
 	// binaryTests();
 	// variableTests();
-
+    conditionalTests();
 
 	return 0;
 }
 
+
 void unaryTests()
 {
-	Expression * c = sum(constant(M_PI/3), constant(2.0));
+	// Expression * c = sum(constant(M_PI/3), constant(2.0));
+	Expression * c = constant(2);
 	cerr << *c << " = " << c->eval() << endl;
 	Expression::deleteAll();
 }
@@ -105,3 +107,22 @@ void variableTests()
 	// cout << *y << " = " << y->eval() << endl;
 }
 
+void conditionalTests()
+{
+	Expression * test = ternary(greaterOrEqual(variable("x"), constant(0.0)),
+										cosinus(variable("x")),
+										cosinus(product(constant(2.0), variable("x"))));
+
+	Variable * x = variable("x", M_PI/3.0);
+
+	cerr << *x << " = " << x->eval() << endl;
+	cerr << *test << " = " << test->eval() << endl;
+
+	x->set( -M_PI/3.0);
+
+	cerr << *x << " = " << x->eval() << endl;
+	cerr << *test << " = " << test->eval() << endl;
+
+	Variable::deleteAll();
+	Expression::deleteAll();
+}

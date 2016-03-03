@@ -6,22 +6,22 @@
 #include "debugger.hpp"
 
 
-std::map<std::string, double> _variables;
+std::map<std::string, double> Variable::_variables;
 
 Variable::Variable(const std::string & id, double value = 0): _id(id)
 {
-	if (_variables.find(_id) == _variables.end())
-	{
-		_variables[_id] = value;
-	}
+	//if (Variable::_variables.find(_id) == Variable::_variables.end())
+	//{
+		Variable::_variables[_id] = value;
+	//}
 }
 
 Variable::Variable(const std::string & id): _id(id)
 {
-	if (_variables.find(_id) == _variables.end())
-	{
-		_variables[_id] = 0;
-	}
+	//if (Variable::_variables.find(_id) == Variable::_variables.end())
+	//{
+		Variable::_variables[_id] = 0;
+	//}
 }
 
 Variable::~Variable()
@@ -29,7 +29,7 @@ Variable::~Variable()
 
 double Variable::eval()
 {
-	return _variables[_id];
+	return Variable::_variables[_id];
 }
 
 std::string Variable::display() const
@@ -39,12 +39,12 @@ std::string Variable::display() const
 
 void Variable::set(double value)
 {
-	_variables[_id] = value;
+	Variable::_variables[_id] = value;
 }
 
 void Variable::deleteAll()
 {
-	_variables.clear();
+	Variable::_variables.clear();
 }
 
 std::ostream & operator << (std::ostream & os, const Variable & variable)

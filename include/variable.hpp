@@ -7,7 +7,7 @@
  * \version 1.0
  */
 #include <iostream>
-
+#include <map>
 #include "expression.hpp"
 
 
@@ -88,7 +88,7 @@ public:
 
 private:
 	const std::string _id; /*!< L'identifiant de la variable */
-
+	static std::map<std::string, double> _variables; /*!< L'ensemble des variables du programme */
 };
 
 #endif
