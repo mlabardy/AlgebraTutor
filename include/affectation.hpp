@@ -21,18 +21,19 @@ class Affectation: public Expression
 {
 public:
 	/*! 
+	 * \fn Affectation(Variable * variable, Expression * expression)
 	 * \brief Constructeur
 	 * \param variable : la variable à affecter
 	 * \param expression : l'expression à associer
 	 *
-	 * Constructeur de la class Affectation 
+	 * Constructeur de la classe Affectation 
 	 */
 	Affectation(Variable *, Expression *);
 
-	/*! 
+	/*!
 	 * \brief Destructeur
 	 *
-	 * Destructeur de la class Affectation 
+	 * Destructeur de la classe Affectation 
 	 */
 	~Affectation();
 
@@ -64,8 +65,17 @@ public:
 
 private:
 	Variable * _variable; /*!< La variable à affecter */
-
 	Expression * _expression; /*!< L'expression à associer à la variable */
+	
+	/*!
+	 * \bref Constructeur de copie
+	 */
+	Affectation(const Affectation &);
+	
+	/*!
+	 * \bref Surcharge de l'opérateur =
+	 */
+	void operator = (const Affectation &);
 
 };
 

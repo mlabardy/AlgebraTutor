@@ -24,6 +24,9 @@ Affectation::Affectation(Variable * variable, Expression * expression): _variabl
 	_variable->set(_expression->eval());
 }
 
+Affectation::Affectation(const Affectation & affectation): _variable(affectation._variable), _expression(affectation._expression)
+{}
+
 Affectation::~Affectation()
 {
 	// if (_variable != nullptr)
