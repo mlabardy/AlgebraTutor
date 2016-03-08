@@ -18,7 +18,7 @@ void unaryTests();
 void binaryTests();
 void variableTests();
 
-int main(int argc, char *argv[])
+int main(int argc, char * argv [])
 {
 	Debugger & d = Debugger::instance();
 
@@ -55,18 +55,18 @@ int main(int argc, char *argv[])
     } while (option != -1);
 
 	
+	
 	unaryTests();
 	// binaryTests();
 	// variableTests();
 
 
-	return EXIT_SUCCESS;
+	return 0;
 }
 
 void unaryTests()
 {
-	// Expression * c = sum(constant(M_PI/3), constant(2.0));
-	Expression * c = constant(2);
+	Expression * c = sum(constant(M_PI/3), constant(2.0));
 	cerr << *c << " = " << c->eval() << endl;
 	Expression::deleteAll();
 }
