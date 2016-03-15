@@ -1,5 +1,5 @@
 # for the unit tests
-CC=g++
+CC= /usr/bin/g++
 CFLAGS= -W -Wall -Weffc++ -ansi -std=c++11
 LDFLAGS=
 EXEC= tests.exe

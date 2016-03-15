@@ -19,27 +19,14 @@ class Scanner : public yyFlexLexer
 public:
 	using yyFlexLexer::yylex;
 	Scanner(std::istream *in) : yyFlexLexer(in)
-	{
-		// loc = Algebra::Parser::location_type();
-	};
+	{};
 
 	~Scanner() 
-	{
-		
-		// delete yylval;
-		// delete loc;
-	};
+	{};
 
 	int yylex(Algebra::Parser::semantic_type * const lval, Algebra::Parser::location_type * location);
 	// YY_DECL defined in mc_lexer.l
 	// Method body created by flex in mc_lexer.yy.cc
-
-
-private:
-	/* yyval ptr */
-	//Algebra::Parser::semantic_type * yylval;
-	/* location ptr */
-	// Algebra::Parser::location_type * loc;
 };
 }
 

@@ -5,8 +5,8 @@ CXX = /usr/bin/g++
 LEX = flex
 YACC = bison
 
-CXXFLAGS = -W -Wall -Wno-deprecated-register -ansi -g -O0 -std=c++11
-LDFLAGS = 
+CXXFLAGS= -W -Wall -Wno-deprecated-register -ansi -g -O0 -std=c++11
+LDFLAGS= 
 
 EXEC= example
 
