@@ -10,6 +10,7 @@
       class Driver;
       class Scanner;
    }
+   class Expression;
 
 // The following definitions is missing when %locations isn't used
 # ifndef YY_NULLPTR
@@ -26,14 +27,16 @@
 %parse-param { Driver & driver }
 
 %code{
-   #include <iostream>
-   #include <cstdlib>
-   #include <fstream>
+	#include <iostream>
+	#include <cstdlib>
+	#include <fstream>
+	#include <math.h>
    
-   #include "driver.hpp"
+	#include "driver.hpp"
+	#include "../include/expression.hpp"
 
-   #undef yylex
-   #define yylex scanner.yylex
+	#undef yylex
+	#define yylex scanner.yylex
 }
 
 %define parse.assert
@@ -42,18 +45,24 @@
 {
 	char * stringValue;
 	double doubleValue;
+	Expression * exprValue;
 }
 
 
-%token END    0   "end of file"
-%token EOL			"end of line"
+%token END     0   	"end of file"
+%token EOL	 	 	"end of line"
+
 %token<doubleValue> DOUBLE
-%token<stringValue> OP 
+%token<stringValue> BINOP 
 %token<stringValue> IDENTIFIER
+%token<stringValue> UNOP
+%token<stringValue> EQUAL
 
+%token<stringValue> LBRACKET
+%token<stringValue> RBRACKET
 
-%type<doubleValue> expression 
-%type<doubleValue> prog
+%type<exprValue> expression
+%type<exprValue> prog
 
 %locations
 
@@ -62,20 +71,22 @@
 %%
 
 prog
-   : expression prog             { $$=$2; }
-   | expression                  { $$=$1; }
+   : expression prog            { $$ = $2; }
+   | expression                 { $$ = $1; }
    ;
 
 expression
-	: DOUBLE 				         { driver.get($1); $$=$1; }
-	| expression OP expression 	{ driver.operation($1, $3, $2); $$=$1+$3;}
+	: DOUBLE 									{ $$ = driver.constant($1); }
+	| UNOP LBRACKET expression RBRACKET			{ $$ = driver.unop($3, $1); }
+	| expression BINOP expression				{ $$ = driver.binop($1, $3, $2); }
+	| "delete"									{ driver.deleteAll(); }
 	;
+	
 
 %%
 
 
-void 
-Algebra::Parser::error(const location_type & l, const std::string & err_message)
+void Algebra::Parser::error(const location_type & l, const std::string & err_message)
 {
    std::cerr << "Error: " << err_message << " at " << l << "\n";
 }

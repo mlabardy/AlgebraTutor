@@ -3,42 +3,36 @@
 
 #include <string>
 #include <cstdint>
+#include <functional>
+#include <map>
+
 #include "scanner.hpp"
 #include "parser.h"
+#include "../include/expression.hpp"
 
-namespace Algebra {
+
+namespace Algebra
+{
 
 class Driver 
 {
 public:
-	Driver() = default;
-
+	Driver();
 	virtual ~Driver();
 
-	void parse(const char *filename );
+	void parse(const char *);
 
-	void add_upper();
-	void add_lower();
-	void add_word(const std::string & word);
-	void add_newline();
-	void add_char();
+	Expression * constant(double);
+	Expression * variable(double, const char *);
+	Expression * unop(Expression *, const char *);
+	Expression * binop(Expression *, Expression *, const char *);
+	void deleteAll();
 
-	void operation(double x, double y, const char * op);
-	void cos(double x);
-	void get(double x);
-
-   // std::ostream& print(std::ostream & stream);
 private:
-   int chars      = 0;
-   int words      = 0;
-   int lines      = 0;
-   int uppercase  = 0;
-   int lowercase  = 0;
-
-   // Algebra::Parser  & parser;
-   // Algebra::Scanner & scanner;
+	std::map<std::string, std::function<Expression *(Expression *)>> unops;
+	std::map<std::string, std::function<Expression *(Expression *, Expression *)>> binops;
 };
 
-} /* end namespace MC */
+}
 
 #endif

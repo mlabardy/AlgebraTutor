@@ -31,12 +31,12 @@
 // version 2.2 of Bison.
 
 /**
- ** \file position.hh
+ ** \file parser/position.hh
  ** Define the Algebra::position class.
  */
 
-#ifndef YY_YY_POSITION_HH_INCLUDED
-# define YY_YY_POSITION_HH_INCLUDED
+#ifndef YY_YY_PARSER_POSITION_HH_INCLUDED
+# define YY_YY_PARSER_POSITION_HH_INCLUDED
 
 # include <algorithm> // std::max
 # include <iostream>
@@ -50,9 +50,9 @@
 #  endif
 # endif
 
-#line 5 "parser.yy" // location.cc:337
+#line 5 "parser/parser.yy" // location.cc:337
 namespace Algebra {
-#line 56 "position.hh" // location.cc:337
+#line 56 "parser/position.hh" // location.cc:337
   /// Abstract a position.
   class position
   {
@@ -174,7 +174,7 @@ namespace Algebra {
     return ostr << pos.line << '.' << pos.column;
   }
 
-#line 5 "parser.yy" // location.cc:337
+#line 5 "parser/parser.yy" // location.cc:337
 } // Algebra
-#line 180 "position.hh" // location.cc:337
-#endif // !YY_YY_POSITION_HH_INCLUDED
+#line 180 "parser/position.hh" // location.cc:337
+#endif // !YY_YY_PARSER_POSITION_HH_INCLUDED

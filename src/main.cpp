@@ -6,9 +6,8 @@
 #include "expression.hpp"
 #include "variable.hpp"
 #include "debugger.hpp"
-#include "../parser/driver.hpp"
+#include "driver.hpp"
 
-#define M_PI 3.14
 
 using namespace std;
 using namespace ExpressionFactory;
@@ -51,12 +50,12 @@ int main(int argc, char *argv[])
     			d.debug(".-------------------------------------------------------.");
     		return 0;
     	}
-
-	    if (optind < argc) 
+    	driver.parse("exercices/exercices.txt");
+	    /*if (optind < argc)
 	    {
-	    	// driver.parse("exercices/exercices.txt");
-	    	driver.parse(argv[optind]);
-	    }
+
+	    	//driver.parse(argv[optind]);
+	    }*/
 
     } while (option != -1);
 

@@ -33,7 +33,7 @@
 
 // First part of user declarations.
 
-#line 37 "parser.cc" // lalr1.cc:404
+#line 37 "parser/parser.cc" // lalr1.cc:404
 
 # ifndef YY_NULLPTR
 #  if defined __cplusplus && 201103L <= __cplusplus
@@ -47,20 +47,22 @@
 
 // User implementation prologue.
 
-#line 51 "parser.cc" // lalr1.cc:412
+#line 51 "parser/parser.cc" // lalr1.cc:412
 // Unqualified %code blocks.
-#line 28 "parser.yy" // lalr1.cc:413
+#line 29 "parser/parser.yy" // lalr1.cc:413
 
-   #include <iostream>
-   #include <cstdlib>
-   #include <fstream>
+	#include <iostream>
+	#include <cstdlib>
+	#include <fstream>
+	#include <math.h>
    
-   #include "driver.hpp"
+	#include "driver.hpp"
+	#include "../include/expression.hpp"
 
-   #undef yylex
-   #define yylex scanner.yylex
+	#undef yylex
+	#define yylex scanner.yylex
 
-#line 64 "parser.cc" // lalr1.cc:413
+#line 66 "parser/parser.cc" // lalr1.cc:413
 
 
 #ifndef YY_
@@ -144,9 +146,9 @@
 #define YYERROR         goto yyerrorlab
 #define YYRECOVERING()  (!!yyerrstatus_)
 
-#line 5 "parser.yy" // lalr1.cc:479
+#line 5 "parser/parser.yy" // lalr1.cc:479
 namespace Algebra {
-#line 150 "parser.cc" // lalr1.cc:479
+#line 152 "parser/parser.cc" // lalr1.cc:479
 
   /// Build a parser object.
   Parser::Parser (Scanner & scanner_yyarg, Driver & driver_yyarg)
@@ -587,31 +589,43 @@ namespace Algebra {
           switch (yyn)
             {
   case 2:
-#line 65 "parser.yy" // lalr1.cc:859
-    { (yylhs.value.doubleValue)=(yystack_[0].value.doubleValue); }
-#line 593 "parser.cc" // lalr1.cc:859
+#line 74 "parser/parser.yy" // lalr1.cc:859
+    { (yylhs.value.exprValue) = (yystack_[0].value.exprValue); }
+#line 595 "parser/parser.cc" // lalr1.cc:859
     break;
 
   case 3:
-#line 66 "parser.yy" // lalr1.cc:859
-    { (yylhs.value.doubleValue)=(yystack_[0].value.doubleValue); }
-#line 599 "parser.cc" // lalr1.cc:859
+#line 75 "parser/parser.yy" // lalr1.cc:859
+    { (yylhs.value.exprValue) = (yystack_[0].value.exprValue); }
+#line 601 "parser/parser.cc" // lalr1.cc:859
     break;
 
   case 4:
-#line 70 "parser.yy" // lalr1.cc:859
-    { driver.get((yystack_[0].value.doubleValue)); (yylhs.value.doubleValue)=(yystack_[0].value.doubleValue); }
-#line 605 "parser.cc" // lalr1.cc:859
+#line 79 "parser/parser.yy" // lalr1.cc:859
+    { (yylhs.value.exprValue) = driver.constant((yystack_[0].value.doubleValue)); }
+#line 607 "parser/parser.cc" // lalr1.cc:859
     break;
 
   case 5:
-#line 71 "parser.yy" // lalr1.cc:859
-    { driver.operation((yystack_[2].value.doubleValue), (yystack_[0].value.doubleValue), (yystack_[1].value.stringValue)); (yylhs.value.doubleValue)=(yystack_[2].value.doubleValue)+(yystack_[0].value.doubleValue);}
-#line 611 "parser.cc" // lalr1.cc:859
+#line 80 "parser/parser.yy" // lalr1.cc:859
+    { (yylhs.value.exprValue) = driver.unop((yystack_[1].value.exprValue), (yystack_[3].value.stringValue)); }
+#line 613 "parser/parser.cc" // lalr1.cc:859
+    break;
+
+  case 6:
+#line 81 "parser/parser.yy" // lalr1.cc:859
+    { (yylhs.value.exprValue) = driver.binop((yystack_[2].value.exprValue), (yystack_[0].value.exprValue), (yystack_[1].value.stringValue)); }
+#line 619 "parser/parser.cc" // lalr1.cc:859
+    break;
+
+  case 7:
+#line 82 "parser/parser.yy" // lalr1.cc:859
+    { driver.deleteAll(); }
+#line 625 "parser/parser.cc" // lalr1.cc:859
     break;
 
 
-#line 615 "parser.cc" // lalr1.cc:859
+#line 629 "parser/parser.cc" // lalr1.cc:859
             default:
               break;
             }
@@ -777,62 +791,67 @@ namespace Algebra {
   }
 
 
-  const signed char Parser::yypact_ninf_ = -5;
+  const signed char Parser::yypact_ninf_ = -6;
 
   const signed char Parser::yytable_ninf_ = -1;
 
   const signed char
   Parser::yypact_[] =
   {
-      -2,    -5,     3,    -4,    -5,    -2,    -5,    -1
+      -2,    -6,    -5,    -6,    12,    -4,    -2,    -6,    -2,    -6,
+       1,     8,    -6
   };
 
   const unsigned char
   Parser::yydefact_[] =
   {
-       0,     4,     0,     3,     1,     0,     2,     5
+       0,     4,     0,     7,     0,     3,     0,     1,     0,     2,
+       0,     6,     5
   };
 
   const signed char
   Parser::yypgoto_[] =
   {
-      -5,     2,     1
+      -6,     9,     2
   };
 
   const signed char
   Parser::yydefgoto_[] =
   {
-      -1,     2,     3
+      -1,     4,     5
   };
 
   const unsigned char
   Parser::yytable_[] =
   {
-       1,     5,     1,     4,     5,     6,     7
+       1,     8,     1,     2,     6,     2,     8,     3,    10,     3,
+      11,    12,     7,     8,     9
   };
 
   const unsigned char
   Parser::yycheck_[] =
   {
-       4,     5,     4,     0,     5,     3,     5
+       4,     5,     4,     7,     9,     7,     5,    11,     6,    11,
+       8,    10,     0,     5,     5
   };
 
   const unsigned char
   Parser::yystos_[] =
   {
-       0,     4,     8,     9,     0,     5,     8,     9
+       0,     4,     7,    11,    13,    14,     9,     0,     5,    13,
+      14,    14,    10
   };
 
   const unsigned char
   Parser::yyr1_[] =
   {
-       0,     7,     8,     8,     9,     9
+       0,    12,    13,    13,    14,    14,    14,    14
   };
 
   const unsigned char
   Parser::yyr2_[] =
   {
-       0,     2,     2,     1,     1,     3
+       0,     2,     2,     1,     1,     4,     3,     1
   };
 
 
@@ -843,14 +862,15 @@ namespace Algebra {
   const Parser::yytname_[] =
   {
   "\"end of file\"", "error", "$undefined", "\"end of line\"", "DOUBLE",
-  "OP", "IDENTIFIER", "$accept", "prog", "expression", YY_NULLPTR
+  "BINOP", "IDENTIFIER", "UNOP", "EQUAL", "LBRACKET", "RBRACKET",
+  "\"delete\"", "$accept", "prog", "expression", YY_NULLPTR
   };
 
 
   const unsigned char
   Parser::yyrline_[] =
   {
-       0,    65,    65,    66,    70,    71
+       0,    74,    74,    75,    79,    80,    81,    82
   };
 
   // Print the state stack on the debug stream.
@@ -917,9 +937,9 @@ namespace Algebra {
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     1,     2,     3,     4,
-       5,     6
+       5,     6,     7,     8,     9,    10,    11
     };
-    const unsigned int user_token_number_max_ = 261;
+    const unsigned int user_token_number_max_ = 266;
     const token_number_type undef_token_ = 2;
 
     if (static_cast<int>(t) <= yyeof_)
@@ -930,15 +950,14 @@ namespace Algebra {
       return undef_token_;
   }
 
-#line 5 "parser.yy" // lalr1.cc:1167
+#line 5 "parser/parser.yy" // lalr1.cc:1167
 } // Algebra
-#line 936 "parser.cc" // lalr1.cc:1167
-#line 74 "parser.yy" // lalr1.cc:1168
+#line 956 "parser/parser.cc" // lalr1.cc:1167
+#line 86 "parser/parser.yy" // lalr1.cc:1168
 
 
 
-void 
-Algebra::Parser::error(const location_type & l, const std::string & err_message)
+void Algebra::Parser::error(const location_type & l, const std::string & err_message)
 {
    std::cerr << "Error: " << err_message << " at " << l << "\n";
 }

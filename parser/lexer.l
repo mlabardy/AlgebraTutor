@@ -39,10 +39,18 @@ typedef Algebra::Parser::token token;
 [ \t\r]+ 		;
 
 \n 				{ printf("%s\n", "end of line"); }
-		
+
 [0-9]+"."[0-9]* { lval->doubleValue = atof(yytext); return token::DOUBLE; }
 
-"+" 		 	{ lval->stringValue = strdup(yytext); return token::OP; }
+"(" 		 	{ lval->stringValue = strdup(yytext); return token::LBRACKET; }
+
+")" 		 	{ lval->stringValue = strdup(yytext); return token::RBRACKET; }
+
+"cos"|"sin"|"tan"	{ lval->stringValue = strdup(yytext); return token::UNOP; }
+
+"+"|"-"|"*"|"/" 	{ lval->stringValue = strdup(yytext); return token::BINOP; }
+
+"="				 	{ lval->stringValue = strdup(yytext); return token::EQUAL; }
 
 [a-zA-Z]+		{ lval->stringValue = strdup(yytext); return token::IDENTIFIER; }
 

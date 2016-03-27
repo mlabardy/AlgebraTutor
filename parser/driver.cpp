@@ -1,27 +1,37 @@
 #include <cctype>
 #include <fstream>
 #include <cassert>
+#include <map>
+#include <functional>
+#include <string>
+#include <iostream>
 
 #include "driver.hpp"
 #include "scanner.hpp"
 #include "parser.h"
+#include "expressionFactory.hpp"
+#include "expression.hpp"
+
 
 namespace Algebra {
 
-Driver::~Driver()
+Driver::Driver()
 {
-   // delete scanner;
-   // scanner = nullptr;
-   // delete parser;
-   // parser = nullptr;
+	unops["cos"] = [](Expression * expr) { return ExpressionFactory::cosinus(expr); };
+	unops["sin"] = [](Expression * expr) { return ExpressionFactory::sinus(expr); };
+	binops["+"] = [](Expression * lexpr, Expression * rexpr) { return ExpressionFactory::sum(lexpr, rexpr); };
+	binops["-"] = [](Expression * lexpr, Expression * rexpr) { return ExpressionFactory::difference(lexpr, rexpr); };
+	binops["*"] = [](Expression * lexpr, Expression * rexpr) { return ExpressionFactory::product(lexpr, rexpr); };
+	binops["/"] = [](Expression * lexpr, Expression * rexpr) { return ExpressionFactory::quotient(lexpr, rexpr); };
 }
 
-void 
-Driver::parse( const char * const filename )
-{
-	assert( filename != nullptr );
+Driver::~Driver() { }
 
-	std::ifstream in_file( filename );
+void Driver::parse(const char * filename)
+{
+	assert(filename != nullptr);
+
+	std::ifstream in_file(filename);
 
 	if(!in_file.good()) 
 	{
@@ -36,115 +46,39 @@ Driver::parse( const char * const filename )
 	{
 		std::cerr << "Parse failed!!\n";
 	}
-
-	// Algebra::Parser  & parser;
-	// Algebra::Scanner & scanner;
-
-	// assert( filename != nullptr );
-	// std::ifstream in_file( filename );
-
-	// if( ! in_file.good() ) exit( EXIT_FAILURE );
-
-	// // delete(scanner);
-	// try
-	// {
-	// 	scanner = Algebra::Scanner( &in_file );
-	// }
-	// catch( std::bad_alloc &ba )
-	// {
-	// 	std::cerr << "Failed to allocate scanner: (" <<
-	//      ba.what() << "), exiting!!\n";
-	// 	exit( EXIT_FAILURE );
-	// }
-
-	// // delete(parser); 
-	// try
-	// {
-	// 	parser( (scanner) /* scanner */, 
-	//                               (*this) /* driver */ );
-	// }
-	// catch( std::bad_alloc &ba )
-	// {
-	// 	std::cerr << "Failed to allocate parser: (" << 
-	//      ba.what() << "), exiting!!\n";
-	//   exit( EXIT_FAILURE );
-	// }
-	// const int accept( 0 );
-	// if( parser.parse() != accept )
-	// {
-	// 	std::cerr << "Parse failed!!\n";
-	// }
 }
 
-void 
-Driver::add_upper()
-{ 
-   uppercase++; 
-   chars++; 
-   words++; 
-}
-
-void 
-Driver::add_lower()
-{ 
-   lowercase++; 
-   chars++; 
-   words++; 
-}
-
-void 
-Driver::add_word( const std::string &word )
+Expression * Driver::constant(double x)
 {
-   words++; 
-   chars += word.length();
-   for(const char &c : word ){
-      if( islower( c ) )
-      { 
-         lowercase++; 
-      }
-      else if ( isupper( c ) ) 
-      { 
-         uppercase++; 
-      }
-   }
+	Expression * expr = ExpressionFactory::constant(x);
+	std::cout << expr->display() << std::endl;
+	return expr;
 }
 
-void 
-Driver::add_newline()
-{ 
-   lines++; 
-   chars++; 
-}
-
-void 
-Driver::add_char()
-{ 
-   chars++; 
-}
-
-void Driver::operation(double x, double y, const char * op)
+Expression * variable(double x, const char * id)
 {
-	printf("%f %s %f\n", x, op, y);
+	Expression * expr = ExpressionFactory::variable(std::string(id), x);
+	std::cout << expr->display() << std::endl;
+	return expr;
 }
 
-void Driver::cos(double x)
+Expression * Driver::unop(Expression * x, const char * op)
 {
-	printf("cos(%f)\n", x);
+	Expression * expr = unops.find(std::string(op))->second(x);
+	std::cout << expr->display() << std::endl;
+	return expr;
 }
 
-void Driver::get(double x)
+Expression * Driver::binop(Expression * x, Expression * y, const char * op)
 {
-	printf("%f\n", x);
+	Expression * expr = binops.find(std::string(op))->second(x, y);
+	std::cout << expr->display() << std::endl;
+	return expr;
 }
 
-// std::ostream& 
-// Driver::print( std::ostream &stream )
-// {
-//    stream << "Uppercase: " << uppercase << "\n";
-//    stream << "Lowercase: " << lowercase << "\n";
-//    stream << "Lines: " << lines << "\n";
-//    stream << "Words: " << words << "\n";
-//    stream << "Characters: " << chars << "\n";
-//    return(stream);
-// }
+void Driver::deleteAll()
+{
+	Expression::deleteAll();
+}
+
 }

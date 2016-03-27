@@ -16,7 +16,7 @@ namespace ExpressionFactory
 
 	Variable * variable(const std::string & id)
 	{
-		return new Variable(id);	
+		return new Variable(id);
 	}
 
 	Variable * variable(const std::string & id, double value)

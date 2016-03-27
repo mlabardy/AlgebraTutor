@@ -31,21 +31,22 @@
 // version 2.2 of Bison.
 
 /**
- ** \file parser.h
+ ** \file ./parser/parser.h
  ** Define the Algebra::parser class.
  */
 
 // C++ LALR(1) parser skeleton written by Akim Demaille.
 
-#ifndef YY_YY_PARSER_H_INCLUDED
-# define YY_YY_PARSER_H_INCLUDED
+#ifndef YY_YY_PARSER_PARSER_H_INCLUDED
+# define YY_YY_PARSER_PARSER_H_INCLUDED
 // //                    "%code requires" blocks.
-#line 8 "parser.yy" // lalr1.cc:392
+#line 8 "parser/parser.yy" // lalr1.cc:392
 
    namespace Algebra {
       class Driver;
       class Scanner;
    }
+   class Expression;
 
 // The following definitions is missing when %locations isn't used
 # ifndef YY_NULLPTR
@@ -57,7 +58,7 @@
 # endif
 
 
-#line 61 "parser.h" // lalr1.cc:392
+#line 62 "./parser/parser.h" // lalr1.cc:392
 
 # include <cassert>
 # include <cstdlib> // std::abort
@@ -127,9 +128,9 @@
 # define YYDEBUG 1
 #endif
 
-#line 5 "parser.yy" // lalr1.cc:392
+#line 5 "parser/parser.yy" // lalr1.cc:392
 namespace Algebra {
-#line 133 "parser.h" // lalr1.cc:392
+#line 134 "./parser/parser.h" // lalr1.cc:392
 
 
 
@@ -143,12 +144,13 @@ namespace Algebra {
     /// Symbol semantic values.
     union semantic_type
     {
-    #line 42 "parser.yy" // lalr1.cc:392
+    #line 45 "parser/parser.yy" // lalr1.cc:392
 
 	char * stringValue;
 	double doubleValue;
+	Expression * exprValue;
 
-#line 152 "parser.h" // lalr1.cc:392
+#line 154 "./parser/parser.h" // lalr1.cc:392
     };
 #else
     typedef YYSTYPE semantic_type;
@@ -171,8 +173,12 @@ namespace Algebra {
         END = 0,
         EOL = 258,
         DOUBLE = 259,
-        OP = 260,
-        IDENTIFIER = 261
+        BINOP = 260,
+        IDENTIFIER = 261,
+        UNOP = 262,
+        EQUAL = 263,
+        LBRACKET = 264,
+        RBRACKET = 265
       };
     };
 
@@ -477,12 +483,12 @@ namespace Algebra {
     enum
     {
       yyeof_ = 0,
-      yylast_ = 6,     ///< Last index in yytable_.
+      yylast_ = 14,     ///< Last index in yytable_.
       yynnts_ = 3,  ///< Number of nonterminal symbols.
-      yyfinal_ = 4, ///< Termination state number.
+      yyfinal_ = 7, ///< Termination state number.
       yyterror_ = 1,
       yyerrcode_ = 256,
-      yyntokens_ = 7  ///< Number of tokens.
+      yyntokens_ = 12  ///< Number of tokens.
     };
 
 
@@ -492,11 +498,11 @@ namespace Algebra {
   };
 
 
-#line 5 "parser.yy" // lalr1.cc:392
+#line 5 "parser/parser.yy" // lalr1.cc:392
 } // Algebra
-#line 498 "parser.h" // lalr1.cc:392
+#line 504 "./parser/parser.h" // lalr1.cc:392
 
 
 
 
-#endif // !YY_YY_PARSER_H_INCLUDED
+#endif // !YY_YY_PARSER_PARSER_H_INCLUDED

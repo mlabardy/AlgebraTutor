@@ -9,47 +9,50 @@ LDFLAGS=
 EXEC= project.exe
 
 SRC= ./src/
-PARSER= parser/
+PARSER= ./parser/
 INCL= -I./include/$(wildcard *.h)
+INCL_PARSER= -I./parser/$(wildcard *.h)
+OBJECTS= ./objects/
 
 OBJ= operator.o binaryOperator.o unaryOperator.o constant.o variable.o affectation.o expressionFactory.o operatorFactory.o expression.o main.o debugger.o
-PARSER_OBJ= parser.o scanner.o driver.o
+PARSER_OBJ= $(OBJECTS)parser.o $(OBJECTS)scanner.o $(OBJECTS)driver.o
 
 
 all: $(EXEC) clean
 
-$(EXEC): $(OBJ) $(PARSER_OBJ)
+$(EXEC): $(PARSER_OBJ) $(OBJ)
 	@echo "création de l'exécutable ->" $@
 	@$(CC) $(LDFLAGS) $^ -o $@
 
-parser.cc: $(PARSER)parser.yy
-	@echo "création de l'objet" $@
-	@$(YACC) -o parser.cc --defines=parser.h parser.yy
+$(PARSER)parser.cc: $(PARSER)parser.yy
+	@echo "création du fichier" $@
+	@$(YACC) -o $@ --defines=$(PARSER)parser.h $<
 
-scanner.cc: $(PARSER)lexer.l
-	@echo "création de l'objet" $@
-	@$(LEX) -o scanner.cc lexer.l
+$(PARSER)scanner.cc: $(PARSER)lexer.l
+	@echo "création du fichier" $@
+	@$(LEX) -o $(PARSER)scanner.cc $(PARSER)lexer.l
 
-parser.o: $(PARSER)parser.cc
+$(OBJECTS)parser.o: $(PARSER)parser.cc
 	@echo "création de l'objet" $@
 	@$(CC) $(CXXFLAGS) -c -o $@ $<
 
-scanner.o: $(PARSER)scanner.cc
+$(OBJECTS)scanner.o: $(PARSER)scanner.cc
 	@echo "création de l'objet" $@
 	@$(CC) $(CXXFLAGS) -c -o $@ $<
 
-driver.o: $(PARSER)driver.cpp
+$(OBJECTS)driver.o: $(PARSER)driver.cpp
 	@echo "création de l'objet" $@
-	@$(CC) $(CXXFLAGS) -c -o $@ $<
+	@$(CC) $(CXXFLAGS) $(INCL) $(INCL_PARSER) -c -o $@ $<
 
 %.o: $(SRC)%.cpp
 	@echo "création de l'objet" $@
-	@$(CC) $(CFLAGS) $(INCL) -c $< -o $@ 
+	@$(CC) $(CFLAGS) $(INCL) $(INCL_PARSER) -c $< -o $@ 
 
-clean: 	
+clean: 
 	@rm -rf *.o
 	@rm -rf $(EXEC).dSYM
 
 mrproper: clean 
 	@rm -rf $(EXEC)
-	@rm -f *.cc *.hh parser.h
+	@rm -f *.cc *.hh
+	@rm -rf $(OBJECTS)*.o

@@ -31,18 +31,18 @@
 // version 2.2 of Bison.
 
 /**
- ** \file location.hh
+ ** \file parser/location.hh
  ** Define the Algebra::location class.
  */
 
-#ifndef YY_YY_LOCATION_HH_INCLUDED
-# define YY_YY_LOCATION_HH_INCLUDED
+#ifndef YY_YY_PARSER_LOCATION_HH_INCLUDED
+# define YY_YY_PARSER_LOCATION_HH_INCLUDED
 
 # include "position.hh"
 
-#line 5 "parser.yy" // location.cc:337
+#line 5 "parser/parser.yy" // location.cc:337
 namespace Algebra {
-#line 46 "location.hh" // location.cc:337
+#line 46 "parser/location.hh" // location.cc:337
   /// Abstract a location.
   class location
   {
@@ -186,7 +186,7 @@ namespace Algebra {
     return ostr;
   }
 
-#line 5 "parser.yy" // location.cc:337
+#line 5 "parser/parser.yy" // location.cc:337
 } // Algebra
-#line 192 "location.hh" // location.cc:337
-#endif // !YY_YY_LOCATION_HH_INCLUDED
+#line 192 "parser/location.hh" // location.cc:337
+#endif // !YY_YY_PARSER_LOCATION_HH_INCLUDED
