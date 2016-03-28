@@ -77,7 +77,7 @@ Expression * UnaryOperator::exponantial(Expression * expression, Expression * po
 			// stringOfValue << expression->display() <<  ' ' << name(Operator::EXP) << ' ' << power->display();
 			// return stringOfValue.str(); 
 			char buffer[100];
-			snprintf(buffer, 100, "%s %s %s", expression->display().c_str(), name(Operator::EXP).c_str(), power->display().c_str());
+			snprintf(buffer, 100, "(%s %s %s)", expression->display().c_str(), name(Operator::EXP).c_str(), power->display().c_str());
 			std::string str(buffer);
 			return str;
 		},

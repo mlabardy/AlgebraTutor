@@ -26,6 +26,7 @@ public:
 	Expression * variable(double, const char *);
 	Expression * unop(Expression *, const char *);
 	Expression * binop(Expression *, Expression *, const char *);
+
 	void deleteAll();
 
 private:

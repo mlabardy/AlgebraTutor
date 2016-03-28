@@ -4,6 +4,7 @@
 %defines 
 %define api.namespace {Algebra}
 %define parser_class_name {Parser}
+%expect 2 // on supprime les warnings concernants le signe d'un nombre
 
 %code requires{
    namespace Algebra {
@@ -25,6 +26,9 @@
 
 %parse-param { Scanner & scanner }
 %parse-param { Driver & driver }
+
+%locations
+%start prog
 
 %code{
 	#include <iostream>
@@ -48,45 +52,71 @@
 	Expression * exprValue;
 }
 
-
 %token END     0   	"end of file"
-%token EOL	 	 	"end of line"
+%token EOL
 
 %token<doubleValue> DOUBLE
-%token<stringValue> BINOP 
 %token<stringValue> IDENTIFIER
 %token<stringValue> UNOP
 %token<stringValue> EQUAL
+%token<stringValue> COMMA
+%token<stringValue> DEL
 
 %token<stringValue> LBRACKET
 %token<stringValue> RBRACKET
 
 %type<exprValue> expression
-%type<exprValue> prog
+%type<doubleValue> number
 
-%locations
+%left<stringValue> ADD SUB
+%left<stringValue> BINOPMQ
+%left MINUS PLUS
 
-%start prog
+%right<stringValue> EXP
 
 %%
 
 prog
-   : expression prog            { $$ = $2; }
-   | expression                 { $$ = $1; }
-   ;
+	: prog line		{ ; }
+	| line 			{ ; }
+   	;
 
-expression
-	: DOUBLE 									{ $$ = driver.constant($1); }
-	| UNOP LBRACKET expression RBRACKET			{ $$ = driver.unop($3, $1); }
-	| expression BINOP expression				{ $$ = driver.binop($1, $3, $2); }
-	| "delete"									{ driver.deleteAll(); }
+line
+	: EOL			{ ; }
+	| expression 	{ ; }
+	| affectations 	{ ; }
+	| DEL 			{ free($1); }
+	| IDENTIFIER 	{ printf("new exercise\n"); free($1); }
+	;
+
+number
+	: SUB DOUBLE %prec MINUS 	{ $$ = -$2; free($1); }
+	| ADD DOUBLE %prec PLUS 	{ $$ = $2; free($1); }
+	| DOUBLE 					{ $$ = $1; }
 	;
 	
+affectations
+	: affectation COMMA affectations  	{ ; }
+	| affectation						{ ; }
+	;
+
+affectation
+	: IDENTIFIER EQUAL number { driver.variable($3, $1); free($1); }
+	;
+
+expression
+	: expression ADD expression			{ $$ = driver.binop($1, $3, $2); free($2); }
+	| expression SUB expression			{ $$ = driver.binop($1, $3, $2); free($2); }
+	| expression BINOPMQ expression		{ $$ = driver.binop($1, $3, $2); free($2); }
+	| expression EXP expression			{ $$ = driver.binop($1, $3, $2); free($2); }
+	| LBRACKET expression RBRACKET		{ $$ = $2; }
+	| UNOP LBRACKET expression RBRACKET	{ $$ = driver.unop($3, $1); free($1); }
+	| number 							{ $$ = driver.constant($1); }
+	;
 
 %%
 
-
 void Algebra::Parser::error(const location_type & l, const std::string & err_message)
 {
-   std::cerr << "Error: " << err_message << " at " << l << "\n";
+	std::cerr << "Error: " << err_message << " at " << l << "\n";
 }

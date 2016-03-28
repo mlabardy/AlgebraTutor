@@ -40,7 +40,7 @@
 #ifndef YY_YY_PARSER_PARSER_H_INCLUDED
 # define YY_YY_PARSER_PARSER_H_INCLUDED
 // //                    "%code requires" blocks.
-#line 8 "parser/parser.yy" // lalr1.cc:392
+#line 9 "parser/parser.yy" // lalr1.cc:392
 
    namespace Algebra {
       class Driver;
@@ -144,7 +144,7 @@ namespace Algebra {
     /// Symbol semantic values.
     union semantic_type
     {
-    #line 45 "parser/parser.yy" // lalr1.cc:392
+    #line 49 "parser/parser.yy" // lalr1.cc:392
 
 	char * stringValue;
 	double doubleValue;
@@ -173,12 +173,19 @@ namespace Algebra {
         END = 0,
         EOL = 258,
         DOUBLE = 259,
-        BINOP = 260,
-        IDENTIFIER = 261,
-        UNOP = 262,
-        EQUAL = 263,
-        LBRACKET = 264,
-        RBRACKET = 265
+        IDENTIFIER = 260,
+        UNOP = 261,
+        EQUAL = 262,
+        COMMA = 263,
+        DEL = 264,
+        LBRACKET = 265,
+        RBRACKET = 266,
+        ADD = 267,
+        SUB = 268,
+        BINOPMQ = 269,
+        MINUS = 270,
+        PLUS = 271,
+        EXP = 272
       };
     };
 
@@ -366,7 +373,7 @@ namespace Algebra {
   // number is the opposite.  If YYTABLE_NINF, syntax error.
   static const unsigned char yytable_[];
 
-  static const unsigned char yycheck_[];
+  static const signed char yycheck_[];
 
   // YYSTOS[STATE-NUM] -- The (internal number of the) accessing
   // symbol of state STATE-NUM.
@@ -483,12 +490,12 @@ namespace Algebra {
     enum
     {
       yyeof_ = 0,
-      yylast_ = 14,     ///< Last index in yytable_.
-      yynnts_ = 3,  ///< Number of nonterminal symbols.
-      yyfinal_ = 7, ///< Termination state number.
+      yylast_ = 64,     ///< Last index in yytable_.
+      yynnts_ = 7,  ///< Number of nonterminal symbols.
+      yyfinal_ = 20, ///< Termination state number.
       yyterror_ = 1,
       yyerrcode_ = 256,
-      yyntokens_ = 12  ///< Number of tokens.
+      yyntokens_ = 18  ///< Number of tokens.
     };
 
 
@@ -500,7 +507,7 @@ namespace Algebra {
 
 #line 5 "parser/parser.yy" // lalr1.cc:392
 } // Algebra
-#line 504 "./parser/parser.h" // lalr1.cc:392
+#line 511 "./parser/parser.h" // lalr1.cc:392
 
 
 

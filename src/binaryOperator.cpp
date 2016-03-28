@@ -59,7 +59,7 @@ Expression * BinaryOperator::difference(Expression * leftExpression, Expression 
 	return new OperatorFactory (
 		[=] () 
 		{ 
-			return BinaryOperator::display(SUB, leftExpression, rightExpression); 
+			return BinaryOperator::display(SUB, leftExpression, rightExpression);
 		},
 		[=] () 
 		{ 

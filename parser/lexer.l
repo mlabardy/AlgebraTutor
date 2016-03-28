@@ -22,7 +22,7 @@ typedef Algebra::Parser::token token;
 
 /* update location on matching */
 #define YY_USER_ACTION location->step(); location->columns(yyleng);
-
+int linenum = 0;
 %}
 
 %option debug
@@ -32,29 +32,68 @@ typedef Algebra::Parser::token token;
 %option c++
 
 %%
-%{  // Code executed at the beginning of yylex
-	//yylval = lval;
-%}
 
-[ \t\r]+ 		;
+[ \t]+ 		;
 
-\n 				{ printf("%s\n", "end of line"); }
+[\n]+ {
+	++linenum;
+	location->lines(linenum);
+	return token::EOL; 
+}
 
-[0-9]+"."[0-9]* { lval->doubleValue = atof(yytext); return token::DOUBLE; }
+[0-9]+("."[0-9]*)* { 
+	lval->doubleValue = atof(yytext); 
+	return token::DOUBLE;
+}
 
-"(" 		 	{ lval->stringValue = strdup(yytext); return token::LBRACKET; }
+"(" { 
+	return token::LBRACKET; 
+}
 
-")" 		 	{ lval->stringValue = strdup(yytext); return token::RBRACKET; }
+")" { 
+	return token::RBRACKET; 
+}
 
-"cos"|"sin"|"tan"	{ lval->stringValue = strdup(yytext); return token::UNOP; }
+"+" { 
+	lval->stringValue = strdup(yytext); 
+	return token::ADD; 
+}
 
-"+"|"-"|"*"|"/" 	{ lval->stringValue = strdup(yytext); return token::BINOP; }
+"-" { 
+	lval->stringValue = strdup(yytext); 
+	return token::SUB; 
+}
 
-"="				 	{ lval->stringValue = strdup(yytext); return token::EQUAL; }
+"^" {
+	lval->stringValue = strdup(yytext); 
+	return token::EXP; 
+}
 
-[a-zA-Z]+		{ lval->stringValue = strdup(yytext); return token::IDENTIFIER; }
+"*"|"/" { 
+	lval->stringValue = strdup(yytext); 
+	return token::BINOPMQ; 
+}
 
-.           ;
+"=" { 
+	return token::EQUAL; 
+}
+
+"cos"|"sin"|"tan" { 
+	lval->stringValue = strdup(yytext); 
+	return token::UNOP;
+}
+
+"deleteAll" { 
+	lval->stringValue = strdup(yytext); 
+	return token::DEL;
+}
+
+[a-zA-Z]([a-zA-Z]|[0-9]|_)* { 
+	lval->stringValue = strdup(yytext); 
+	return token::IDENTIFIER; 
+}
+
+.          ;
 %%
 
 

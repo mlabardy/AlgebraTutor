@@ -19,10 +19,13 @@ Driver::Driver()
 {
 	unops["cos"] = [](Expression * expr) { return ExpressionFactory::cosinus(expr); };
 	unops["sin"] = [](Expression * expr) { return ExpressionFactory::sinus(expr); };
+
 	binops["+"] = [](Expression * lexpr, Expression * rexpr) { return ExpressionFactory::sum(lexpr, rexpr); };
 	binops["-"] = [](Expression * lexpr, Expression * rexpr) { return ExpressionFactory::difference(lexpr, rexpr); };
 	binops["*"] = [](Expression * lexpr, Expression * rexpr) { return ExpressionFactory::product(lexpr, rexpr); };
 	binops["/"] = [](Expression * lexpr, Expression * rexpr) { return ExpressionFactory::quotient(lexpr, rexpr); };
+	binops["^"] = [](Expression * lexpr, Expression * rexpr) { return ExpressionFactory::exponantial(lexpr, rexpr); };
+
 }
 
 Driver::~Driver() { }
@@ -46,39 +49,43 @@ void Driver::parse(const char * filename)
 	{
 		std::cerr << "Parse failed!!\n";
 	}
+	Expression::deleteAll();
+	Variable::deleteAll();
 }
 
 Expression * Driver::constant(double x)
 {
 	Expression * expr = ExpressionFactory::constant(x);
-	std::cout << expr->display() << std::endl;
+	//std::cout << expr->display() << std::endl;
 	return expr;
 }
 
-Expression * variable(double x, const char * id)
+Expression * Driver::variable(double x, const char * id)
 {
 	Expression * expr = ExpressionFactory::variable(std::string(id), x);
-	std::cout << expr->display() << std::endl;
+	//std::cout << *expr << " = " << expr->eval() << std::endl;
 	return expr;
 }
 
 Expression * Driver::unop(Expression * x, const char * op)
 {
 	Expression * expr = unops.find(std::string(op))->second(x);
-	std::cout << expr->display() << std::endl;
+	//std::cout << *expr << std::endl;
 	return expr;
 }
 
 Expression * Driver::binop(Expression * x, Expression * y, const char * op)
 {
 	Expression * expr = binops.find(std::string(op))->second(x, y);
-	std::cout << expr->display() << std::endl;
+	std::cout << *expr << " = " << expr->eval() << std::endl;
+	//Expression::deleteAll();
 	return expr;
 }
 
 void Driver::deleteAll()
 {
 	Expression::deleteAll();
+	Variable::deleteAll();
 }
 
 }

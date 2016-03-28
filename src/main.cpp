@@ -8,7 +8,6 @@
 #include "debugger.hpp"
 #include "driver.hpp"
 
-
 using namespace std;
 using namespace ExpressionFactory;
 using namespace Algebra;
