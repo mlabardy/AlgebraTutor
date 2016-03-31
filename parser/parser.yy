@@ -68,6 +68,7 @@
 %type<exprValue> expression
 %type<doubleValue> number
 
+%left<stringValue> COMP
 %left<stringValue> ADD SUB
 %left<stringValue> BINOPMQ
 %left MINUS PLUS
@@ -107,6 +108,7 @@ affectation
 expression
 	: expression ADD expression			{ $$ = driver.binop($1, $3, $2); free($2); }
 	| expression SUB expression			{ $$ = driver.binop($1, $3, $2); free($2); }
+	| expression COMP expression		{ $$ = driver.binop($1, $3, $2); free($2); }
 	| expression BINOPMQ expression		{ $$ = driver.binop($1, $3, $2); free($2); }
 	| expression EXP expression			{ $$ = driver.binop($1, $3, $2); free($2); }
 	| LBRACKET expression RBRACKET		{ $$ = $2; }

@@ -54,6 +54,11 @@ int linenum = 0;
 	return token::RBRACKET; 
 }
 
+"=="|"!="|"<="|">="|"<"|">" { 
+	lval->stringValue = strdup(yytext); 
+	return token::COMP; 
+}
+
 "+" { 
 	lval->stringValue = strdup(yytext); 
 	return token::ADD; 

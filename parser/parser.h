@@ -180,12 +180,13 @@ namespace Algebra {
         DEL = 264,
         LBRACKET = 265,
         RBRACKET = 266,
-        ADD = 267,
-        SUB = 268,
-        BINOPMQ = 269,
-        MINUS = 270,
-        PLUS = 271,
-        EXP = 272
+        COMP = 267,
+        ADD = 268,
+        SUB = 269,
+        BINOPMQ = 270,
+        MINUS = 271,
+        PLUS = 272,
+        EXP = 273
       };
     };
 
@@ -490,12 +491,12 @@ namespace Algebra {
     enum
     {
       yyeof_ = 0,
-      yylast_ = 64,     ///< Last index in yytable_.
+      yylast_ = 67,     ///< Last index in yytable_.
       yynnts_ = 7,  ///< Number of nonterminal symbols.
       yyfinal_ = 20, ///< Termination state number.
       yyterror_ = 1,
       yyerrcode_ = 256,
-      yyntokens_ = 18  ///< Number of tokens.
+      yyntokens_ = 19  ///< Number of tokens.
     };
 
 
@@ -507,7 +508,7 @@ namespace Algebra {
 
 #line 5 "parser/parser.yy" // lalr1.cc:392
 } // Algebra
-#line 511 "./parser/parser.h" // lalr1.cc:392
+#line 512 "./parser/parser.h" // lalr1.cc:392
 
 
 
