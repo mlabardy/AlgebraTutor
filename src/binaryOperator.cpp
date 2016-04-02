@@ -4,6 +4,7 @@
 #include "expression.hpp"
 #include "operator.hpp"
 #include "operatorFactory.hpp"
+#include "comparatorFactory.hpp"
 #include "debugger.hpp"
 
 using namespace Operator;
@@ -108,9 +109,9 @@ Expression * BinaryOperator::quotient(Expression * leftExpression, Expression * 
 	);
 }
 
-Expression * BinaryOperator::lessOrEqual(Expression * leftExpression, Expression * rightExpression)
+ComparatorFactory * BinaryOperator::lessOrEqual(Expression * leftExpression, Expression * rightExpression)
 {
-	return new OperatorFactory (
+	return new ComparatorFactory (
 		[=] () 
 		{ 
 			return BinaryOperator::display(LOE, leftExpression, rightExpression);
@@ -126,9 +127,9 @@ Expression * BinaryOperator::lessOrEqual(Expression * leftExpression, Expression
 	);
 }
 
-Expression * BinaryOperator::greaterOrEqual(Expression * leftExpression, Expression * rightExpression)
+ComparatorFactory * BinaryOperator::greaterOrEqual(Expression * leftExpression, Expression * rightExpression)
 {
-	return new OperatorFactory (
+	return new ComparatorFactory (
 		[=] () 
 		{ 
 			return BinaryOperator::display(GOE, leftExpression, rightExpression);

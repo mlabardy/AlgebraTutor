@@ -42,6 +42,13 @@ public:
 	~ComparatorFactory();
 
 	/*!
+     * \brief Indique que la valeur de l'expression doit être inversée
+     *
+     * Méthode qui négationne une comparaison
+     */
+	void isNegation();
+
+	/*!
      * \brief Evalue une expression contenant un comparateur
      * \return Le résultat de l'expression
      *
@@ -58,6 +65,7 @@ public:
 	std::string display() const;
 
 private:
+	bool _isNegation;
 	DisplayCallback _displayCallback; /*!< la lambda qui affiche une expression contenant un comparateur  */
 	EvalCallback _evalCallback; /*!< la lambda qui évalue une expression contenant un comparateur  */
 	DeleteCallback _deleteCallback; /* la lambda qui supprime une expression contenant un comparateur  */

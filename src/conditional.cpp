@@ -6,7 +6,6 @@
 #include "comparator.hpp"
 
 
-
 Conditional::Conditional(Expression * comparator, Expression * expression, Expression * otherExpression): _comparator(comparator), _expression(expression), _otherExpression(otherExpression)
 {}
 

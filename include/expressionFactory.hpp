@@ -11,6 +11,7 @@
 #include "expression.hpp"
 #include "variable.hpp" 
 #include "affectation.hpp"
+#include "comparatorFactory.hpp"
 
 
 /*! 
@@ -151,7 +152,7 @@ namespace ExpressionFactory
      *
      * Fonction qui crée une nouvelle comparaison inférieur ou égal
      */
-	Expression * lessOrEqual(Expression *, Expression *);
+	ComparatorFactory * lessOrEqual(Expression *, Expression *);
 
 	/*!
 	 * \fn Expression * greaterOrEqual(Expression * leftExpression, Expression * rightExpression)
@@ -162,7 +163,7 @@ namespace ExpressionFactory
      *
      * Fonction qui crée une nouvelle comparaison supérieur ou égal
      */
-	Expression * greaterOrEqual(Expression *, Expression *);
+	ComparatorFactory * greaterOrEqual(Expression *, Expression *);
 
 	/*!
 	 * \fn Expression * conditional(Expression * comparator, Expression * expression, Expression * otherExpression)

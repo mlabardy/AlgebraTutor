@@ -3,7 +3,7 @@
 #include "comparator.hpp"
 #include "expression.hpp"
 #include "operator.hpp"
-#include "operatorFactory.hpp"
+#include "comparatorFactory.hpp"
 
 using namespace Operator;
 
@@ -37,7 +37,7 @@ void Comparator::free(Expression * leftExpression, Expression * rightExpression)
 
 Comparator * Comparator::lessOrEqual(Expression * leftExpression, Expression * rightExpression)
 {
-	return new OperatorFactory (
+	return new ComparatorFactory (
 		[=] ()
 		{
 			return Comparator::display(LOE, leftExpression, rightExpression);
@@ -55,7 +55,7 @@ Comparator * Comparator::lessOrEqual(Expression * leftExpression, Expression * r
 
 Comparator * Comparator::greaterOrEqual(Expression * leftExpression, Expression * rightExpression)
 {
-	return new OperatorFactory (
+	return new ComparatorFactory (
 		[=] ()
 		{
 			return BinaryOperator::display(GOE, leftExpression, rightExpression);

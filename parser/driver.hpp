@@ -4,11 +4,14 @@
 #include <string>
 #include <cstdint>
 #include <functional>
+#include <tuple>
 #include <map>
 
 #include "scanner.hpp"
 #include "parser.h"
+#include "../include/variable.hpp"
 #include "../include/expression.hpp"
+#include "../include/comparatorFactory.hpp"
 
 
 namespace Algebra
@@ -23,15 +26,18 @@ public:
 	void parse(const char *);
 
 	Expression * constant(double);
-	Expression * variable(double, const char *);
+	Variable * variable(double, const char *);
 	Expression * unop(Expression *, const char *);
 	Expression * binop(Expression *, Expression *, const char *);
+	Expression * ternary(Expression *, Expression *, Expression *);
+	ComparatorFactory * comp(Expression * x, Expression * y, const char * op);
 
 	void deleteAll();
 
 private:
 	std::map<std::string, std::function<Expression *(Expression *)>> unops;
 	std::map<std::string, std::function<Expression *(Expression *, Expression *)>> binops;
+	std::map<std::string, std::function<ComparatorFactory *(Expression *, Expression *)>> comps;
 };
 
 }

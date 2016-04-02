@@ -10,6 +10,7 @@
 
 #include "expression.hpp"
 #include "operator.hpp"
+#include "comparatorFactory.hpp"
 
 /*! 
  * \class BinaryOperator
@@ -68,7 +69,7 @@ public:
 	 * Renvoie une nouvelle instance de lessOrEqual, qui effectue la comparaison
 	 * des expressions en paramètre avec l'opératuer inférieur ou égal. 
 	 */
-	static Expression * lessOrEqual(Expression *, Expression *);
+	static ComparatorFactory * lessOrEqual(Expression *, Expression *);
 
 	/*! 
 	 * \brief La comparaison des expressions avec supérieur ou égal
@@ -78,7 +79,7 @@ public:
 	 * Renvoie une nouvelle instance de lessOrEqual, qui effectue la comparaison
 	 * des expressions en paramètre avec l'opératuer supérieur ou égal. 
 	 */
-	static Expression * greaterOrEqual(Expression *, Expression *);
+	static ComparatorFactory * greaterOrEqual(Expression *, Expression *);
 
 private:
 	/*! 

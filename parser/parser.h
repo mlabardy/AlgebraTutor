@@ -144,7 +144,7 @@ namespace Algebra {
     /// Symbol semantic values.
     union semantic_type
     {
-    #line 49 "parser/parser.yy" // lalr1.cc:392
+    #line 51 "parser/parser.yy" // lalr1.cc:392
 
 	char * stringValue;
 	double doubleValue;
@@ -178,15 +178,18 @@ namespace Algebra {
         EQUAL = 262,
         COMMA = 263,
         DEL = 264,
-        LBRACKET = 265,
-        RBRACKET = 266,
-        COMP = 267,
-        ADD = 268,
-        SUB = 269,
-        BINOPMQ = 270,
-        MINUS = 271,
-        PLUS = 272,
-        EXP = 273
+        IM = 265,
+        OR = 266,
+        EM = 267,
+        LBRACKET = 268,
+        RBRACKET = 269,
+        COMP = 270,
+        ADD = 271,
+        SUB = 272,
+        BINOPMQ = 273,
+        MINUS = 274,
+        PLUS = 275,
+        EXP = 276
       };
     };
 
@@ -491,12 +494,12 @@ namespace Algebra {
     enum
     {
       yyeof_ = 0,
-      yylast_ = 67,     ///< Last index in yytable_.
-      yynnts_ = 7,  ///< Number of nonterminal symbols.
-      yyfinal_ = 20, ///< Termination state number.
+      yylast_ = 94,     ///< Last index in yytable_.
+      yynnts_ = 9,  ///< Number of nonterminal symbols.
+      yyfinal_ = 26, ///< Termination state number.
       yyterror_ = 1,
       yyerrcode_ = 256,
-      yyntokens_ = 19  ///< Number of tokens.
+      yyntokens_ = 24  ///< Number of tokens.
     };
 
 
@@ -508,7 +511,7 @@ namespace Algebra {
 
 #line 5 "parser/parser.yy" // lalr1.cc:392
 } // Algebra
-#line 512 "./parser/parser.h" // lalr1.cc:392
+#line 515 "./parser/parser.h" // lalr1.cc:392
 
 
 

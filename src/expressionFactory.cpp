@@ -6,6 +6,7 @@
 #include "unaryOperator.hpp"
 #include "binaryOperator.hpp"
 #include "conditional.hpp"
+#include "comparatorFactory.hpp"
 
 
 namespace ExpressionFactory 
@@ -65,12 +66,12 @@ namespace ExpressionFactory
 		return BinaryOperator::quotient(leftExpression, rightExpression);
 	}
 
-	Expression * lessOrEqual(Expression * leftExpression, Expression * rightExpression)
+	ComparatorFactory * lessOrEqual(Expression * leftExpression, Expression * rightExpression)
 	{
 		return BinaryOperator::lessOrEqual(leftExpression, rightExpression);
 	}
 
-	Expression * greaterOrEqual(Expression * leftExpression, Expression * rightExpression)
+	ComparatorFactory * greaterOrEqual(Expression * leftExpression, Expression * rightExpression)
 	{
 		return BinaryOperator::greaterOrEqual(leftExpression, rightExpression);
 	}

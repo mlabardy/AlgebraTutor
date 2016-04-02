@@ -37,6 +37,11 @@ std::string Variable::display() const
 	return _id;
 }
 
+void Variable::set(Expression * value)
+{
+	Variable::_variables[_id] = value->eval();
+}
+
 void Variable::set(double value)
 {
 	Variable::_variables[_id] = value;

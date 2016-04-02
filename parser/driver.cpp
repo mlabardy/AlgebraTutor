@@ -5,12 +5,15 @@
 #include <functional>
 #include <string>
 #include <iostream>
+#include <tuple>
 
 #include "driver.hpp"
 #include "scanner.hpp"
 #include "parser.h"
 #include "expressionFactory.hpp"
+#include "comparatorFactory.hpp"
 #include "expression.hpp"
+#include "variable.hpp"
 
 
 namespace Algebra {
@@ -25,8 +28,9 @@ Driver::Driver()
 	binops["*"] = [](Expression * lexpr, Expression * rexpr) { return ExpressionFactory::product(lexpr, rexpr); };
 	binops["/"] = [](Expression * lexpr, Expression * rexpr) { return ExpressionFactory::quotient(lexpr, rexpr); };
 	binops["^"] = [](Expression * lexpr, Expression * rexpr) { return ExpressionFactory::exponantial(lexpr, rexpr); };
-	binops["<="] = [](Expression * lexpr, Expression * rexpr) { return ExpressionFactory::lessOrEqual(lexpr, rexpr); };
-	binops[">="] = [](Expression * lexpr, Expression * rexpr) { return ExpressionFactory::greaterOrEqual(lexpr, rexpr); };
+
+	comps["<="] = [](Expression * lexpr, Expression * rexpr) { return ExpressionFactory::lessOrEqual(lexpr, rexpr); };
+	comps[">="] = [](Expression * lexpr, Expression * rexpr) { return ExpressionFactory::greaterOrEqual(lexpr, rexpr); };
 }
 
 Driver::~Driver() { }
@@ -61,9 +65,9 @@ Expression * Driver::constant(double x)
 	return expr;
 }
 
-Expression * Driver::variable(double x, const char * id)
+Variable * Driver::variable(double x, const char * id)
 {
-	Expression * expr = ExpressionFactory::variable(std::string(id), x);
+	Variable * expr = ExpressionFactory::variable(std::string(id), x);
 	//std::cout << *expr << " = " << expr->eval() << std::endl;
 	return expr;
 }
@@ -80,6 +84,19 @@ Expression * Driver::binop(Expression * x, Expression * y, const char * op)
 	Expression * expr = binops.find(std::string(op))->second(x, y);
 	std::cout << *expr << " = " << expr->eval() << std::endl;
 	//Expression::deleteAll();
+	return expr;
+}
+
+ComparatorFactory * Driver::comp(Expression * x, Expression * y, const char * op)
+{
+	ComparatorFactory * expr = comps.find(std::string(op))->second(x, y);
+	return expr;
+}
+
+Expression * Driver::ternary(Expression * cond, Expression * x, Expression * y)
+{
+	Expression * expr = ExpressionFactory::ternary(cond, x, y);
+	std::cout << *expr << " = " << expr->eval() << std::endl;
 	return expr;
 }
 

@@ -83,6 +83,18 @@ int linenum = 0;
 	return token::EQUAL; 
 }
 
+"?" {
+	return token::IM;
+}
+
+"!" {
+	return token::EM;
+}
+
+":" {
+	return token::OR;
+}
+
 "cos"|"sin"|"tan" { 
 	lval->stringValue = strdup(yytext); 
 	return token::UNOP;
