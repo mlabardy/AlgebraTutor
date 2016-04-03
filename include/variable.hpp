@@ -7,7 +7,7 @@
  * \version 1.0
  */
 #include <iostream>
-
+#include <map>
 #include "expression.hpp"
 
 
@@ -65,9 +65,18 @@ public:
      * \param value : la nouvelle valeur à assigner
      *
      * Modifie la valeur de la variable avec la nouvelle valeur 
-     * spécifié en paramètre
+     * spécifiée en paramètre
      */
 	void set(double value);
+
+	/*!
+     * \brief Modifie la valeur d'une variable
+     * \param value : la nouvelle expression à assigner
+     *
+     * Modifie la valeur de la variable avec la nouvelle expression
+     * spécifiée en paramètre
+     */
+	void set(Expression * value);
 
 	/*!
      * \brief Supprime les variables
@@ -88,7 +97,7 @@ public:
 
 private:
 	const std::string _id; /*!< L'identifiant de la variable */
-
+	static std::map<std::string, double> _variables; /*!< L'ensemble des variables du programme */
 };
 
 #endif

@@ -17,8 +17,10 @@ using namespace ExpressionFactory;
 void unaryTests();
 void binaryTests();
 void variableTests();
+void conditionalTests();
+void affectationTests();
 
-int main(int argc, char * argv [])
+int main(int argc, char **argv)
 {
 	Debugger & d = Debugger::instance();
 
@@ -54,19 +56,20 @@ int main(int argc, char * argv [])
 
     } while (option != -1);
 
-	
-	
-	unaryTests();
+
+	// unaryTests();
 	// binaryTests();
 	// variableTests();
-
-
+    //conditionalTests();
+    affectationTests();
 	return 0;
 }
 
+
 void unaryTests()
 {
-	Expression * c = sum(constant(M_PI/3), constant(2.0));
+	// Expression * c = sum(constant(M_PI/3), constant(2.0));
+	Expression * c = constant(2);
 	cerr << *c << " = " << c->eval() << endl;
 	Expression::deleteAll();
 }
@@ -105,3 +108,80 @@ void variableTests()
 	// cout << *y << " = " << y->eval() << endl;
 }
 
+void conditionalTests()
+{
+	Expression * test = ternary(greaterOrEqual(variable("x"), constant(0.0)),
+										cosinus(variable("x")),
+										cosinus(product(constant(2.0), variable("x"))));
+	Expression * test1 = ternary(greaterThan(variable("x"), constant(0.0)),
+										cosinus(variable("x")),
+										cosinus(product(constant(2.0), variable("x"))));
+	Expression * test2 = ternary(lessThan(variable("x"), constant(0.0)),
+										cosinus(variable("x")),
+										cosinus(product(constant(2.0), variable("x"))));
+	Expression * test3 = ternary(equal(variable("x"), constant(0.0)),
+										cosinus(variable("x")),
+										cosinus(product(constant(2.0), variable("x"))));
+	Expression * test4 = ternary(different(variable("x"), constant(0.0)),
+										cosinus(variable("x")),
+										cosinus(product(constant(2.0), variable("x"))));
+
+	Variable * x = variable("x", M_PI/3.0);
+
+	cerr << *x << " = " << x->eval() << endl;
+	cerr << *test << " = " << test->eval() << endl;
+
+	cerr << *test1 << " = " << test1->eval() << endl;
+
+	cerr << *test2 << " = " << test2->eval() << endl;
+
+	cerr << *test3 << " = " << test3->eval() << endl;
+
+	cerr << *test4 << " = " << test4->eval() << endl;
+
+	x->set( -M_PI/3.0);
+
+	cerr << *x << " = " << x->eval() << endl;
+	cerr << *test << " = " << test->eval() << endl;
+
+	cerr << *test1 << " = " << test1->eval() << endl;
+
+	cerr << *test2 << " = " << test2->eval() << endl;
+
+	cerr << *test3 << " = " << test3->eval() << endl;
+
+	cerr << *test4 << " = " << test4->eval() << endl;
+
+	Variable::deleteAll();
+	Expression::deleteAll();
+}
+
+void affectationTests()
+{
+	Variable * x = variable("x", 10);
+	Variable * y = variable("y", 5);
+
+	cerr << *x << " = " << x->eval() << endl;
+	cerr << *y << " = " << y->eval() << endl;
+
+	Affectation * test = sumAffectation(x, y);
+	cerr << *test << " = " << test->eval() << endl;
+	x->set(10);
+	y->set(5);
+
+	Affectation * test1 = differenceAffectation(x, y);
+	cerr << *test1 << " = " << test1->eval() << endl;
+	x->set(10);
+	y->set(5);
+
+	Affectation * test2 = productAffectation(x, y);
+	cerr << *test2 << " = " << test2->eval() << endl;
+	x->set(10);
+	y->set(5);
+
+	Affectation * test3 = quotientAffectation(x, y);
+	cerr << *test3 << " = " << test3->eval() << endl;
+
+	Variable::deleteAll();
+	Expression::deleteAll();
+}

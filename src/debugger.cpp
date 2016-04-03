@@ -33,6 +33,6 @@ void Debugger::debug(const std::string & message)
 {
 	if (_activate == true)
 	{
-		std::cerr << message << std::endl;	
+		std::cerr << message << std::endl;
 	}
 }

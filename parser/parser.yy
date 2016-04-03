@@ -4,7 +4,6 @@
 %defines 
 %define api.namespace {Algebra}
 %define parser_class_name {Parser}
-%expect 2 // on supprime les warnings concernants le signe d'un nombre
 
 %code requires{
    namespace Algebra {
@@ -37,7 +36,10 @@
 	#include <math.h>
    
 	#include "driver.hpp"
+	#include "../include/variable.hpp"
+	#include "../include/affectation.hpp"
 	#include "../include/expression.hpp"
+	#include "../include/comparatorFactory.hpp"
 
 	#undef yylex
 	#define yylex scanner.yylex
@@ -58,14 +60,17 @@
 %token<doubleValue> DOUBLE
 %token<stringValue> IDENTIFIER
 %token<stringValue> UNOP
-%token<stringValue> EQUAL
+%token<stringValue> OA
 %token<stringValue> COMMA
 %token<stringValue> DEL
+%token<stringValue> IM
+%token<stringValue> OR
+%token<stringValue> EM
 
 %token<stringValue> LBRACKET
 %token<stringValue> RBRACKET
 
-%type<exprValue> expression
+%type<exprValue> expression conditional ternary
 %type<doubleValue> number
 
 %left<stringValue> COMP
@@ -74,6 +79,7 @@
 %left MINUS PLUS
 
 %right<stringValue> EXP
+%precedence "id"
 
 %%
 
@@ -84,41 +90,60 @@ prog
 
 line
 	: EOL			{ ; }
-	| expression 	{ ; }
-	| affectations 	{ ; }
-	| DEL 			{ free($1); }
-	| IDENTIFIER 	{ printf("new exercise\n"); free($1); }
+	| affectation 	{ ; }
 	;
-
+	
 number
 	: SUB DOUBLE %prec MINUS 	{ $$ = -$2; free($1); }
 	| ADD DOUBLE %prec PLUS 	{ $$ = $2; free($1); }
 	| DOUBLE 					{ $$ = $1; }
-	;
+	;	
 	
-affectations
-	: affectation COMMA affectations  	{ ; }
-	| affectation						{ ; }
+affectation
+	: IDENTIFIER OA expression 	{ 
+		driver.affectation($3, $1, $2);
+		free($2);
+		free($1);
+	}
+	| IDENTIFIER OA ternary 	{ 
+		driver.affectation($3, $1, $2);
+		free($2);
+		free($1);
+	}
+	;	
+	
+ternary
+	: LBRACKET conditional RBRACKET IM expression OR expression { 
+		$$ = driver.ternary($2, $5, $7);
+	}
 	;
 
-affectation
-	: IDENTIFIER EQUAL number { driver.variable($3, $1); free($1); }
+conditional
+	: expression COMP expression		{ $$ = driver.comp($1, $3, $2); free($2); }
+	| EM LBRACKET conditional RBRACKET 	{
+		ComparatorFactory * tmp = (ComparatorFactory *)$3;
+		tmp->isNegation();
+		$$ = tmp; 
+	} 
+	| LBRACKET conditional RBRACKET 	{ $$ = $2; }
+	| "0" 								{ $$ = driver.constant(0); }
+	| "1" 								{ $$ = driver.constant(1); }
 	;
 
 expression
 	: expression ADD expression			{ $$ = driver.binop($1, $3, $2); free($2); }
 	| expression SUB expression			{ $$ = driver.binop($1, $3, $2); free($2); }
-	| expression COMP expression		{ $$ = driver.binop($1, $3, $2); free($2); }
 	| expression BINOPMQ expression		{ $$ = driver.binop($1, $3, $2); free($2); }
 	| expression EXP expression			{ $$ = driver.binop($1, $3, $2); free($2); }
 	| LBRACKET expression RBRACKET		{ $$ = $2; }
 	| UNOP LBRACKET expression RBRACKET	{ $$ = driver.unop($3, $1); free($1); }
 	| number 							{ $$ = driver.constant($1); }
+	| IDENTIFIER 						{ $$ = driver.variable($1); free($1); }
 	;
 
 %%
 
 void Algebra::Parser::error(const location_type & l, const std::string & err_message)
 {
-	std::cerr << "Error: " << err_message << " at " << l << "\n";
+	std::cerr << "Error: " << err_message << " at line " << l << "\n";
 }

@@ -10,7 +10,7 @@
 #include <stdio.h>
 #include <iostream>
 #include <string>
-// #include <sstream>
+#include <sstream>
 
 #include "affectation.hpp"
 #include "expression.hpp"
@@ -20,7 +20,7 @@
 
 Affectation::Affectation(Variable * variable, Expression * expression): _variable(variable), _expression(expression)
 {
-	Debugger::instance().debug("Affectation");
+	//Debugger::instance().debug("Affectation");
 	_variable->set(_expression->eval());
 }
 
@@ -48,14 +48,14 @@ double Affectation::eval()
 
 std::string Affectation::display() const 
 {
-	// std::ostringstream stringOfValue;
-	// stringOfValue << '(' <<  *_variable << " <- " << *_expression << ')';
-	// return stringOfValue.str();
+	std::ostringstream stringOfValue;
+	stringOfValue << '(' <<  *_variable << " <- " << *_expression << ')';
+	return stringOfValue.str();
 
-	char buffer[100];
+	/*char buffer[100];
 	snprintf(buffer, 100, "(%s <- %s)", _variable->display().c_str(), _expression->display().c_str());
 	std::string str(buffer);
-	return str;
+	return str;*/
 }
 
 std::ostream & operator << (std::ostream & os, const Affectation & affectation)
