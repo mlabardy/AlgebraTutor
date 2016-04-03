@@ -76,8 +76,48 @@ namespace ExpressionFactory
 		return BinaryOperator::greaterOrEqual(leftExpression, rightExpression);
 	}
 
+	ComparatorFactory * greaterThan(Expression * leftExpression, Expression * rightExpression)
+	{
+		return BinaryOperator::greater(leftExpression, rightExpression);
+	}
+
+	ComparatorFactory * lessThan(Expression * leftExpression, Expression * rightExpression)
+	{
+		return BinaryOperator::less(leftExpression, rightExpression);
+	}
+
+	ComparatorFactory * equal(Expression * leftExpression, Expression * rightExpression)
+	{
+		return BinaryOperator::equal(leftExpression, rightExpression);
+	}
+
+	ComparatorFactory * different(Expression * leftExpression, Expression * rightExpression)
+	{
+		return BinaryOperator::different(leftExpression, rightExpression);
+	}
+
 	Expression * ternary(Expression * comparator, Expression * expression, Expression * otherExpression)
 	{
 		return new Conditional(comparator, expression, otherExpression);
+	}
+
+	Affectation * sumAffectation(Variable * variable, Expression * expression)
+	{
+		return BinaryOperator::sumAffectation(variable, expression);
+	}
+
+	Affectation * differenceAffectation(Variable * variable, Expression * expression)
+	{
+		return BinaryOperator::differenceAffectation(variable, expression);
+	}
+
+	Affectation * productAffectation(Variable * variable, Expression * expression)
+	{
+		return BinaryOperator::productAffectation(variable, expression);
+	}
+
+	Affectation * quotientAffectation(Variable * variable, Expression * expression)
+	{
+		return BinaryOperator::quotientAffectation(variable, expression);
 	}
 }

@@ -30,14 +30,14 @@ int linenum = 0;
 %option yyclass="Algebra::Scanner"
 %option noyywrap
 %option c++
+%option yylineno 
 
 %%
 
 [ \t]+ 		;
 
-[\n]+ {
-	++linenum;
-	location->lines(linenum);
+[\n] {
+	location->lines();
 	return token::EOL; 
 }
 
@@ -59,6 +59,11 @@ int linenum = 0;
 	return token::COMP; 
 }
 
+"+="|"-="|"*="|"/="|"=" { 
+	lval->stringValue = strdup(yytext); 
+	return token::OA; 
+}
+
 "+" { 
 	lval->stringValue = strdup(yytext); 
 	return token::ADD; 
@@ -77,10 +82,6 @@ int linenum = 0;
 "*"|"/" { 
 	lval->stringValue = strdup(yytext); 
 	return token::BINOPMQ; 
-}
-
-"=" { 
-	return token::EQUAL; 
 }
 
 "?" {

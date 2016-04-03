@@ -15,10 +15,11 @@ using namespace Algebra;
 
 int main(int argc, char *argv[])
 {
-
 	Debugger & d = Debugger::instance();
 
-	Driver driver;  
+	Driver driver;
+
+	string filename;
 
 	int option;
     const char* const short_options = "dh";
@@ -49,29 +50,15 @@ int main(int argc, char *argv[])
     			d.debug(".-------------------------------------------------------.");
     		return 0;
     	}
-    	driver.parse("exercices/exercices.txt");
-	    /*if (optind < argc)
+    	//driver.parse("exercices/test.txt");
+	    if (optind < argc)
 	    {
-
-	    	//driver.parse(argv[optind]);
-	    }*/
-
+	    	filename = string(argv[optind++]);
+	    }
     } while (option != -1);
 
 
+    driver.parse(filename.c_str());
 
-
-	// std::cout << "Les tests se font dans le dossier ./tests/" << std::endl;
-	
-	// auto callbacks = make_tuple(
-	//     [] (int x) { std::cout << x << std::endl; },
-	//     [&] () { std::cout << y << std::endl; }, // y is captured by reference
-	//     [=] (int x) { std::cout << x + y << std::endl; } // y is captured by value
-	//     // other lambdas here, if you want...
- 	//    );
-
-    // callbacks(2);
-
-
-	return EXIT_SUCCESS;
+    return EXIT_SUCCESS;
 }

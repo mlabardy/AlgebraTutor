@@ -40,7 +40,7 @@
 #ifndef YY_YY_PARSER_PARSER_H_INCLUDED
 # define YY_YY_PARSER_PARSER_H_INCLUDED
 // //                    "%code requires" blocks.
-#line 9 "parser/parser.yy" // lalr1.cc:392
+#line 8 "parser/parser.yy" // lalr1.cc:392
 
    namespace Algebra {
       class Driver;
@@ -175,7 +175,7 @@ namespace Algebra {
         DOUBLE = 259,
         IDENTIFIER = 260,
         UNOP = 261,
-        EQUAL = 262,
+        OA = 262,
         COMMA = 263,
         DEL = 264,
         IM = 265,
@@ -494,12 +494,12 @@ namespace Algebra {
     enum
     {
       yyeof_ = 0,
-      yylast_ = 94,     ///< Last index in yytable_.
-      yynnts_ = 9,  ///< Number of nonterminal symbols.
-      yyfinal_ = 26, ///< Termination state number.
+      yylast_ = 90,     ///< Last index in yytable_.
+      yynnts_ = 8,  ///< Number of nonterminal symbols.
+      yyfinal_ = 7, ///< Termination state number.
       yyterror_ = 1,
       yyerrcode_ = 256,
-      yyntokens_ = 24  ///< Number of tokens.
+      yyntokens_ = 25  ///< Number of tokens.
     };
 
 

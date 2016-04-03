@@ -4,7 +4,6 @@
 #include <string>
 #include <cstdint>
 #include <functional>
-#include <tuple>
 #include <map>
 
 #include "scanner.hpp"
@@ -12,6 +11,7 @@
 #include "../include/variable.hpp"
 #include "../include/expression.hpp"
 #include "../include/comparatorFactory.hpp"
+#include "../include/affectation.hpp"
 
 
 namespace Algebra
@@ -27,6 +27,8 @@ public:
 
 	Expression * constant(double);
 	Variable * variable(double, const char *);
+	Variable * variable(const char *);
+	Affectation * affectation(Expression *, const char *, const char *);
 	Expression * unop(Expression *, const char *);
 	Expression * binop(Expression *, Expression *, const char *);
 	Expression * ternary(Expression *, Expression *, Expression *);
@@ -35,9 +37,11 @@ public:
 	void deleteAll();
 
 private:
+	std::string str;
 	std::map<std::string, std::function<Expression *(Expression *)>> unops;
 	std::map<std::string, std::function<Expression *(Expression *, Expression *)>> binops;
 	std::map<std::string, std::function<ComparatorFactory *(Expression *, Expression *)>> comps;
+	std::map<std::string, std::function<Affectation *(Variable *, Expression *)>> affect;
 };
 
 }

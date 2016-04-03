@@ -4,7 +4,6 @@
 %defines 
 %define api.namespace {Algebra}
 %define parser_class_name {Parser}
-%expect 8 // on supprime les warnings concernants le signe d'un nombre
 
 %code requires{
    namespace Algebra {
@@ -38,6 +37,7 @@
    
 	#include "driver.hpp"
 	#include "../include/variable.hpp"
+	#include "../include/affectation.hpp"
 	#include "../include/expression.hpp"
 	#include "../include/comparatorFactory.hpp"
 
@@ -60,7 +60,7 @@
 %token<doubleValue> DOUBLE
 %token<stringValue> IDENTIFIER
 %token<stringValue> UNOP
-%token<stringValue> EQUAL
+%token<stringValue> OA
 %token<stringValue> COMMA
 %token<stringValue> DEL
 %token<stringValue> IM
@@ -70,9 +70,7 @@
 %token<stringValue> LBRACKET
 %token<stringValue> RBRACKET
 
-%type<exprValue> expression
-%type<exprValue> conditional
-%type<exprValue> ternary
+%type<exprValue> expression conditional ternary
 %type<doubleValue> number
 
 %left<stringValue> COMP
@@ -80,8 +78,8 @@
 %left<stringValue> BINOPMQ
 %left MINUS PLUS
 
-
 %right<stringValue> EXP
+%precedence "id"
 
 %%
 
@@ -92,31 +90,34 @@ prog
 
 line
 	: EOL			{ ; }
-	| expression 	{ ; }
-	| affectations 	{ ; }
-	| DEL 			{ free($1); }
-	| IDENTIFIER 	{ printf("new exercise\n"); free($1); }
+	| affectation 	{ ; }
 	;
-
+	
 number
 	: SUB DOUBLE %prec MINUS 	{ $$ = -$2; free($1); }
 	| ADD DOUBLE %prec PLUS 	{ $$ = $2; free($1); }
 	| DOUBLE 					{ $$ = $1; }
-	;
+	;	
 	
-affectations
-	: affectation COMMA affectations  	{ ; }
-	| affectation						{ ; }
-	;
-
 affectation
-	: IDENTIFIER EQUAL expression 	{ 
-		Variable * val = driver.variable(0, $1); 
-		val->set($3);
-		free($1); 
+	: IDENTIFIER OA expression 	{ 
+		driver.affectation($3, $1, $2);
+		free($2);
+		free($1);
+	}
+	| IDENTIFIER OA ternary 	{ 
+		driver.affectation($3, $1, $2);
+		free($2);
+		free($1);
+	}
+	;	
+	
+ternary
+	: LBRACKET conditional RBRACKET IM expression OR expression { 
+		$$ = driver.ternary($2, $5, $7);
 	}
 	;
-	
+
 conditional
 	: expression COMP expression		{ $$ = driver.comp($1, $3, $2); free($2); }
 	| EM LBRACKET conditional RBRACKET 	{
@@ -129,12 +130,6 @@ conditional
 	| "1" 								{ $$ = driver.constant(1); }
 	;
 
-ternary
-	: LBRACKET conditional RBRACKET IM expression OR expression { 
-		$$ = driver.ternary($2, $5, $7);
-	}
-	;
-
 expression
 	: expression ADD expression			{ $$ = driver.binop($1, $3, $2); free($2); }
 	| expression SUB expression			{ $$ = driver.binop($1, $3, $2); free($2); }
@@ -143,12 +138,12 @@ expression
 	| LBRACKET expression RBRACKET		{ $$ = $2; }
 	| UNOP LBRACKET expression RBRACKET	{ $$ = driver.unop($3, $1); free($1); }
 	| number 							{ $$ = driver.constant($1); }
-	| ternary 							{ ; }
+	| IDENTIFIER 						{ $$ = driver.variable($1); free($1); }
 	;
 
 %%
 
 void Algebra::Parser::error(const location_type & l, const std::string & err_message)
 {
-	std::cerr << "Error: " << err_message << " at " << l << "\n";
+	std::cerr << "Error: " << err_message << " at line " << l << "\n";
 }

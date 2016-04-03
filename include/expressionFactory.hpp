@@ -145,25 +145,69 @@ namespace ExpressionFactory
 
 	/*!
 	 * \fn Expression * lessOrEqual(Expression * leftExpression, Expression * rightExpression)
-     * \brief Crée une comparaison inférieur ou égal
+     * \brief Crée un comparateur inférieur ou égal
      * \param leftExpression : l'opérande de gauche
      * \param rightExpression : l'operande de droite
      * \return Une expression
      *
-     * Fonction qui crée une nouvelle comparaison inférieur ou égal
+     * Fonction qui crée un nouveau comparateur inférieur ou égal
      */
 	ComparatorFactory * lessOrEqual(Expression *, Expression *);
 
 	/*!
 	 * \fn Expression * greaterOrEqual(Expression * leftExpression, Expression * rightExpression)
-     * \brief Crée une comparaison supérieur ou égal
+     * \brief Crée un comparateur supérieur ou égal
      * \param leftExpression : l'opérande de gauche
      * \param rightExpression : l'operande de droite
      * \return Une expression
      *
-     * Fonction qui crée une nouvelle comparaison supérieur ou égal
+     * Fonction qui crée un nouveau comparateur supérieur ou égal
      */
 	ComparatorFactory * greaterOrEqual(Expression *, Expression *);
+
+	/*!
+	 * \fn Expression * greater(Expression * leftExpression, Expression * rightExpression)
+     * \brief Crée un comparateur supérieur
+     * \param leftExpression : l'opérande de gauche
+     * \param rightExpression : l'operande de droite
+     * \return Une expression
+     *
+     * Fonction qui crée un nouveau comparateur supérieur
+     */
+	ComparatorFactory * greaterThan(Expression *, Expression *);
+
+	/*!
+	 * \fn Expression * less(Expression * leftExpression, Expression * rightExpression)
+     * \brief Crée un comparateur inférieur
+     * \param leftExpression : l'opérande de gauche
+     * \param rightExpression : l'operande de droite
+     * \return Une expression
+     *
+     * Fonction qui crée un nouveau comparateur inférieur
+     */
+	ComparatorFactory * lessThan(Expression *, Expression *);
+
+	/*!
+	 * \fn Expression * equal(Expression * leftExpression, Expression * rightExpression)
+     * \brief Crée le comparateur égal
+     * \param leftExpression : l'opérande de gauche
+     * \param rightExpression : l'operande de droite
+     * \return Une expression
+     *
+     * Fonction qui crée un nouveau comparateur égal
+     */
+	ComparatorFactory * equal(Expression *, Expression *);
+
+	/*!
+	 * \fn Expression * different(Expression * leftExpression, Expression * rightExpression)
+     * \brief Crée un comparateur 'différent de'
+     * \param leftExpression : l'opérande de gauche
+     * \param rightExpression : l'operande de droite
+     * \return Une expression
+     *
+     * Fonction qui crée un nouveau comparateur 'différent de'
+     */
+	ComparatorFactory * different(Expression *, Expression *);
 
 	/*!
 	 * \fn Expression * conditional(Expression * comparator, Expression * expression, Expression * otherExpression)
@@ -176,6 +220,52 @@ namespace ExpressionFactory
      * Fonction qui crée une nouvelle ternaire
      */
 	Expression * ternary(Expression *, Expression *, Expression *);
+
+	/*!
+	 * \fn Expression * sumAffectation(Variable * variable, Expression * expression)
+     * \brief Crée une somme
+     * \param variable : la variable à modifier
+     * \param expression : l'expression à affecter
+     * \return Une expression
+     *
+     * Fonction qui crée une nouvelle somme
+     */
+	Affectation * sumAffectation(Variable *, Expression *);
+
+	/*!
+	 * \fn Expression * differenceAffectation(Variable * variable, Expression * expression)
+     * \brief Crée une différence
+     * \param variable : la variable à modifier
+     * \param expression : l'expression à affecter
+     * \return Une expression
+     *
+     * Fonction qui crée une nouvelle différence
+     */
+	Affectation * differenceAffectation(Variable *, Expression *);
+
+	/*!
+	 * \fn Expression * productAffectation(Variable * variable, Expression * expression)
+     * \brief Crée un produit
+     * \param variable : la variable à modifier
+     * \param expression : l'expression à affecter
+     * \return Une expression
+     *
+     * Fonction qui crée une nouveau produit
+     */
+	Affectation * productAffectation(Variable *, Expression *);
+
+	/*!
+	 * \fn Expression * quotientAffectation(Variable * variable, Expression * expression)
+     * \brief Crée un quotient
+     * \param variable : la variable à modifier
+     * \param expression : l'expression à affecter
+     * \return Une expression
+     *
+     * Fonction qui crée un nouveau quotient
+     */
+	Affectation * quotientAffectation(Variable *, Expression *);
+
+
 }
 
 #endif

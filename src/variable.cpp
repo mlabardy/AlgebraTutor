@@ -10,18 +10,18 @@ std::map<std::string, double> Variable::_variables;
 
 Variable::Variable(const std::string & id, double value = 0): _id(id)
 {
-	//if (Variable::_variables.find(_id) == Variable::_variables.end())
-	//{
+	if (Variable::_variables.find(_id) == Variable::_variables.end())
+	{
 		Variable::_variables[_id] = value;
-	//}
+	}
 }
 
 Variable::Variable(const std::string & id): _id(id)
 {
-	//if (Variable::_variables.find(_id) == Variable::_variables.end())
-	//{
+	if (Variable::_variables.find(_id) == Variable::_variables.end())
+	{
 		Variable::_variables[_id] = 0;
-	//}
+	}
 }
 
 Variable::~Variable()
