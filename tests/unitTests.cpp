@@ -6,6 +6,8 @@
 #include "../include/expression.hpp"
 #include "../include/variable.hpp"
 #include "../include/affectation.hpp"
+#include "../include/block.hpp"
+#include "../include/ifElse.hpp"
 #include "../include/debugger.hpp"
 
 #define M_PI 3.14
@@ -19,6 +21,8 @@ void binaryTests();
 void variableTests();
 void conditionalTests();
 void affectationTests();
+void blockTests();
+void ifElse();
 
 int main(int argc, char **argv)
 {
@@ -60,8 +64,10 @@ int main(int argc, char **argv)
 	// unaryTests();
 	// binaryTests();
 	// variableTests();
-    //conditionalTests();
-    affectationTests();
+    // conditionalTests();
+    // affectationTests();
+    // blockTests();
+    ifElse();
 	return 0;
 }
 
@@ -181,6 +187,50 @@ void affectationTests()
 
 	Affectation * test3 = quotientAffectation(x, y);
 	cerr << *test3 << " = " << test3->eval() << endl;
+
+	Variable::deleteAll();
+	Expression::deleteAll();
+}
+
+void blockTests()
+{
+	Expression * s = sum(constant(1.0), product(constant(2.0), sinus(constant(M_PI/6.0))));
+	Expression * m = product(constant(1.0), product(constant(2.0), cosinus(constant(M_PI/6.0))));
+	Expression * q = quotient(constant(1.0), product(constant(2.0), sinus(constant(M_PI/6.0))));
+
+	Block * b = block();
+	b->add(s);
+	b->add(m);
+	b->add(q);
+
+	cerr << *b << " = " << b->eval() << endl;
+	cerr << *q << " = " << q->eval() << endl;
+
+	Variable::deleteAll();
+	Expression::deleteAll();
+}
+
+void ifElse()
+{
+	variable("x", 3);
+	Expression * s = sum(constant(1.0), product(constant(2.0), sinus(constant(M_PI/6.0))));
+	Expression * m = product(constant(1.0), product(constant(2.0), cosinus(constant(M_PI/6.0))));
+	Expression * q = quotient(constant(1.0), product(constant(2.0), sinus(constant(M_PI/6.0))));
+
+	Expression * test = greaterOrEqual(variable("x"), constant(0.0));
+
+	Block * i = block();
+	i->add(s);
+	i->add(m);
+
+	Block * e = block();
+	e->add(q);
+
+	Expression * ite = ifThenElse(test, i, e);
+
+	cerr << *test << " = " << test->eval() << endl;
+
+	cerr << *ite << endl;
 
 	Variable::deleteAll();
 	Expression::deleteAll();
