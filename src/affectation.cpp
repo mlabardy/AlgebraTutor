@@ -25,7 +25,9 @@ Affectation::Affectation(Variable * variable, Expression * expression): _variabl
 }
 
 Affectation::Affectation(const Affectation & affectation): _variable(affectation._variable), _expression(affectation._expression)
-{}
+{
+	_variable->set(_expression->eval());
+}
 
 Affectation::~Affectation()
 {
@@ -51,11 +53,6 @@ std::string Affectation::display() const
 	std::ostringstream stringOfValue;
 	stringOfValue << '(' <<  *_variable << " <- " << *_expression << ')';
 	return stringOfValue.str();
-
-	/*char buffer[100];
-	snprintf(buffer, 100, "(%s <- %s)", _variable->display().c_str(), _expression->display().c_str());
-	std::string str(buffer);
-	return str;*/
 }
 
 std::ostream & operator << (std::ostream & os, const Affectation & affectation)

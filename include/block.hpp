@@ -9,6 +9,7 @@
 #include <list>
 
 #include "expression.hpp"
+#include "affectation.hpp"
 
 /*!
  * \class Bloc
@@ -27,6 +28,18 @@ public:
 	Block();
 
 	/*!
+	 * \bref Constructeur de copie
+	 */
+	Block(const Block &);
+
+	/*!
+     * \brief Constructeur
+     *
+     * Constructeur de la classe Block
+     */
+	Block(const std::list<Affectation *>);
+
+	/*!
      * \brief Destructeur
      *
      * Destructeur de la classe Block
@@ -42,11 +55,18 @@ public:
 	double eval();
 
 	/*!
+	 * \brief Execute les instructions du bloc
+	 *
+	 * Méthode qui exécute toutes les instructions du bloc
+	 */
+	void execute();
+
+	/*!
      * \brief Ajoute une expression au bloc
      *
      * Méthode qui rajoute une expression à la fin du bloc
      */
-	void add(Expression *);
+	void add(Affectation *);
 
 	/*!
      * \brief Affiche un bloc
@@ -67,12 +87,8 @@ public:
 	friend std::ostream & operator << (std::ostream & os, const Block & block);
 
 private:
-	std::list<Expression *> _expressions; /*!< Une liste d'expressions */
+	std::list<Affectation *> _expressions; /*!< Une liste d'expressions */
 
-	/*!
-	 * \bref Constructeur de copie
-	 */
-	Block(const Block &);
 
 	/*!
 	 * \bref Surcharge de l'opérateur =

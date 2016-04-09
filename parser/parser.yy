@@ -11,6 +11,8 @@
       class Scanner;
    }
    class Expression;
+   class Block;
+   class Affectation;
 
 // The following definitions is missing when %locations isn't used
 # ifndef YY_NULLPTR
@@ -34,6 +36,7 @@
 	#include <cstdlib>
 	#include <fstream>
 	#include <math.h>
+	#include <list>
    
 	#include "driver.hpp"
 	#include "../include/variable.hpp"
@@ -46,6 +49,7 @@
 	#undef yylex
 	#define yylex scanner.yylex
 	
+	Block * block = nullptr;
 	
 }
 
@@ -56,6 +60,8 @@
 	char * stringValue;
 	double doubleValue;
 	Expression * exprValue;
+	Affectation * affValue;
+	Block * blockValue;
 }
 
 %token END     0   	"end of file"
@@ -80,6 +86,7 @@
 
 %type<exprValue> expression conditional ternary affectation
 %type<doubleValue> number
+%type<blockValue> braces block
 
 %left<stringValue> COMP
 %left<stringValue> ADD SUB
@@ -91,20 +98,14 @@
 %%
 
 prog
-	: prog line					{ ; }
+	: prog EOL line				{ ; }
 	| line 						{ ; }
-	| ifElse 					{ ; }
    	;
 
 line
 	: EOL			{ ; }
-	| affectation 	{ 
-		driver.block();
-		Block * b = driver.currentBlock();
-		if (b != nullptr) {
-			b->add($1);
-		} 
-	}
+	| affectation 	{ ; }
+	| ifElse 		{ ; }
 	;
 	
 number
@@ -144,13 +145,35 @@ conditional
 	| "1" 								{ $$ = driver.constant(1); }
 	;
 	
-ifElse
-	: IF conditional THEN LBRACE block RBRACE ELSE LBRACE block RBRACE { driver.ifElse($2, driver.previousBlock(), driver.currentBlock()); }
+block
+	:  block EOL affectation { 
+		if (block == nullptr)
+		{
+			block = new Block();
+		}
+		block->add((Affectation*)$3); 
+		$$ = new Block(*block);
+	}
+	| affectation {
+		if (block == nullptr)
+		{
+			block = new Block();
+		}
+		block->add((Affectation*)$1);
+		$$ = new Block(*block);
+	}	
 	;
 	
-block
-	: block line  	{ ; }
-	| line			{ ; }			
+ifElse
+	: IF conditional THEN braces ELSE braces 				{ driver.ifElse($2, $4, $6); }
+	| IF conditional THEN EOL braces EOL ELSE EOL braces 	{ driver.ifElse($2, $5, $9); }
+	| IF conditional EOL braces EOL ELSE EOL braces 		{ driver.ifElse($2, $4, $8); }
+	| IF conditional braces ELSE braces 					{ driver.ifElse($2, $3, $5); }
+	;
+	
+braces
+	: LBRACE block RBRACE 			{ $$ = driver.block($2); block = nullptr; }
+	| LBRACE EOL block EOL RBRACE 	{ $$ = driver.block($3); block = nullptr; }
 	;
 	
 expression

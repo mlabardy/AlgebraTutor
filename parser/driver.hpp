@@ -4,7 +4,6 @@
 #include <string>
 #include <cstdint>
 #include <functional>
-#include <vector>
 #include <map>
 
 #include "scanner.hpp"
@@ -35,15 +34,12 @@ public:
 	Expression * binop(Expression *, Expression *, const char *);
 	Expression * ternary(Expression *, Expression *, Expression *);
 	ComparatorFactory * comp(Expression * x, Expression * y, const char * op);
-	void block();
-	Block * currentBlock();
-	Block * previousBlock();
-	void ifElse(Expression * cond, Block * x, Block * y);
+	Block * block(Block *);
+	void ifElse(Expression *, Block *, Block *);
 	void deleteAll();
 
 private:
 	std::string _str;
-	std::vector<Block *> _blocks;
 	std::map<std::string, std::function<Expression *(Expression *)>> unops;
 	std::map<std::string, std::function<Expression *(Expression *, Expression *)>> binops;
 	std::map<std::string, std::function<ComparatorFactory *(Expression *, Expression *)>> comps;

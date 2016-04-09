@@ -47,6 +47,8 @@
       class Scanner;
    }
    class Expression;
+   class Block;
+   class Affectation;
 
 // The following definitions is missing when %locations isn't used
 # ifndef YY_NULLPTR
@@ -58,7 +60,7 @@
 # endif
 
 
-#line 62 "./parser/parser.h" // lalr1.cc:392
+#line 64 "./parser/parser.h" // lalr1.cc:392
 
 # include <cassert>
 # include <cstdlib> // std::abort
@@ -130,7 +132,7 @@
 
 #line 5 "parser/parser.yy" // lalr1.cc:392
 namespace Algebra {
-#line 134 "./parser/parser.h" // lalr1.cc:392
+#line 136 "./parser/parser.h" // lalr1.cc:392
 
 
 
@@ -144,13 +146,15 @@ namespace Algebra {
     /// Symbol semantic values.
     union semantic_type
     {
-    #line 55 "parser/parser.yy" // lalr1.cc:392
+    #line 59 "parser/parser.yy" // lalr1.cc:392
 
 	char * stringValue;
 	double doubleValue;
 	Expression * exprValue;
+	Affectation * affValue;
+	Block * blockValue;
 
-#line 154 "./parser/parser.h" // lalr1.cc:392
+#line 158 "./parser/parser.h" // lalr1.cc:392
     };
 #else
     typedef YYSTYPE semantic_type;
@@ -382,7 +386,7 @@ namespace Algebra {
   // number is the opposite.  If YYTABLE_NINF, syntax error.
   static const unsigned char yytable_[];
 
-  static const signed char yycheck_[];
+  static const unsigned char yycheck_[];
 
   // YYSTOS[STATE-NUM] -- The (internal number of the) accessing
   // symbol of state STATE-NUM.
@@ -499,8 +503,8 @@ namespace Algebra {
     enum
     {
       yyeof_ = 0,
-      yylast_ = 101,     ///< Last index in yytable_.
-      yynnts_ = 10,  ///< Number of nonterminal symbols.
+      yylast_ = 117,     ///< Last index in yytable_.
+      yynnts_ = 11,  ///< Number of nonterminal symbols.
       yyfinal_ = 21, ///< Termination state number.
       yyterror_ = 1,
       yyerrcode_ = 256,
@@ -516,7 +520,7 @@ namespace Algebra {
 
 #line 5 "parser/parser.yy" // lalr1.cc:392
 } // Algebra
-#line 520 "./parser/parser.h" // lalr1.cc:392
+#line 524 "./parser/parser.h" // lalr1.cc:392
 
 
 

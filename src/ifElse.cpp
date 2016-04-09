@@ -32,14 +32,13 @@ double IfElse::eval()
 {
 	if (_comparator->eval())
 	{
-		return _expressions->eval();
+		_expressions->execute();
 	}
 	else
 	{
-		return _otherExpressions->eval();
+		_otherExpressions->execute();
 	}
-
-//	return -1;
+	return -1;
 }
 
 std::string IfElse::display() const

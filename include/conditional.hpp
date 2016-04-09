@@ -68,8 +68,6 @@ private:
 
 	/*!
      * \brief Constructeur de copie
-     *
-     * Constructeur de la classe Conditional
      */
 	Conditional(const Conditional &);
 

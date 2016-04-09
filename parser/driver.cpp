@@ -65,7 +65,7 @@ void Driver::parse(const char * filename)
     Algebra::Parser parser(scanner, *this);
     
     _str = std::string("");
-    block();
+    //block(); // bloc initial
 
     if(parser.parse() != 0)
 	{
@@ -194,28 +194,18 @@ Expression * Driver::ternary(Expression * cond, Expression * x, Expression * y)
 	return expr;
 }
 
-void Driver::block()
+Block * Driver::block(Block * block)
 {
-	Block * currentBlock = ExpressionFactory::block();
-	_blocks.push_back(currentBlock);
-}
-
-Block * Driver::currentBlock()
-{
-	return _blocks[_blocks.size()-1];
-}
-
-Block * Driver::previousBlock()
-{
-	return _blocks[_blocks.size()-2];
+	Block * currentBlock = new Block(*block);
+	return currentBlock;
 }
 
 void Driver::ifElse(Expression * cond, Block * x, Block * y)
 {
 	IfElse * ie = ExpressionFactory::ifThenElse(cond, x, y);
-
+	ie->eval(); // met à jour le choix
 	_str.append(ie->display());
-	_str.append("\n");
+	_str.append("\n\n");
 }
 
 void Driver::deleteAll()
@@ -223,5 +213,6 @@ void Driver::deleteAll()
 	Expression::deleteAll();
 	Variable::deleteAll();
 }
+
 
 }
