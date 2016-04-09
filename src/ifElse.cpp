@@ -9,6 +9,9 @@
 IfElse::IfElse(Expression * comparator, Block * expressions, Block * otherExpressions): _comparator(comparator), _expressions(expressions), _otherExpressions(otherExpressions)
 {}
 
+IfElse::IfElse(const IfElse & ie): _comparator(ie._comparator), _expressions(ie._expressions), _otherExpressions(ie._otherExpressions)
+{}
+
 IfElse::~IfElse()
 {
 	/*if (_comparator != nullptr)
@@ -27,7 +30,16 @@ IfElse::~IfElse()
 
 double IfElse::eval()
 {
-	return -1;
+	if (_comparator->eval())
+	{
+		return _expressions->eval();
+	}
+	else
+	{
+		return _otherExpressions->eval();
+	}
+
+//	return -1;
 }
 
 std::string IfElse::display() const

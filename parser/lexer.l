@@ -54,6 +54,14 @@ int linenum = 0;
 	return token::RBRACKET; 
 }
 
+"}" { 
+	return token::RBRACE; 
+}
+
+"{" { 
+	return token::LBRACE; 
+}
+
 "=="|"!="|"<="|">="|"<"|">" { 
 	lval->stringValue = strdup(yytext); 
 	return token::COMP; 
@@ -99,6 +107,18 @@ int linenum = 0;
 "cos"|"sin"|"tan" { 
 	lval->stringValue = strdup(yytext); 
 	return token::UNOP;
+}
+
+"if" { 
+	return token::IF;
+}
+
+"then" { 
+	return token::THEN;
+}
+
+"else" { 
+	return token::ELSE;
 }
 
 "deleteAll" { 

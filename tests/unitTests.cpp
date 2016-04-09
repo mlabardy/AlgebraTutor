@@ -217,20 +217,31 @@ void ifElse()
 	Expression * m = product(constant(1.0), product(constant(2.0), cosinus(constant(M_PI/6.0))));
 	Expression * q = quotient(constant(1.0), product(constant(2.0), sinus(constant(M_PI/6.0))));
 
+	cerr << *s << " = " << s->eval() << endl;
+	cerr << *q << " = " << q->eval() << endl;
+
 	Expression * test = greaterOrEqual(variable("x"), constant(0.0));
 
+	Affectation * af = affectation(variable("y"), s);
+	Affectation * of = affectation(variable("y"), q);
+
 	Block * i = block();
-	i->add(s);
-	i->add(m);
+	i->add(af);
 
 	Block * e = block();
-	e->add(q);
+	e->add(of);
 
 	Expression * ite = ifThenElse(test, i, e);
 
 	cerr << *test << " = " << test->eval() << endl;
 
-	cerr << *ite << endl;
+	cerr << *ite << " = " << ite->eval() << endl;
+
+
+	Variable * var = variable("y");
+
+
+	cerr << *var << " = " << var->eval() << endl;
 
 	Variable::deleteAll();
 	Expression::deleteAll();

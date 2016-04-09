@@ -14,7 +14,7 @@ INCL= -I./include/$(wildcard *.h)
 INCL_PARSER= -I./parser/$(wildcard *.h)
 OBJECTS= ./objects/
 
-OBJ= operator.o binaryOperator.o unaryOperator.o constant.o variable.o affectation.o expressionFactory.o operatorFactory.o expression.o main.o debugger.o
+OBJ= main.o ifElse.o block.o conditional.o operator.o binaryOperator.o unaryOperator.o constant.o variable.o affectation.o expressionFactory.o comparatorFactory.o operatorFactory.o expression.o debugger.o
 PARSER_OBJ= $(OBJECTS)parser.o $(OBJECTS)scanner.o $(OBJECTS)driver.o
 
 
@@ -54,5 +54,5 @@ clean:
 
 mrproper: clean 
 	@rm -rf $(EXEC)
-	@rm -f *.cc *.hh
+	@rm -f $(PARSER)*.cc $(PARSER)*.hh
 	@rm -rf $(OBJECTS)*.o

@@ -7,6 +7,9 @@
 Block::Block()
 {}
 
+Block::Block(const Block & block): _expressions(block._expressions)
+{}
+
 Block::~Block()
 {}
 

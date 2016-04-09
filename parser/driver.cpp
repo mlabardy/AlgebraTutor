@@ -4,6 +4,7 @@
 #include <map>
 #include <functional>
 #include <string>
+#include <vector>
 #include <iostream>
 #include <sstream>
 
@@ -15,6 +16,7 @@
 #include "expression.hpp"
 #include "variable.hpp"
 #include "affectation.hpp"
+#include "block.hpp"
 #include "debugger.hpp"
 
 
@@ -62,14 +64,15 @@ void Driver::parse(const char * filename)
 
     Algebra::Parser parser(scanner, *this);
     
-    str = std::string("");
+    _str = std::string("");
+    block();
 
     if(parser.parse() != 0)
 	{
 		std::cerr << "Parse failed!!\n";
 	}
 
-    Debugger::instance().debug(str);
+    Debugger::instance().debug(_str);
 
 	Expression::deleteAll();
 	Variable::deleteAll();
@@ -113,14 +116,14 @@ Affectation * Driver::affectation(Expression * expression, const char * variable
 	std::ostringstream stringOfValue;
 	stringOfValue << expr->eval();
 
-	str.append(expr->display());
-	str.append(" = ");
-	str.append(stringOfValue.str());
-	str.append("\n");
-	str.append(var->display());
-	str.append(" = ");
-	str.append(stringOfValue.str());
-	str.append("\n\n");
+	_str.append(expr->display());
+	_str.append(" = ");
+	_str.append(stringOfValue.str());
+	_str.append("\n");
+	_str.append(var->display());
+	_str.append(" = ");
+	_str.append(stringOfValue.str());
+	_str.append("\n\n");
 
 	//Debugger::instance().debug(str);
 
@@ -134,11 +137,11 @@ Expression * Driver::unop(Expression * x, const char * op)
 	std::ostringstream stringOfValue;
 	stringOfValue << expr->eval();
 
-	str.append("r:");
-	str.append(expr->display());
-	str.append(" = ");
-	str.append(stringOfValue.str());
-	str.append("\n");
+	_str.append("r:");
+	_str.append(expr->display());
+	_str.append(" = ");
+	_str.append(stringOfValue.str());
+	_str.append("\n");
 
 	//Debugger::instance().debug(str);
 
@@ -152,11 +155,11 @@ Expression * Driver::binop(Expression * x, Expression * y, const char * op)
 	std::ostringstream stringOfValue;
 	stringOfValue << expr->eval();
 
-	str.append("r:");
-	str.append(expr->display());
-	str.append(" = ");
-	str.append(stringOfValue.str());
-	str.append("\n");
+	_str.append("r:");
+	_str.append(expr->display());
+	_str.append(" = ");
+	_str.append(stringOfValue.str());
+	_str.append("\n");
 
 	//Debugger::instance().debug(str);
 
@@ -167,11 +170,11 @@ ComparatorFactory * Driver::comp(Expression * x, Expression * y, const char * op
 {
 	ComparatorFactory * expr = comps.find(std::string(op))->second(x, y);
 
-	str.append(expr->display());
-	str.append(" = ");
+	_str.append(expr->display());
+	_str.append(" = ");
 
-	str.append((expr->eval() == 1) ? "true" : "false");
-	str.append("\n");
+	_str.append((expr->eval() == 1) ? "true" : "false");
+	_str.append("\n");
 	//Debugger::instance().debug(str);
 
 	return expr;
@@ -189,6 +192,30 @@ Expression * Driver::ternary(Expression * cond, Expression * x, Expression * y)
 	Debugger::instance().debug(str);*/
 
 	return expr;
+}
+
+void Driver::block()
+{
+	Block * currentBlock = ExpressionFactory::block();
+	_blocks.push_back(currentBlock);
+}
+
+Block * Driver::currentBlock()
+{
+	return _blocks[_blocks.size()-1];
+}
+
+Block * Driver::previousBlock()
+{
+	return _blocks[_blocks.size()-2];
+}
+
+void Driver::ifElse(Expression * cond, Block * x, Block * y)
+{
+	IfElse * ie = ExpressionFactory::ifThenElse(cond, x, y);
+
+	_str.append(ie->display());
+	_str.append("\n");
 }
 
 void Driver::deleteAll()

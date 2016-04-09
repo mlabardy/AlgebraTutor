@@ -40,9 +40,13 @@
 	#include "../include/affectation.hpp"
 	#include "../include/expression.hpp"
 	#include "../include/comparatorFactory.hpp"
+	#include "../include/block.hpp"
+	#include "../include/ifElse.hpp"
 
 	#undef yylex
 	#define yylex scanner.yylex
+	
+	
 }
 
 %define parse.assert
@@ -66,11 +70,15 @@
 %token<stringValue> IM
 %token<stringValue> OR
 %token<stringValue> EM
+%token<stringValue> IF THEN ELSE
 
 %token<stringValue> LBRACKET
 %token<stringValue> RBRACKET
 
-%type<exprValue> expression conditional ternary
+%token<stringValue> LBRACE
+%token<stringValue> RBRACE
+
+%type<exprValue> expression conditional ternary affectation
 %type<doubleValue> number
 
 %left<stringValue> COMP
@@ -79,18 +87,24 @@
 %left MINUS PLUS
 
 %right<stringValue> EXP
-%precedence "id"
 
 %%
 
 prog
-	: prog line		{ ; }
-	| line 			{ ; }
+	: prog line					{ ; }
+	| line 						{ ; }
+	| ifElse 					{ ; }
    	;
 
 line
 	: EOL			{ ; }
-	| affectation 	{ ; }
+	| affectation 	{ 
+		driver.block();
+		Block * b = driver.currentBlock();
+		if (b != nullptr) {
+			b->add($1);
+		} 
+	}
 	;
 	
 number
@@ -101,12 +115,12 @@ number
 	
 affectation
 	: IDENTIFIER OA expression 	{ 
-		driver.affectation($3, $1, $2);
+		$$ = driver.affectation($3, $1, $2);
 		free($2);
 		free($1);
 	}
 	| IDENTIFIER OA ternary 	{ 
-		driver.affectation($3, $1, $2);
+		$$ = driver.affectation($3, $1, $2);
 		free($2);
 		free($1);
 	}
@@ -129,7 +143,16 @@ conditional
 	| "0" 								{ $$ = driver.constant(0); }
 	| "1" 								{ $$ = driver.constant(1); }
 	;
-
+	
+ifElse
+	: IF conditional THEN LBRACE block RBRACE ELSE LBRACE block RBRACE { driver.ifElse($2, driver.previousBlock(), driver.currentBlock()); }
+	;
+	
+block
+	: block line  	{ ; }
+	| line			{ ; }			
+	;
+	
 expression
 	: expression ADD expression			{ $$ = driver.binop($1, $3, $2); free($2); }
 	| expression SUB expression			{ $$ = driver.binop($1, $3, $2); free($2); }

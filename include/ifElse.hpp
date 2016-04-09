@@ -57,6 +57,18 @@ private:
 	Expression * _comparator; /*!< L'expression à évaluer */
 	Block * _expressions; /*!< Un bloc d'expressions à retourner */
 	Block * _otherExpressions; /*!< Un autre bloc d'expressions à retourner */
+
+	/*!
+     * \brief Constructeur de copie
+     *
+     * Constructeur de la classe IfElse
+     */
+	IfElse(const IfElse &);
+
+	/*!
+	 * \bref Surcharge de l'opérateur =
+	 */
+	void operator = (const IfElse &);
 };
 
 #endif

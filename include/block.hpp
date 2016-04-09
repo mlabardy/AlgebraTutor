@@ -68,6 +68,16 @@ public:
 
 private:
 	std::list<Expression *> _expressions; /*!< Une liste d'expressions */
+
+	/*!
+	 * \bref Constructeur de copie
+	 */
+	Block(const Block &);
+
+	/*!
+	 * \bref Surcharge de l'opérateur =
+	 */
+	void operator = (const Block &);
 };
 
 

@@ -65,6 +65,18 @@ private:
 	Expression * _comparator; /*!< L'expression à évaluer */
 	Expression * _expression; /*!< Une expression à retourner */
 	Expression * _otherExpression; /*!< Une autre expression à retourner */
+
+	/*!
+     * \brief Constructeur de copie
+     *
+     * Constructeur de la classe Conditional
+     */
+	Conditional(const Conditional &);
+
+	/*!
+	 * \bref Surcharge de l'opérateur =
+	 */
+	void operator = (const Conditional &);
 };
 
 #endif
