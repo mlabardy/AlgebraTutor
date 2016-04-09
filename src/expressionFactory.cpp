@@ -7,6 +7,8 @@
 #include "binaryOperator.hpp"
 #include "conditional.hpp"
 #include "comparatorFactory.hpp"
+#include "block.hpp"
+#include "ifElse.hpp"
 
 
 namespace ExpressionFactory 
@@ -119,5 +121,15 @@ namespace ExpressionFactory
 	Affectation * quotientAffectation(Variable * variable, Expression * expression)
 	{
 		return BinaryOperator::quotientAffectation(variable, expression);
+	}
+
+	Block * block()
+	{
+		return new Block();
+	}
+
+	IfElse * ifThenElse(Expression * cond, Block * expressions, Block * otherExpressions)
+	{
+		return new IfElse(cond, expressions, otherExpressions);
 	}
 }

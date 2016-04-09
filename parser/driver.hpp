@@ -11,6 +11,7 @@
 #include "../include/variable.hpp"
 #include "../include/expression.hpp"
 #include "../include/comparatorFactory.hpp"
+#include "../include/block.hpp"
 #include "../include/affectation.hpp"
 
 
@@ -33,11 +34,12 @@ public:
 	Expression * binop(Expression *, Expression *, const char *);
 	Expression * ternary(Expression *, Expression *, Expression *);
 	ComparatorFactory * comp(Expression * x, Expression * y, const char * op);
-
+	Block * block(Block *);
+	void ifElse(Expression *, Block *, Block *);
 	void deleteAll();
 
 private:
-	std::string str;
+	std::string _str;
 	std::map<std::string, std::function<Expression *(Expression *)>> unops;
 	std::map<std::string, std::function<Expression *(Expression *, Expression *)>> binops;
 	std::map<std::string, std::function<ComparatorFactory *(Expression *, Expression *)>> comps;

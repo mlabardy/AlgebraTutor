@@ -11,6 +11,8 @@
       class Scanner;
    }
    class Expression;
+   class Block;
+   class Affectation;
 
 // The following definitions is missing when %locations isn't used
 # ifndef YY_NULLPTR
@@ -34,15 +36,21 @@
 	#include <cstdlib>
 	#include <fstream>
 	#include <math.h>
+	#include <list>
    
 	#include "driver.hpp"
 	#include "../include/variable.hpp"
 	#include "../include/affectation.hpp"
 	#include "../include/expression.hpp"
 	#include "../include/comparatorFactory.hpp"
+	#include "../include/block.hpp"
+	#include "../include/ifElse.hpp"
 
 	#undef yylex
 	#define yylex scanner.yylex
+	
+	Block * block = nullptr;
+	
 }
 
 %define parse.assert
@@ -52,6 +60,8 @@
 	char * stringValue;
 	double doubleValue;
 	Expression * exprValue;
+	Affectation * affValue;
+	Block * blockValue;
 }
 
 %token END     0   	"end of file"
@@ -66,12 +76,17 @@
 %token<stringValue> IM
 %token<stringValue> OR
 %token<stringValue> EM
+%token<stringValue> IF THEN ELSE
 
 %token<stringValue> LBRACKET
 %token<stringValue> RBRACKET
 
-%type<exprValue> expression conditional ternary
+%token<stringValue> LBRACE
+%token<stringValue> RBRACE
+
+%type<exprValue> expression conditional ternary affectation
 %type<doubleValue> number
+%type<blockValue> braces block
 
 %left<stringValue> COMP
 %left<stringValue> ADD SUB
@@ -79,18 +94,18 @@
 %left MINUS PLUS
 
 %right<stringValue> EXP
-%precedence "id"
 
 %%
 
 prog
-	: prog line		{ ; }
-	| line 			{ ; }
+	: prog EOL line				{ ; }
+	| line 						{ ; }
    	;
 
 line
 	: EOL			{ ; }
 	| affectation 	{ ; }
+	| ifElse 		{ ; }
 	;
 	
 number
@@ -101,12 +116,12 @@ number
 	
 affectation
 	: IDENTIFIER OA expression 	{ 
-		driver.affectation($3, $1, $2);
+		$$ = driver.affectation($3, $1, $2);
 		free($2);
 		free($1);
 	}
 	| IDENTIFIER OA ternary 	{ 
-		driver.affectation($3, $1, $2);
+		$$ = driver.affectation($3, $1, $2);
 		free($2);
 		free($1);
 	}
@@ -129,7 +144,38 @@ conditional
 	| "0" 								{ $$ = driver.constant(0); }
 	| "1" 								{ $$ = driver.constant(1); }
 	;
-
+	
+block
+	:  block EOL affectation { 
+		if (block == nullptr)
+		{
+			block = new Block();
+		}
+		block->add((Affectation*)$3); 
+		$$ = new Block(*block);
+	}
+	| affectation {
+		if (block == nullptr)
+		{
+			block = new Block();
+		}
+		block->add((Affectation*)$1);
+		$$ = new Block(*block);
+	}	
+	;
+	
+ifElse
+	: IF conditional THEN braces ELSE braces 				{ driver.ifElse($2, $4, $6); }
+	| IF conditional THEN EOL braces EOL ELSE EOL braces 	{ driver.ifElse($2, $5, $9); }
+	| IF conditional EOL braces EOL ELSE EOL braces 		{ driver.ifElse($2, $4, $8); }
+	| IF conditional braces ELSE braces 					{ driver.ifElse($2, $3, $5); }
+	;
+	
+braces
+	: LBRACE block RBRACE 			{ $$ = driver.block($2); block = nullptr; }
+	| LBRACE EOL block EOL RBRACE 	{ $$ = driver.block($3); block = nullptr; }
+	;
+	
 expression
 	: expression ADD expression			{ $$ = driver.binop($1, $3, $2); free($2); }
 	| expression SUB expression			{ $$ = driver.binop($1, $3, $2); free($2); }

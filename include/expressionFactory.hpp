@@ -12,6 +12,8 @@
 #include "variable.hpp" 
 #include "affectation.hpp"
 #include "comparatorFactory.hpp"
+#include "ifElse.hpp"
+#include "block.hpp"
 
 
 /*! 
@@ -210,7 +212,7 @@ namespace ExpressionFactory
 	ComparatorFactory * different(Expression *, Expression *);
 
 	/*!
-	 * \fn Expression * conditional(Expression * comparator, Expression * expression, Expression * otherExpression)
+	 * \fn Expression * ternary(Expression * comparator, Expression * expression, Expression * otherExpression)
      * \brief Crée une ternaire
      * \param comparator : le test à éffectuer
      * \param expression : le résultat si le test renvoi true
@@ -265,6 +267,26 @@ namespace ExpressionFactory
      */
 	Affectation * quotientAffectation(Variable *, Expression *);
 
+	/*!
+	 * \fn Block * block()
+     * \brief Crée un bloc
+     * \return Un nouveau bloc
+     *
+     * Fonction qui crée un nouveau bloc
+     */
+	Block * block();
+
+	/*!
+	 * \fn IfElse * ifThenElse(Expression * cond, Block * expressions, Expression * otherExpressions)
+     * \brief Crée une clause if else
+     * \param cond : la condition à vérifier
+     * \param expressions : un premier bloc d'expressions
+     * \param otherExpressions : un second bloc d'expressions
+     * \return Un nouvelle clause if else
+     *
+     * Fonction qui crée une nouvelle clause if else
+     */
+	IfElse * ifThenElse(Expression *, Block *, Block *);
 
 }
 

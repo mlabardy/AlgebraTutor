@@ -6,6 +6,8 @@
 #include "../include/expression.hpp"
 #include "../include/variable.hpp"
 #include "../include/affectation.hpp"
+#include "../include/block.hpp"
+#include "../include/ifElse.hpp"
 #include "../include/debugger.hpp"
 
 #define M_PI 3.14
@@ -19,6 +21,8 @@ void binaryTests();
 void variableTests();
 void conditionalTests();
 void affectationTests();
+void blockTests();
+void ifElse();
 
 int main(int argc, char **argv)
 {
@@ -60,8 +64,10 @@ int main(int argc, char **argv)
 	// unaryTests();
 	// binaryTests();
 	// variableTests();
-    //conditionalTests();
-    affectationTests();
+    // conditionalTests();
+    // affectationTests();
+    // blockTests();
+    ifElse();
 	return 0;
 }
 
@@ -181,6 +187,59 @@ void affectationTests()
 
 	Affectation * test3 = quotientAffectation(x, y);
 	cerr << *test3 << " = " << test3->eval() << endl;
+
+	Variable::deleteAll();
+	Expression::deleteAll();
+}
+
+void blockTests()
+{
+	Affectation * s = affectation(variable("x"), sum(constant(1.0), product(constant(2.0), sinus(constant(M_PI/6.0)))));
+	Affectation * m = affectation(variable("y"), product(constant(1.0), product(constant(2.0), cosinus(constant(M_PI/6.0)))));
+	Affectation * q = affectation(variable("z"), quotient(constant(1.0), product(constant(2.0), sinus(constant(M_PI/6.0)))));
+
+	Block * b = block();
+	b->add(s);
+	b->add(m);
+	b->add(q);
+
+	cerr << *b << " = " << b->eval() << endl;
+	cerr << *q << " = " << q->eval() << endl;
+
+	Variable::deleteAll();
+	Expression::deleteAll();
+}
+
+void ifElse()
+{
+	Expression * x = variable("x", 3);
+	Expression * s = sum(constant(1.0), product(constant(2.0), sinus(constant(M_PI/6.0))));
+	Expression * m = product(constant(1.0), product(constant(2.0), cosinus(constant(M_PI/6.0))));
+	Expression * q = quotient(constant(1.0), product(constant(2.0), sinus(constant(M_PI/6.0))));
+
+	cerr << *x << " = " << x->eval() << endl;
+	cerr << *s << " = " << s->eval() << endl;
+	cerr << *q << " = " << q->eval() << endl;
+
+	Expression * test = lessThan(variable("x"), constant(0.0));
+
+	Affectation * af = affectation(variable("y"), s);
+	Affectation * of = affectation(variable("y"), q);
+
+	Block * i = block();
+	i->add(af);
+
+	Block * e = block();
+	e->add(of);
+
+	Expression * ite = ifThenElse(test, i, e);
+	cerr << *test << " = " << test->eval() << endl;
+	cerr << *ite << " = " << ite->eval() << endl;
+
+	ite->eval();
+
+	Variable * var = variable("y");
+	cerr << *var << " = " << var->eval() << endl;
 
 	Variable::deleteAll();
 	Expression::deleteAll();

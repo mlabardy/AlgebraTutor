@@ -8,6 +8,9 @@
 Conditional::Conditional(Expression * comparator, Expression * expression, Expression * otherExpression): _comparator(comparator), _expression(expression), _otherExpression(otherExpression)
 {}
 
+Conditional::Conditional(const Conditional & conditional): _comparator(conditional._comparator), _expression(conditional._expression), _otherExpression(conditional._otherExpression)
+{}
+
 Conditional::~Conditional()
 {
 	/*if (_comparator != nullptr)
