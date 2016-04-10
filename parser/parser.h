@@ -188,17 +188,19 @@ namespace Algebra {
         IF = 268,
         THEN = 269,
         ELSE = 270,
-        LBRACKET = 271,
-        RBRACKET = 272,
-        LBRACE = 273,
-        RBRACE = 274,
-        COMP = 275,
-        ADD = 276,
-        SUB = 277,
-        BINOPMQ = 278,
-        MINUS = 279,
-        PLUS = 280,
-        EXP = 281
+        SEMICOLON = 271,
+        LOOP = 272,
+        LBRACKET = 273,
+        RBRACKET = 274,
+        LBRACE = 275,
+        RBRACE = 276,
+        COMP = 277,
+        ADD = 278,
+        SUB = 279,
+        BINOPMQ = 280,
+        MINUS = 281,
+        PLUS = 282,
+        EXP = 283
       };
     };
 
@@ -386,7 +388,7 @@ namespace Algebra {
   // number is the opposite.  If YYTABLE_NINF, syntax error.
   static const unsigned char yytable_[];
 
-  static const unsigned char yycheck_[];
+  static const signed char yycheck_[];
 
   // YYSTOS[STATE-NUM] -- The (internal number of the) accessing
   // symbol of state STATE-NUM.
@@ -503,12 +505,12 @@ namespace Algebra {
     enum
     {
       yyeof_ = 0,
-      yylast_ = 117,     ///< Last index in yytable_.
-      yynnts_ = 11,  ///< Number of nonterminal symbols.
-      yyfinal_ = 21, ///< Termination state number.
+      yylast_ = 127,     ///< Last index in yytable_.
+      yynnts_ = 12,  ///< Number of nonterminal symbols.
+      yyfinal_ = 24, ///< Termination state number.
       yyterror_ = 1,
       yyerrcode_ = 256,
-      yyntokens_ = 29  ///< Number of tokens.
+      yyntokens_ = 31  ///< Number of tokens.
     };
 
 
@@ -520,7 +522,7 @@ namespace Algebra {
 
 #line 5 "parser/parser.yy" // lalr1.cc:392
 } // Algebra
-#line 524 "./parser/parser.h" // lalr1.cc:392
+#line 526 "./parser/parser.h" // lalr1.cc:392
 
 
 

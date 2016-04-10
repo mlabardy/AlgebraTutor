@@ -113,6 +113,14 @@ int linenum = 0;
 	return token::IF;
 }
 
+"for" { 
+	return token::LOOP;
+}
+
+";" { 
+	return token::SEMICOLON;
+}
+
 "then" { 
 	return token::THEN;
 }

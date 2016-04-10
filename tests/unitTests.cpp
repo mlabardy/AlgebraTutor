@@ -9,6 +9,7 @@
 #include "../include/block.hpp"
 #include "../include/ifElse.hpp"
 #include "../include/debugger.hpp"
+#include "../include/for.hpp"
 
 #define M_PI 3.14
 
@@ -23,6 +24,7 @@ void conditionalTests();
 void affectationTests();
 void blockTests();
 void ifElse();
+void forLoop();
 
 int main(int argc, char **argv)
 {
@@ -67,7 +69,8 @@ int main(int argc, char **argv)
     // conditionalTests();
     // affectationTests();
     // blockTests();
-    ifElse();
+    // ifElse();
+    forLoop();
 	return 0;
 }
 
@@ -221,7 +224,7 @@ void ifElse()
 	cerr << *s << " = " << s->eval() << endl;
 	cerr << *q << " = " << q->eval() << endl;
 
-	Expression * test = lessThan(variable("x"), constant(0.0));
+	Expression * test = greaterThan(variable("x"), constant(0.0));
 
 	Affectation * af = affectation(variable("y"), s);
 	Affectation * of = affectation(variable("y"), q);
@@ -236,10 +239,37 @@ void ifElse()
 	cerr << *test << " = " << test->eval() << endl;
 	cerr << *ite << " = " << ite->eval() << endl;
 
-	ite->eval();
+	ite->eval(); // obligatoire
 
 	Variable * var = variable("y");
 	cerr << *var << " = " << var->eval() << endl;
+
+	Variable::deleteAll();
+	Expression::deleteAll();
+}
+
+void forLoop()
+{
+	Affectation * start = affectation(variable("x"), constant(1));
+	ComparatorFactory * condition = lessOrEqual(variable("x"), constant(5));
+	Affectation * end = sumAffectation(variable("x"), constant(1));
+
+	Block * expressions = block();
+
+	Variable * t = variable("t", 1);
+	double value = t->eval();
+	Affectation * a = sumAffectation(t, variable("x"));
+
+	expressions->add(a);
+
+	For * f = forLoop(start, condition, end, expressions);
+	cerr << *f << endl;
+
+	f->eval(); // obligatoire
+
+	cerr << *t << " = " << t->eval() << endl;
+	cerr << *variable("x") << " = " << variable("x")->eval() << endl;
+
 
 	Variable::deleteAll();
 	Expression::deleteAll();

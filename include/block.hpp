@@ -69,6 +69,13 @@ public:
 	void add(Affectation *);
 
 	/*!
+	 * \brief Ré-insère la valeur précedente dans la variable
+	 *
+	 * Remet la valeur de la variable à l'instant précedent
+	 */
+	void rollback();
+
+	/*!
      * \brief Affiche un bloc
      * \return Une chaîne de charactères représentant un bloc
      *

@@ -39,6 +39,17 @@ void Block::execute()
 	}
 }
 
+void Block::rollback()
+{
+	std::list<Affectation *>::iterator it = _expressions.begin();
+	while (it != _expressions.end())
+	{
+		Affectation * tmp = *it;
+		tmp->rollback();
+		it++;
+	}
+}
+
 std::string Block::display() const
 {
 	std::list<Affectation *>::const_iterator it = _expressions.begin();

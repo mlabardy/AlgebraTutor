@@ -36,6 +36,7 @@ public:
 	ComparatorFactory * comp(Expression * x, Expression * y, const char * op);
 	Block * block(Block *);
 	void ifElse(Expression *, Block *, Block *);
+	void forLoop(Affectation *, ComparatorFactory *, Affectation *, Block *);
 	void deleteAll();
 
 private:

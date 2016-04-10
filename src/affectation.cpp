@@ -20,7 +20,6 @@
 
 Affectation::Affectation(Variable * variable, Expression * expression): _variable(variable), _expression(expression)
 {
-	//Debugger::instance().debug("Affectation");
 	_variable->set(_expression->eval());
 }
 
@@ -30,17 +29,11 @@ Affectation::Affectation(const Affectation & affectation): _variable(affectation
 }
 
 Affectation::~Affectation()
+{}
+
+void Affectation::rollback()
 {
-	// if (_variable != nullptr)
-	// {
-	// 	delete _variable;
-	// 	_variable = nullptr;
-	// }
-	// if (_expression != nullptr)
-	// {
-	// 	delete _expression;
-	// 	_expression = nullptr;
-	// }
+	_variable->rollback();
 }
 
 double Affectation::eval()

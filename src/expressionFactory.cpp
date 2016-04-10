@@ -9,6 +9,7 @@
 #include "comparatorFactory.hpp"
 #include "block.hpp"
 #include "ifElse.hpp"
+#include "for.hpp"
 
 
 namespace ExpressionFactory 
@@ -25,7 +26,7 @@ namespace ExpressionFactory
 
 	Variable * variable(const std::string & id)
 	{
-		return new Variable(id);
+		return new Variable(id, 0);
 	}
 
 	Affectation * affectation(Variable * variable, Expression * value)
@@ -131,5 +132,10 @@ namespace ExpressionFactory
 	IfElse * ifThenElse(Expression * cond, Block * expressions, Block * otherExpressions)
 	{
 		return new IfElse(cond, expressions, otherExpressions);
+	}
+
+	For * forLoop(Affectation * start, ComparatorFactory * condition, Affectation * end, Block * expressions)
+	{
+		return new For(start, condition, end, expressions);
 	}
 }

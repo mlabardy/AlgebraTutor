@@ -8,7 +8,7 @@
 
 std::map<std::string, double> Variable::_variables;
 
-Variable::Variable(const std::string & id, double value = 0): _id(id)
+Variable::Variable(const std::string & id, double value = 0): _id(id), _previousValue(0)
 {
 	if (Variable::_variables.find(_id) == Variable::_variables.end())
 	{
@@ -16,7 +16,7 @@ Variable::Variable(const std::string & id, double value = 0): _id(id)
 	}
 }
 
-Variable::Variable(const std::string & id): _id(id)
+Variable::Variable(const std::string & id): _id(id), _previousValue(0)
 {
 	if (Variable::_variables.find(_id) == Variable::_variables.end())
 	{
@@ -39,12 +39,19 @@ std::string Variable::display() const
 
 void Variable::set(Expression * value)
 {
+	_previousValue = Variable::_variables[_id];
 	Variable::_variables[_id] = value->eval();
 }
 
 void Variable::set(double value)
 {
+	_previousValue = Variable::_variables[_id];
 	Variable::_variables[_id] = value;
+}
+
+void Variable::rollback()
+{
+	Variable::_variables[_id] = _previousValue;
 }
 
 void Variable::deleteAll()

@@ -7,26 +7,19 @@
 
 
 IfElse::IfElse(Expression * comparator, Block * expressions, Block * otherExpressions): _comparator(comparator), _expressions(expressions), _otherExpressions(otherExpressions)
-{}
+{
+	_expressions->rollback();
+	_otherExpressions->rollback();
+}
 
 IfElse::IfElse(const IfElse & ie): _comparator(ie._comparator), _expressions(ie._expressions), _otherExpressions(ie._otherExpressions)
-{}
+{
+	_expressions->rollback();
+	_otherExpressions->rollback();
+}
 
 IfElse::~IfElse()
-{
-	/*if (_comparator != nullptr)
-	{
-		delete _comparator;
-	}
-	if (_expression != nullptr)
-	{
-		delete _expression;
-	}
-	if (_otherExpression != nullptr)
-	{
-		delete _otherExpression;
-	}*/
-}
+{}
 
 double IfElse::eval()
 {

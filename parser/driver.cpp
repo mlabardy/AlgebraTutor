@@ -18,6 +18,7 @@
 #include "affectation.hpp"
 #include "block.hpp"
 #include "debugger.hpp"
+#include "for.hpp"
 
 
 namespace Algebra {
@@ -205,6 +206,14 @@ void Driver::ifElse(Expression * cond, Block * x, Block * y)
 	IfElse * ie = ExpressionFactory::ifThenElse(cond, x, y);
 	ie->eval(); // met à jour le choix
 	_str.append(ie->display());
+	_str.append("\n\n");
+}
+
+void Driver::forLoop(Affectation * start, ComparatorFactory * condition, Affectation * end, Block * expressions)
+{
+	For * loop = ExpressionFactory::forLoop(start, condition, end, expressions);
+	loop->eval(); // execute la boucle
+	_str.append(loop->display());
 	_str.append("\n\n");
 }
 

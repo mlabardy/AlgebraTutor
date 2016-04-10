@@ -14,6 +14,7 @@
 #include "comparatorFactory.hpp"
 #include "ifElse.hpp"
 #include "block.hpp"
+#include "for.hpp"
 
 
 /*! 
@@ -287,6 +288,19 @@ namespace ExpressionFactory
      * Fonction qui crée une nouvelle clause if else
      */
 	IfElse * ifThenElse(Expression *, Block *, Block *);
+
+	/*!
+	 * \fn For * forLoop(Affectation * start, ComparatorFactory * condition, Affectation * next, Block * expressions)
+     * \brief Crée une boucle for
+     * \param start : initialisation de la boucle
+     * \param condition : la condition à vérifier
+     * \param end : la condition d'itération
+     * \param expressions : bloc d'expressions à exécuter
+     * \return Un nouvelle boucle for
+     *
+     * Fonction qui crée une nouvelle boucle for
+     */
+	For * forLoop(Affectation *, ComparatorFactory *, Affectation *, Block *);
 
 }
 

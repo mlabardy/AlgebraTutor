@@ -79,6 +79,13 @@ public:
 	void set(Expression * value);
 
 	/*!
+	 * \brief Ré-insère la valeur précedente dans la variable
+	 *
+	 * Remet la valeur de la variable à l'instant précedent
+	 */
+	void rollback();
+
+	/*!
      * \brief Supprime les variables
      *
      * Supprime toutes les variables precedement crées
@@ -97,6 +104,7 @@ public:
 
 private:
 	const std::string _id; /*!< L'identifiant de la variable */
+	double _previousValue; /*!< Stock la valeur précédente */
 	static std::map<std::string, double> _variables; /*!< L'ensemble des variables du programme */
 };
 

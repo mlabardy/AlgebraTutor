@@ -76,7 +76,7 @@
 %token<stringValue> IM
 %token<stringValue> OR
 %token<stringValue> EM
-%token<stringValue> IF THEN ELSE
+%token<stringValue> IF THEN ELSE SEMICOLON LOOP
 
 %token<stringValue> LBRACKET
 %token<stringValue> RBRACKET
@@ -106,6 +106,7 @@ line
 	: EOL			{ ; }
 	| affectation 	{ ; }
 	| ifElse 		{ ; }
+	| loop			{ ; }
 	;
 	
 number
@@ -174,6 +175,12 @@ ifElse
 braces
 	: LBRACE block RBRACE 			{ $$ = driver.block($2); block = nullptr; }
 	| LBRACE EOL block EOL RBRACE 	{ $$ = driver.block($3); block = nullptr; }
+	;
+	
+loop
+	: LOOP LBRACKET affectation SEMICOLON conditional SEMICOLON affectation RBRACKET braces {
+		driver.forLoop((Affectation *)$3, (ComparatorFactory*)$5, (Affectation *)$7, $9);
+	}
 	;
 	
 expression
