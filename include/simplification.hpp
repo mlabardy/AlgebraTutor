@@ -1,23 +1,19 @@
-#ifndef CONSTANT
-#define CONSTANT
-
 /*!
- * \file constant.hpp
- * \brief Gestion des constantes
+ * \file simplification.hpp
+ * \brief 
  * \version 1.0
  */
-#include <iostream>
 
-#include "expression.hpp"
+#ifndef SIMPLIFICATION
+#define SIMPLIFICATION
 
-
-/*! 
- * \class Constant
- * \brief Classe représentant une constante
+/*!
+ * \class Simplification
+ * \brief Classe représentant une simplification
  *
- * Gère les constantes 
+ * Gère les simplificatiions
  */
-class Constant: public Expression
+class Simplification: public Expression
 {
 public:
 	/*!
@@ -25,14 +21,14 @@ public:
      *
      * Constructeur de la classe Constant
      */
-	Constant(double);
+	Simplification(double);
 
 	/*!
      * \brief Destructeur
      *
      * Destructeur de la classe Constant
      */
-	~Constant();
+	~Simplification();
 
 	/*!
      * \brief Evalue une constante
@@ -44,24 +40,15 @@ public:
 
 	/*!
 	 * \brief Retourne la dérivée d'une constante
-	 * \return Une nouvelle expression dérivée
 	 *
 	 * Calcul la dérivée d'une constante
 	 */
-	Expression * derivation();
-
-	/*!
-	 * \brief Retourne une expression simplifiée
-	 * \return Une nouvelle expression simplifiée
-	 *
-	 * Simplifie une constante
-	 */
-	Expression * simplification();
+	double derivation();
 
 	/*!
      * \brief Affiche une constante
      * \return Une chaîne de charactères représentant la constante
-     *  
+     *
      * Affiche une constante
      */
 	std::string display() const;
@@ -74,12 +61,8 @@ public:
      *
      * Affiche une constante sur le flux indiqué
      */
-	friend std::ostream & operator << (std::ostream & os, const Constant & constant);
-	
-private:
-	const double _value; /*!< La constante */
+	friend std::ostream & operator << (std::ostream & os, const Simplification & simplification);
 
-	Constant(const Constant &);
-};
+}
 
-#endif
+#endif /* INCLUDE_SIMPLIFICATION_HPP_ */

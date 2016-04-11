@@ -66,6 +66,24 @@ std::string Block::display() const
 	return str;
 }
 
+Expression * Block::derivation()
+{
+	Affectation * tmp;
+	std::list<Affectation *>::iterator it = _expressions.begin();
+	while (it != _expressions.end())
+	{
+		tmp = *it;
+		tmp->rollback();
+		it++;
+	}
+	return tmp;
+}
+
+Expression * Block::simplification()
+{
+	return nullptr;
+}
+
 std::ostream & operator << (std::ostream & os, const Block & block)
 {
 	os << block.display();

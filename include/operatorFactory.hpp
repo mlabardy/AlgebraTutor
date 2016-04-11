@@ -24,6 +24,8 @@ public:
 	typedef std::function<std::string(void)> DisplayCallback;
 	typedef std::function<double(void)> EvalCallback;
 	typedef std::function<void(void)> DeleteCallback;
+	typedef std::function<Expression *(void)> DerivationCallback;
+	typedef std::function<Expression *(void)> SimplificationCallback;
 
 	/*!
      * \brief Constructeur
@@ -33,7 +35,7 @@ public:
      *
      * Constructeur de la classe OperatorFactory
      */
-	OperatorFactory(DisplayCallback, EvalCallback, DeleteCallback);
+	OperatorFactory(DisplayCallback, EvalCallback, DeleteCallback, DerivationCallback, SimplificationCallback);
 
 	/*!
      * \brief Destructeur
@@ -51,6 +53,22 @@ public:
 	double eval();
 
 	/*!
+	 * \brief Retourne la dérivée d'une expression
+	 * \return Une nouvelle expression dérivée
+	 *
+	 * Calcul la dérivée d'une expression
+	 */
+	Expression * derivation();
+
+	/*!
+     * \brief Simplifie une expression
+     * \return L'espression simplifiée
+     *
+     * Simplifie une expression
+     */
+	Expression * simplification();
+
+	/*!
      * \brief Affiche une expression contenant un opérateur
      * \return Une chaîne de charactères représentant l'expression
      *  
@@ -61,8 +79,9 @@ public:
 private:
 	DisplayCallback _displayCallback; /*!< la lambda qui affiche une expression contenant un opérateur  */
 	EvalCallback _evalCallback; /*!< la lambda qui évalue une expression contenant un opérateur  */
-	DeleteCallback _deleteCallback; /* la lambda qui supprime une expression contenant un opérateur  */
-
+	DeleteCallback _deleteCallback; /*!< la lambda qui supprime une expression contenant un opérateur  */
+	DerivationCallback _derivationCallback; /*!< la lambda qui dérive une expression  */
+	SimplificationCallback _simplificationCallback; /*!< la lambda qui simplifie une expression  */
 };
 
 

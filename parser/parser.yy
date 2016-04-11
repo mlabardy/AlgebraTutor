@@ -100,11 +100,11 @@
 prog
 	: prog EOL line				{ ; }
 	| line 						{ ; }
+	| EOL						{ ; }
    	;
 
 line
-	: EOL			{ ; }
-	| affectation 	{ ; }
+	: affectation 	{ ; }
 	| ifElse 		{ ; }
 	| loop			{ ; }
 	;

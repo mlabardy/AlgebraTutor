@@ -84,6 +84,22 @@ public:
 	std::string display() const;
 
 	/*!
+	 * \brief Retourne la dérivée d'une expression
+	 * \return Une nouvelle expression dérivée
+	 *
+	 * Calcul la dérivée d'une expression
+	 */
+	Expression * derivation();
+
+	/*!
+     * \brief Simplifie une expression
+     * \return L'espression simplifiée
+     *
+     * Simplifie une expression
+     */
+	Expression * simplification();
+
+	/*!
      * \brief Affiche un bloc
      * \param os : le flux de sortie
      * \param block : le bloc à afficher

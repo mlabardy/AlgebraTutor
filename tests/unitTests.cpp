@@ -25,6 +25,7 @@ void affectationTests();
 void blockTests();
 void ifElse();
 void forLoop();
+void derivationTests();
 
 int main(int argc, char **argv)
 {
@@ -70,7 +71,8 @@ int main(int argc, char **argv)
     // affectationTests();
     // blockTests();
     // ifElse();
-    forLoop();
+    //forLoop();
+    derivationTests();
 	return 0;
 }
 
@@ -270,6 +272,37 @@ void forLoop()
 	cerr << *t << " = " << t->eval() << endl;
 	cerr << *variable("x") << " = " << variable("x")->eval() << endl;
 
+
+	Variable::deleteAll();
+	Expression::deleteAll();
+}
+
+void derivationTests()
+{
+	Expression * monome1 = product(constant(-4), exponantial(variable("x"), constant(3)));
+	Expression * monome2 = product(constant(2), exponantial(variable("x"), constant(2)));
+	Expression * monome3 = product(constant(-3), exponantial(variable("x"), constant(1)));
+	Expression * monome4 = cosinus(exponantial(variable("x"), constant(5)));
+
+	Expression * e = quotient(constant(1), variable("x")); // 1/x
+
+	Expression * c = cosinus(exponantial(variable("x"), constant(3))); // cos(x^3)
+
+	Expression * s = sum(monome1, sum(monome2, sum(monome3, monome4))); // −4x^3 +2x^2 −3x +1
+
+	Expression * si = sinus(product(constant(5), exponantial(variable("x"), constant(2)))); // sin(5x^2)
+
+	cerr << *s << endl;
+	cerr << *(s->derivation()) << endl;
+
+	cerr << *e << endl;
+	cerr << *(e->derivation()) << endl;
+
+	cerr << *c << endl;
+	cerr << *(c->derivation()) << endl;
+
+	cerr << *si << endl;
+	cerr << *(si->derivation()) << endl;
 
 	Variable::deleteAll();
 	Expression::deleteAll();

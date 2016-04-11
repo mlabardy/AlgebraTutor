@@ -36,6 +36,17 @@ double For::eval()
 	return -1;
 }
 
+Expression * For::derivation()
+{
+	return nullptr;
+}
+
+
+Expression * For::simplification()
+{
+	return nullptr;
+}
+
 std::string For::display() const
 {
 	std::ostringstream stringOfValue;

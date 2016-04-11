@@ -32,6 +32,16 @@ double Conditional::eval()
 	return (_comparator->eval()) ? _expression->eval() : _otherExpression->eval();
 }
 
+Expression * Conditional::derivation()
+{
+	return nullptr;
+}
+
+Expression * Conditional::simplification()
+{
+	return nullptr;
+}
+
 std::string Conditional::display() const
 {
 	char buffer[100];

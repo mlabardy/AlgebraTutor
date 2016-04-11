@@ -4,6 +4,7 @@
 #include "variable.hpp"
 #include "expression.hpp"
 #include "debugger.hpp"
+#include "constant.hpp"
 
 
 std::map<std::string, double> Variable::_variables;
@@ -52,6 +53,18 @@ void Variable::set(double value)
 void Variable::rollback()
 {
 	Variable::_variables[_id] = _previousValue;
+}
+
+Expression * Variable::derivation()
+{
+	//std::string newId(_id);
+	//newId.append("'");
+	return new Variable(_id, Variable::_variables[_id]);
+}
+
+Expression * Variable::simplification()
+{
+	return nullptr;
 }
 
 void Variable::deleteAll()

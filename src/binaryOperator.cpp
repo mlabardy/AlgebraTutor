@@ -8,6 +8,8 @@
 #include "variable.hpp"
 #include "affectation.hpp"
 #include "debugger.hpp"
+#include "unaryOperator.hpp"
+#include "constant.hpp"
 
 using namespace Operator;
 
@@ -51,8 +53,14 @@ Expression * BinaryOperator::sum(Expression * leftExpression, Expression * right
 			return leftExpression->eval() + rightExpression->eval(); 
 		},
 		[=] () 
-		{ 
-			// BinaryOperator::free(leftExpression, rightExpression);
+		{},
+		[=] ()
+		{
+			return sum(leftExpression->derivation(), rightExpression->derivation());
+		},
+		[=] ()
+		{
+			return nullptr;
 		}
 	); 
 }
@@ -71,6 +79,14 @@ Expression * BinaryOperator::difference(Expression * leftExpression, Expression 
 		[=] () 
 		{ 
 			// BinaryOperator::free(leftExpression, rightExpression);
+		},
+		[=] ()
+		{
+			return difference(leftExpression->derivation(), rightExpression->derivation());
+		},
+		[=] ()
+		{
+			return nullptr;
 		}
 	);  
 }
@@ -89,6 +105,15 @@ Expression * BinaryOperator::product(Expression * leftExpression, Expression * r
 		[=] () 
 		{ 
 			// BinaryOperator::free(leftExpression, rightExpression);
+		},
+		[=] ()
+		{
+			//return sum(product(leftExpression->derivation(), rightExpression), product(rightExpression->derivation(), leftExpression->derivation()));
+			return product(leftExpression, rightExpression->derivation());
+		},
+		[=] ()
+		{
+			return nullptr;
 		}
 	);
 }
@@ -107,6 +132,21 @@ Expression * BinaryOperator::quotient(Expression * leftExpression, Expression * 
 		[=] () 
 		{ 
 			// BinaryOperator::free(leftExpression, rightExpression);
+		},
+		[=] ()
+		{
+			Expression * a = product(leftExpression->derivation(), rightExpression);
+			Expression * b = product(rightExpression->derivation(), leftExpression);
+
+			Expression * numerator = difference(a, b);
+			Expression * denominator = UnaryOperator::exponantial(rightExpression, new Constant(2));
+
+			return quotient(numerator, denominator);
+
+		},
+		[=] ()
+		{
+			return nullptr;
 		}
 	);
 }
@@ -125,6 +165,14 @@ ComparatorFactory * BinaryOperator::lessOrEqual(Expression * leftExpression, Exp
 		[=] () 
 		{ 
 			// BinaryOperator::free(leftExpression, rightExpression);
+		},
+		[=] ()
+		{
+			return lessOrEqual(leftExpression, rightExpression);
+		},
+		[=] ()
+		{
+			return nullptr;
 		}
 	);
 }
@@ -143,6 +191,14 @@ ComparatorFactory * BinaryOperator::greaterOrEqual(Expression * leftExpression, 
 		[=] () 
 		{ 
 			// BinaryOperator::free(leftExpression, rightExpression);
+		},
+		[=] ()
+		{
+			return greaterOrEqual(leftExpression, rightExpression);
+		},
+		[=] ()
+		{
+			return nullptr;
 		}
 	);
 }
@@ -161,6 +217,14 @@ ComparatorFactory * BinaryOperator::greater(Expression * leftExpression, Express
 		[=] ()
 		{
 			// BinaryOperator::free(leftExpression, rightExpression);
+		},
+		[=] ()
+		{
+			return greater(leftExpression, rightExpression);
+		},
+		[=] ()
+		{
+			return nullptr;
 		}
 	);
 }
@@ -179,6 +243,14 @@ ComparatorFactory * BinaryOperator::less(Expression * leftExpression, Expression
 		[=] ()
 		{
 			// BinaryOperator::free(leftExpression, rightExpression);
+		},
+		[=] ()
+		{
+			return less(leftExpression, rightExpression);
+		},
+		[=] ()
+		{
+			return nullptr;
 		}
 	);
 }
@@ -197,6 +269,14 @@ ComparatorFactory * BinaryOperator::equal(Expression * leftExpression, Expressio
 		[=] ()
 		{
 			// BinaryOperator::free(leftExpression, rightExpression);
+		},
+		[=] ()
+		{
+			return equal(leftExpression, rightExpression);
+		},
+		[=] ()
+		{
+			return nullptr;
 		}
 	);
 }
@@ -215,6 +295,14 @@ ComparatorFactory * BinaryOperator::different(Expression * leftExpression, Expre
 		[=] ()
 		{
 			// BinaryOperator::free(leftExpression, rightExpression);
+		},
+		[=] ()
+		{
+			return different(leftExpression, rightExpression);
+		},
+		[=] ()
+		{
+			return nullptr;
 		}
 	);
 }

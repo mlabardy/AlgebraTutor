@@ -388,7 +388,7 @@ namespace Algebra {
   // number is the opposite.  If YYTABLE_NINF, syntax error.
   static const unsigned char yytable_[];
 
-  static const signed char yycheck_[];
+  static const unsigned char yycheck_[];
 
   // YYSTOS[STATE-NUM] -- The (internal number of the) accessing
   // symbol of state STATE-NUM.
@@ -505,7 +505,7 @@ namespace Algebra {
     enum
     {
       yyeof_ = 0,
-      yylast_ = 127,     ///< Last index in yytable_.
+      yylast_ = 129,     ///< Last index in yytable_.
       yynnts_ = 12,  ///< Number of nonterminal symbols.
       yyfinal_ = 24, ///< Termination state number.
       yyterror_ = 1,

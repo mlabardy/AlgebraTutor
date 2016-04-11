@@ -34,6 +34,17 @@ double IfElse::eval()
 	return -1;
 }
 
+Expression * IfElse::derivation()
+{
+	return nullptr;
+}
+
+
+Expression * IfElse::simplification()
+{
+	return nullptr;
+}
+
 std::string IfElse::display() const
 {
 	std::ostringstream stringOfValue;

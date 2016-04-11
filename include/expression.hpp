@@ -48,6 +48,22 @@ public:
 	virtual std::string display() const = 0;
 
 	/*!
+     * \brief Simplifie une expression
+     * \return L'espression simplifiée
+     *
+     * Simplifie une expression
+     */
+	virtual Expression * simplification() = 0;
+
+	/*!
+     * \brief Dérive une expression
+     * \return Une expression dérivée
+     *
+     * Dérive une expression
+     */
+	virtual Expression * derivation() = 0;
+
+	/*!
      * \brief Supprime toutes les expressions
      *
      * Supprime itérativement toutes les expressions de l'arbre
