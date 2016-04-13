@@ -1,6 +1,7 @@
 #include <iostream>
 #include "Server.hpp"
-#include <thread>
+#include "Exercice.hpp"
+
  
 using namespace std;
 
@@ -31,6 +32,7 @@ void Server::start(){
 
     _size = sizeof(_server_addr);
 
+
     thread thr(&Server::acceptClient, this );
     thr.join();
 }
@@ -59,7 +61,10 @@ void Server::sendToClient(){
 }
 
 int main(void){
-    string path;
+    //Exercice *ex = new Exercice("/home/yann/CPP/AlgebraTutor/exercices");
+
+    cout << sendExercice("/home/yann/CPP/AlgebraTutor/exercices/test.txt") <<endl;
+   /* string path;
     Server *server = new Server(8080);
 
     server->start();
@@ -67,6 +72,7 @@ int main(void){
 
     cout << "Path of file to send at students?" << endl;
     cin >> path;
+    cout << path << endl;*/
 
     return 0;
 }
