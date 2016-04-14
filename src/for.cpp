@@ -47,6 +47,11 @@ Expression * For::simplification()
 	return nullptr;
 }
 
+int For::type()
+{
+	return 0;
+}
+
 std::string For::display() const
 {
 	std::ostringstream stringOfValue;

@@ -10,6 +10,7 @@
 #include "block.hpp"
 #include "ifElse.hpp"
 #include "for.hpp"
+#include "product.hpp"
 
 
 namespace ExpressionFactory 
@@ -61,7 +62,8 @@ namespace ExpressionFactory
 
 	Expression * product(Expression * leftExpression, Expression * rightExpression)
 	{
-		return BinaryOperator::product(leftExpression, rightExpression);
+		return new Product(leftExpression, rightExpression);
+		//return BinaryOperator::product(leftExpression, rightExpression);
 	}
 
 	Expression * quotient(Expression * leftExpression, Expression * rightExpression)

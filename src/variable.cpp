@@ -55,6 +55,11 @@ void Variable::rollback()
 	Variable::_variables[_id] = _previousValue;
 }
 
+std::string Variable::id()
+{
+	return _id;
+}
+
 Expression * Variable::derivation()
 {
 	//std::string newId(_id);
@@ -64,7 +69,12 @@ Expression * Variable::derivation()
 
 Expression * Variable::simplification()
 {
-	return nullptr;
+	return new Variable(*this);
+}
+
+int Variable::type()
+{
+	return 2;
 }
 
 void Variable::deleteAll()

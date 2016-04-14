@@ -51,6 +51,11 @@ Expression * Affectation::simplification()
 	return nullptr;
 }
 
+int Affectation::type()
+{
+	return 0;
+}
+
 std::string Affectation::display() const 
 {
 	std::ostringstream stringOfValue;

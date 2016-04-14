@@ -26,6 +26,7 @@ void blockTests();
 void ifElse();
 void forLoop();
 void derivationTests();
+void simplificationsTests();
 
 int main(int argc, char **argv)
 {
@@ -71,8 +72,11 @@ int main(int argc, char **argv)
     // affectationTests();
     // blockTests();
     // ifElse();
-    //forLoop();
-    derivationTests();
+    // forLoop();
+    // derivationTests();
+    simplificationsTests();
+
+
 	return 0;
 }
 
@@ -82,6 +86,8 @@ void unaryTests()
 	// Expression * c = sum(constant(M_PI/3), constant(2.0));
 	Expression * c = constant(2);
 	cerr << *c << " = " << c->eval() << endl;
+
+	Variable::deleteAll();
 	Expression::deleteAll();
 }
 
@@ -93,8 +99,10 @@ void binaryTests()
 	Expression * comp = greaterOrEqual(s, constant(1.8));
 	cerr << *comp << " = " << comp->eval() << endl;
 
+	Variable::deleteAll();
 	Expression::deleteAll();
 }
+
 
 void variableTests()
 {
@@ -112,11 +120,11 @@ void variableTests()
 	cerr << *a << " = " << a->eval() << endl;
 	cerr << *y << " = " << y->eval() << endl;
 
-	Variable::deleteAll();
-	Expression::deleteAll();
-
 	// plante ici -> c'est normal
 	// cout << *y << " = " << y->eval() << endl;
+
+	Variable::deleteAll();
+	Expression::deleteAll();
 }
 
 void conditionalTests()
@@ -165,6 +173,7 @@ void conditionalTests()
 
 	Variable::deleteAll();
 	Expression::deleteAll();
+
 }
 
 void affectationTests()
@@ -195,6 +204,7 @@ void affectationTests()
 
 	Variable::deleteAll();
 	Expression::deleteAll();
+
 }
 
 void blockTests()
@@ -272,7 +282,6 @@ void forLoop()
 	cerr << *t << " = " << t->eval() << endl;
 	cerr << *variable("x") << " = " << variable("x")->eval() << endl;
 
-
 	Variable::deleteAll();
 	Expression::deleteAll();
 }
@@ -303,6 +312,49 @@ void derivationTests()
 
 	cerr << *si << endl;
 	cerr << *(si->derivation()) << endl;
+
+	Variable::deleteAll();
+	Expression::deleteAll();
+}
+
+void simplificationsTests()
+{
+	Expression * monome1 = product(constant(-4), exponantial(variable("x"), constant(3)));
+	Expression * monome2 = product(constant(2), exponantial(variable("x"), constant(2)));
+	Expression * monome3 = product(constant(-3), exponantial(variable("x"), constant(1)));
+	Expression * monome4 = cosinus(exponantial(variable("x"), constant(5)));
+
+	Expression * e = quotient(constant(1), variable("x")); // 1/x
+
+	Expression * c = cosinus(exponantial(variable("x"), constant(3))); // cos(x^3)
+
+	Expression * s = sum(monome1, sum(monome2, sum(monome3, monome4))); // −4x^3 +2x^2 −3x +1
+
+	Expression * si = sinus(product(constant(5), exponantial(variable("x"), constant(2)))); // sin(5x^2)
+
+	Expression * l = product(constant(2), product(constant(5), variable("x")));
+
+	Expression * l2 = product(product(constant(3), variable("y")), product(constant(5), variable("x")));
+
+	//Expression * l3 = product(l, l2);
+
+	cerr << *l << endl;
+	cerr << *(l->simplification()) << endl;
+
+	cerr << *l2 << endl;
+	cerr << *(l2->simplification()) << endl;
+
+	/*cerr << *s << endl;
+	cerr << *(s->derivation()) << endl;
+
+	cerr << *e << endl;
+	cerr << *(e->derivation()) << endl;
+
+	cerr << *c << endl;
+	cerr << *(c->derivation()) << endl;
+
+	cerr << *si << endl;
+	cerr << *(si->derivation()) << endl;*/
 
 	Variable::deleteAll();
 	Expression::deleteAll();

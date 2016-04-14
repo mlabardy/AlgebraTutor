@@ -26,6 +26,7 @@ public:
 	typedef std::function<void(void)> DeleteCallback;
 	typedef std::function<Expression *(void)> DerivationCallback;
 	typedef std::function<Expression *(void)> SimplificationCallback;
+	typedef std::function<int(void)> TypeCallback;
 
 	/*!
      * \brief Constructeur
@@ -35,7 +36,7 @@ public:
      *
      * Constructeur de la classe OperatorFactory
      */
-	OperatorFactory(DisplayCallback, EvalCallback, DeleteCallback, DerivationCallback, SimplificationCallback);
+	OperatorFactory(DisplayCallback, EvalCallback, DeleteCallback, DerivationCallback, SimplificationCallback, TypeCallback);
 
 	/*!
      * \brief Destructeur
@@ -69,6 +70,13 @@ public:
 	Expression * simplification();
 
 	/*!
+	 * \brief Détermine le type de l'expression
+	 *
+	 * Retourne le type de l'expression
+	 */
+	int type();
+
+	/*!
      * \brief Affiche une expression contenant un opérateur
      * \return Une chaîne de charactères représentant l'expression
      *  
@@ -82,6 +90,7 @@ private:
 	DeleteCallback _deleteCallback; /*!< la lambda qui supprime une expression contenant un opérateur  */
 	DerivationCallback _derivationCallback; /*!< la lambda qui dérive une expression  */
 	SimplificationCallback _simplificationCallback; /*!< la lambda qui simplifie une expression  */
+	TypeCallback _typeCallback; /*!< la lambda qui retourne le type d'une expression  */
 };
 
 

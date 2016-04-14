@@ -64,6 +64,13 @@ public:
 	virtual Expression * derivation() = 0;
 
 	/*!
+	 * \brief Détermine le type de l'expression
+	 *
+	 * Retourne le type de l'expression
+	 */
+	virtual int type() = 0;
+
+	/*!
      * \brief Supprime toutes les expressions
      *
      * Supprime itérativement toutes les expressions de l'arbre

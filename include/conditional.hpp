@@ -68,6 +68,13 @@ public:
 	Expression * simplification();
 
 	/*!
+	 * \brief Détermine le type de l'expression
+	 *
+	 * Retourne le type de l'expression
+	 */
+	int type();
+
+	/*!
      * \brief Affiche une ternaire
      * \param os : le flux de sortie
      * \param conditional : la ternaire à afficher

@@ -84,6 +84,11 @@ Expression * Block::simplification()
 	return nullptr;
 }
 
+int Block::type()
+{
+	return 0;
+}
+
 std::ostream & operator << (std::ostream & os, const Block & block)
 {
 	os << block.display();

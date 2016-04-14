@@ -100,6 +100,13 @@ public:
 	Expression * simplification();
 
 	/*!
+	 * \brief Détermine le type de l'expression
+	 *
+	 * Retourne le type de l'expression
+	 */
+	int type();
+
+	/*!
      * \brief Affiche un bloc
      * \param os : le flux de sortie
      * \param block : le bloc à afficher

@@ -1,10 +1,8 @@
-#include <stdio.h>
 #include <iostream>
 #include <sstream>
 
 #include "constant.hpp"
 #include "expression.hpp"
-#include "debugger.hpp"
 
 
 Constant::Constant(double value): _value(value)
@@ -21,6 +19,11 @@ double Constant::eval()
 	return _value;
 }
 
+double Constant::value()
+{
+	return _value;
+}
+
 Expression * Constant::derivation()
 {
 	return new Constant(0);
@@ -28,7 +31,12 @@ Expression * Constant::derivation()
 
 Expression * Constant::simplification()
 {
-	return this;
+	return new Constant(*this);
+}
+
+int Constant::type()
+{
+	return 1;
 }
 
 std::string Constant::display() const

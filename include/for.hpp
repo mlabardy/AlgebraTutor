@@ -63,6 +63,13 @@ public:
 	Expression * simplification();
 
 	/*!
+	 * \brief Détermine le type de l'expression
+	 *
+	 * Retourne le type de l'expression
+	 */
+	int type();
+
+	/*!
      * \brief Affiche une boucle for
      * \param os : le flux de sortie
      * \param loop : la boucle for à afficher

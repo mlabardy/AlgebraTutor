@@ -60,6 +60,13 @@ public:
 	Expression * simplification();
 
 	/*!
+	 * \brief Détermine le type de l'expression
+	 *
+	 * Retourne le type de l'expression
+	 */
+	int type();
+
+	/*!
      * \brief Affiche une clause if else
      * \param os : le flux de sortie
      * \param expression : la clause if else à afficher

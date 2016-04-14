@@ -43,6 +43,13 @@ public:
 	double eval();
 
 	/*!
+	 * \brief Retourne la valeur de la constante
+	 *
+	 * Retourne la valeur de la constante courante
+	 */
+	double value();
+
+	/*!
 	 * \brief Retourne la dérivée d'une constante
 	 * \return Une nouvelle expression dérivée
 	 *
@@ -57,6 +64,13 @@ public:
 	 * Simplifie une constante
 	 */
 	Expression * simplification();
+
+	/*!
+	 * \brief Détermine le type de l'expression
+	 *
+	 * Retourne le type de l'expression
+	 */
+	int type();
 
 	/*!
      * \brief Affiche une constante

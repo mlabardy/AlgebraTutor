@@ -50,6 +50,10 @@ Expression * UnaryOperator::cosinus(Expression * expression)
 		[=] ()
 		{
 			return cosinus(expression);
+		},
+		[=] ()
+		{
+			return 3;
 		}
 	);	
 }
@@ -59,7 +63,7 @@ Expression * UnaryOperator::sinus(Expression * expression)
 	return new OperatorFactory (
 		[=] () 
 		{ 
-			return UnaryOperator::display(SIN, expression); 
+			return UnaryOperator::display(SIN, expression);
 		},
 		[=] () 
 		{ 
@@ -75,6 +79,10 @@ Expression * UnaryOperator::sinus(Expression * expression)
 		[=] ()
 		{
 			return sinus(expression);
+		},
+		[=] ()
+		{
+			return 4;
 		}
 	);	
 }
@@ -102,6 +110,10 @@ Expression * UnaryOperator::exponantial(Expression * expression, Expression * po
 		[=] ()
 		{
 			return exponantial(expression, power);
+		},
+		[=] ()
+		{
+			return 0;
 		}
 	);	
 }
