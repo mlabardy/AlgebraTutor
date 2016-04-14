@@ -2,7 +2,7 @@
 #include "expression.hpp"
 
 
-OperatorFactory::OperatorFactory(DisplayCallback displayCallback, EvalCallback evalCallback, DeleteCallback deleteCallback) : _displayCallback(displayCallback), _evalCallback(evalCallback), _deleteCallback(deleteCallback)
+OperatorFactory::OperatorFactory(DisplayCallback displayCallback, EvalCallback evalCallback, DeleteCallback deleteCallback, DerivationCallback derivationCallback, SimplificationCallback simplificationCallback, TypeCallback typeCallback) : _displayCallback(displayCallback), _evalCallback(evalCallback), _deleteCallback(deleteCallback), _derivationCallback(derivationCallback), _simplificationCallback(simplificationCallback), _typeCallback(typeCallback)
 {}
 
 OperatorFactory::~OperatorFactory() 
@@ -18,4 +18,19 @@ double OperatorFactory::eval()
 std::string OperatorFactory::display() const
 {
 	return _displayCallback();
+}
+
+Expression * OperatorFactory::derivation()
+{
+	return _derivationCallback();
+}
+
+Expression * OperatorFactory::simplification()
+{
+	return _simplificationCallback();
+}
+
+int OperatorFactory::type()
+{
+	return _typeCallback();
 }

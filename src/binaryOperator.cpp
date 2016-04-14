@@ -1,4 +1,4 @@
-#include <stdio.h>
+#include <sstream>
 
 #include "binaryOperator.hpp"
 #include "expression.hpp"
@@ -8,20 +8,17 @@
 #include "variable.hpp"
 #include "affectation.hpp"
 #include "debugger.hpp"
+#include "unaryOperator.hpp"
+#include "constant.hpp"
 
 using namespace Operator;
 
 
 const std::string BinaryOperator::display(Binary binaryOperator, Expression * leftExpression, Expression * rightExpression)
 { 
-	// std::ostringstream stringOfValue;
-	// stringOfValue << '(' << leftExpression->display() << ' ' << name(binaryOperator) << ' ' << rightExpression->display() << ')';
-	// return stringOfValue.str();
-
-	char buffer[100];
-	snprintf(buffer, 100, "(%s %s %s)", leftExpression->display().c_str(), name(binaryOperator).c_str(), rightExpression->display().c_str());
-	std::string str(buffer);
-	return str;
+	std::ostringstream stringOfValue;
+	stringOfValue << '(' << leftExpression->display() << ' ' << name(binaryOperator) << ' ' << rightExpression->display() << ')';
+	return stringOfValue.str();
 }
 
 void BinaryOperator::free(Expression * leftExpression, Expression * rightExpression) 
@@ -51,8 +48,18 @@ Expression * BinaryOperator::sum(Expression * leftExpression, Expression * right
 			return leftExpression->eval() + rightExpression->eval(); 
 		},
 		[=] () 
-		{ 
-			// BinaryOperator::free(leftExpression, rightExpression);
+		{},
+		[=] ()
+		{
+			return sum(leftExpression->derivation(), rightExpression->derivation());
+		},
+		[=] ()
+		{
+			return nullptr;
+		},
+		[=] ()
+		{
+			return 0;
 		}
 	); 
 }
@@ -71,6 +78,18 @@ Expression * BinaryOperator::difference(Expression * leftExpression, Expression 
 		[=] () 
 		{ 
 			// BinaryOperator::free(leftExpression, rightExpression);
+		},
+		[=] ()
+		{
+			return difference(leftExpression->derivation(), rightExpression->derivation());
+		},
+		[=] ()
+		{
+			return nullptr;
+		},
+		[=] ()
+		{
+			return 0;
 		}
 	);  
 }
@@ -89,6 +108,19 @@ Expression * BinaryOperator::product(Expression * leftExpression, Expression * r
 		[=] () 
 		{ 
 			// BinaryOperator::free(leftExpression, rightExpression);
+		},
+		[=] ()
+		{
+			//return sum(product(leftExpression->derivation(), rightExpression), product(rightExpression->derivation(), leftExpression->derivation()));
+			return product(leftExpression, rightExpression->derivation());
+		},
+		[=] ()
+		{
+			return nullptr;
+		},
+		[=] ()
+		{
+			return 0;
 		}
 	);
 }
@@ -107,6 +139,25 @@ Expression * BinaryOperator::quotient(Expression * leftExpression, Expression * 
 		[=] () 
 		{ 
 			// BinaryOperator::free(leftExpression, rightExpression);
+		},
+		[=] ()
+		{
+			Expression * a = product(leftExpression->derivation(), rightExpression);
+			Expression * b = product(rightExpression->derivation(), leftExpression);
+
+			Expression * numerator = difference(a, b);
+			Expression * denominator = UnaryOperator::exponantial(rightExpression, new Constant(2));
+
+			return quotient(numerator, denominator);
+
+		},
+		[=] ()
+		{
+			return nullptr;
+		},
+		[=] ()
+		{
+			return 0;
 		}
 	);
 }
@@ -125,6 +176,18 @@ ComparatorFactory * BinaryOperator::lessOrEqual(Expression * leftExpression, Exp
 		[=] () 
 		{ 
 			// BinaryOperator::free(leftExpression, rightExpression);
+		},
+		[=] ()
+		{
+			return lessOrEqual(leftExpression, rightExpression);
+		},
+		[=] ()
+		{
+			return nullptr;
+		},
+		[=] ()
+		{
+			return 0;
 		}
 	);
 }
@@ -143,6 +206,18 @@ ComparatorFactory * BinaryOperator::greaterOrEqual(Expression * leftExpression, 
 		[=] () 
 		{ 
 			// BinaryOperator::free(leftExpression, rightExpression);
+		},
+		[=] ()
+		{
+			return greaterOrEqual(leftExpression, rightExpression);
+		},
+		[=] ()
+		{
+			return nullptr;
+		},
+		[=] ()
+		{
+			return 0;
 		}
 	);
 }
@@ -161,6 +236,18 @@ ComparatorFactory * BinaryOperator::greater(Expression * leftExpression, Express
 		[=] ()
 		{
 			// BinaryOperator::free(leftExpression, rightExpression);
+		},
+		[=] ()
+		{
+			return greater(leftExpression, rightExpression);
+		},
+		[=] ()
+		{
+			return nullptr;
+		},
+		[=] ()
+		{
+			return 0;
 		}
 	);
 }
@@ -179,6 +266,18 @@ ComparatorFactory * BinaryOperator::less(Expression * leftExpression, Expression
 		[=] ()
 		{
 			// BinaryOperator::free(leftExpression, rightExpression);
+		},
+		[=] ()
+		{
+			return less(leftExpression, rightExpression);
+		},
+		[=] ()
+		{
+			return nullptr;
+		},
+		[=] ()
+		{
+			return 0;
 		}
 	);
 }
@@ -197,6 +296,18 @@ ComparatorFactory * BinaryOperator::equal(Expression * leftExpression, Expressio
 		[=] ()
 		{
 			// BinaryOperator::free(leftExpression, rightExpression);
+		},
+		[=] ()
+		{
+			return equal(leftExpression, rightExpression);
+		},
+		[=] ()
+		{
+			return nullptr;
+		},
+		[=] ()
+		{
+			return 0;
 		}
 	);
 }
@@ -215,6 +326,18 @@ ComparatorFactory * BinaryOperator::different(Expression * leftExpression, Expre
 		[=] ()
 		{
 			// BinaryOperator::free(leftExpression, rightExpression);
+		},
+		[=] ()
+		{
+			return different(leftExpression, rightExpression);
+		},
+		[=] ()
+		{
+			return nullptr;
+		},
+		[=] ()
+		{
+			return 0;
 		}
 	);
 }

@@ -4,7 +4,7 @@
 #include "expression.hpp"
 
 
-ComparatorFactory::ComparatorFactory(DisplayCallback displayCallback, EvalCallback evalCallback, DeleteCallback deleteCallback) : _isNegation(false), _displayCallback(displayCallback), _evalCallback(evalCallback), _deleteCallback(deleteCallback)
+ComparatorFactory::ComparatorFactory(DisplayCallback displayCallback, EvalCallback evalCallback, DeleteCallback deleteCallback, DerivationCallback derivationCallback, SimplificationCallback simplificationCallback, TypeCallback typeCallback) : _isNegation(false), _displayCallback(displayCallback), _evalCallback(evalCallback), _deleteCallback(deleteCallback), _derivationCallback(derivationCallback), _simplificationCallback(simplificationCallback), _typeCallback(typeCallback)
 {}
 
 ComparatorFactory::~ComparatorFactory()
@@ -35,3 +35,17 @@ std::string ComparatorFactory::display() const
 	return _displayCallback();
 }
 
+Expression * ComparatorFactory::derivation()
+{
+	return _derivationCallback();
+}
+
+Expression * ComparatorFactory::simplification()
+{
+	return _simplificationCallback();
+}
+
+int ComparatorFactory::type()
+{
+	return _typeCallback();
+}

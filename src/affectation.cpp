@@ -41,6 +41,21 @@ double Affectation::eval()
 	return _variable->eval();
 }
 
+Expression * Affectation::derivation()
+{
+	return new Affectation((Variable*)_variable->derivation(), _expression->derivation());
+}
+
+Expression * Affectation::simplification()
+{
+	return nullptr;
+}
+
+int Affectation::type()
+{
+	return 0;
+}
+
 std::string Affectation::display() const 
 {
 	std::ostringstream stringOfValue;

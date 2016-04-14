@@ -5,7 +5,7 @@ LDFLAGS=
 EXEC= tests.exe
 SRC= ./../src/
 INCL= -I./../include/$(wildcard *.h)
-OBJ= for.o ifElse.o block.o conditional.o operator.o binaryOperator.o unaryOperator.o constant.o variable.o affectation.o expressionFactory.o comparatorFactory.o operatorFactory.o expression.o debugger.o
+OBJ= product.o for.o ifElse.o block.o conditional.o operator.o binaryOperator.o unaryOperator.o constant.o variable.o affectation.o expressionFactory.o comparatorFactory.o operatorFactory.o expression.o debugger.o
 OBJ_TESTS= unitTests.o
 
 

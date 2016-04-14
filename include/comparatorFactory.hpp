@@ -24,6 +24,9 @@ public:
 	typedef std::function<std::string(void)> DisplayCallback;
 	typedef std::function<double(void)> EvalCallback;
 	typedef std::function<void(void)> DeleteCallback;
+	typedef std::function<Expression *(void)> DerivationCallback;
+	typedef std::function<Expression *(void)> SimplificationCallback;
+	typedef std::function<int(void)> TypeCallback;
 
 	/*!
      * \brief Constructeur
@@ -33,7 +36,7 @@ public:
      *
      * Constructeur de la classe ComparatorFactory
      */
-	ComparatorFactory(DisplayCallback, EvalCallback, DeleteCallback);
+	ComparatorFactory(DisplayCallback, EvalCallback, DeleteCallback, DerivationCallback, SimplificationCallback, TypeCallback);
 
 	/*!
      * \brief Destructeur
@@ -58,6 +61,29 @@ public:
 	double eval();
 
 	/*!
+	 * \brief Retourne la dérivée d'une expression
+	 * \return Une nouvelle expression dérivée
+	 *
+	 * Calcul la dérivée d'une expression
+	 */
+	Expression * derivation();
+
+	/*!
+     * \brief Simplifie une expression
+     * \return L'espression simplifiée
+     *
+     * Simplifie une expression
+     */
+	Expression * simplification();
+
+	/*!
+	 * \brief Détermine le type de l'expression
+	 *
+	 * Retourne le type de l'expression
+	 */
+	int type();
+
+	/*!
      * \brief Affiche une expression contenant un comparateur
      * \return Une chaîne de charactères représentant l'expression
      *
@@ -70,7 +96,9 @@ private:
 	DisplayCallback _displayCallback; /*!< la lambda qui affiche une expression contenant un comparateur  */
 	EvalCallback _evalCallback; /*!< la lambda qui évalue une expression contenant un comparateur  */
 	DeleteCallback _deleteCallback; /* la lambda qui supprime une expression contenant un comparateur  */
-
+	DerivationCallback _derivationCallback; /*!< la lambda qui dérive une expression  */
+	SimplificationCallback _simplificationCallback; /*!< la lambda qui simplifie une expression  */
+	TypeCallback _typeCallback; /*!< la lambda qui retourne le type d'une expression  */
 };
 
 

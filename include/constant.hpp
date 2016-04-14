@@ -43,6 +43,36 @@ public:
 	double eval();
 
 	/*!
+	 * \brief Retourne la valeur de la constante
+	 *
+	 * Retourne la valeur de la constante courante
+	 */
+	double value();
+
+	/*!
+	 * \brief Retourne la dérivée d'une constante
+	 * \return Une nouvelle expression dérivée
+	 *
+	 * Calcul la dérivée d'une constante
+	 */
+	Expression * derivation();
+
+	/*!
+	 * \brief Retourne une expression simplifiée
+	 * \return Une nouvelle expression simplifiée
+	 *
+	 * Simplifie une constante
+	 */
+	Expression * simplification();
+
+	/*!
+	 * \brief Détermine le type de l'expression
+	 *
+	 * Retourne le type de l'expression
+	 */
+	int type();
+
+	/*!
      * \brief Affiche une constante
      * \return Une chaîne de charactères représentant la constante
      *  
@@ -62,6 +92,8 @@ public:
 	
 private:
 	const double _value; /*!< La constante */
+
+	Constant(const Constant &);
 };
 
 #endif

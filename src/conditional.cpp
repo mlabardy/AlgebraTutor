@@ -12,24 +12,26 @@ Conditional::Conditional(const Conditional & conditional): _comparator(condition
 {}
 
 Conditional::~Conditional()
-{
-	/*if (_comparator != nullptr)
-	{
-		delete _comparator;
-	}
-	if (_expression != nullptr)
-	{
-		delete _expression;
-	}
-	if (_otherExpression != nullptr)
-	{
-		delete _otherExpression;
-	}*/
-}
+{}
 
 double Conditional::eval()
 {
 	return (_comparator->eval()) ? _expression->eval() : _otherExpression->eval();
+}
+
+Expression * Conditional::derivation()
+{
+	return nullptr;
+}
+
+Expression * Conditional::simplification()
+{
+	return nullptr;
+}
+
+int Conditional::type()
+{
+	return 0;
 }
 
 std::string Conditional::display() const

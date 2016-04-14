@@ -86,6 +86,36 @@ public:
 	void rollback();
 
 	/*!
+	 * \brief Retourne l'identifiant
+	 *
+	 * Retourne l'identifiant de la variable courante
+	 */
+	std::string id();
+
+	/*!
+	 * \brief Retourne la dérivée d'une variable
+	 * \return Une nouvelle expression dérivée
+	 *
+	 * Calcul la dérivée d'une variable
+	 */
+	Expression * derivation();
+
+	/*!
+	 * \brief Retourne une expression simplifiée
+	 * \return Une nouvelle expression simplifiée
+	 *
+	 * Simplifie une variable
+	 */
+	Expression * simplification();
+
+	/*!
+	 * \brief Détermine le type de l'expression
+	 *
+	 * Retourne le type de l'expression
+	 */
+	int type();
+
+	/*!
      * \brief Supprime les variables
      *
      * Supprime toutes les variables precedement crées

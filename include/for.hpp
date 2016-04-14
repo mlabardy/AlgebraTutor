@@ -47,6 +47,29 @@ public:
 	std::string display() const;
 
 	/*!
+	 * \brief Retourne la dérivée d'une expression
+	 * \return Une nouvelle expression dérivée
+	 *
+	 * Calcul la dérivée d'une expression
+	 */
+	Expression * derivation();
+
+	/*!
+     * \brief Simplifie une expression
+     * \return L'espression simplifiée
+     *
+     * Simplifie une expression
+     */
+	Expression * simplification();
+
+	/*!
+	 * \brief Détermine le type de l'expression
+	 *
+	 * Retourne le type de l'expression
+	 */
+	int type();
+
+	/*!
      * \brief Affiche une boucle for
      * \param os : le flux de sortie
      * \param loop : la boucle for à afficher
