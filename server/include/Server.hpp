@@ -19,9 +19,7 @@ using namespace std;
 class Server{
 	private:
 		int _socketServer;
-		int _client;
 		int _port;
-		bool _isAccepted = true;
 		vector<int> _clients;
 		mutex _mutex;
 		//bool isExit = false;

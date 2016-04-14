@@ -1,12 +1,10 @@
 #include <iostream>
 #include "Server.hpp"
 #include "Exercice.hpp"
-
  
 using namespace std;
 
-Server::Server(int port){
-    _port = port;
+Server::Server(int port):_socketServer(),_port(port),_clients(),_mutex(),_server_addr(),_size(){
     _socketServer = socket(AF_INET, SOCK_STREAM, 0);
 
     if( _socketServer < 0 ){
@@ -39,7 +37,7 @@ void Server::start(){
 
 void Server::acceptClient(){
     int fd;
-    while(_isAccepted){
+    while(true){
         fd = accept(_socketServer, (struct sockaddr *)&_server_addr,&_size);
 
         send(fd, "Connection established\n", sizeof("Connection established\n"), 0);

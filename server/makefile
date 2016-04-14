@@ -1,4 +1,4 @@
-CC=clang++
+CC=g++
 CFLAGS= -W -Wall -Weffc++ -ansi -pedantic -std=c++11 -pthread
 LDFLAGS=
 EXEC= server

@@ -45,7 +45,7 @@ string sendExercice(string path){
 	ifstream exo ( path );
 
 	if( !exo.good() ){
-		return 
+		return "";
 	}
 	
 	if( exo.is_open() ){
