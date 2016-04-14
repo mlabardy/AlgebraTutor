@@ -11,18 +11,22 @@
 #include <unistd.h>
 #include <netdb.h>
 
+
+using namespace std;
+
 class Client{
 	private:
 		int _socketClient;
 		int _port;
-		string _address
+		string _address;
 
 		struct sockaddr_in _server_addr;
-		socklen_t _size;
 	public:
 		Client(int port, string address);
 		~Client();
 		void start();
+		string receive();
+		void sendToServer(string result);
 };
 
 

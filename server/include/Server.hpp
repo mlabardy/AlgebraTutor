@@ -22,9 +22,6 @@ class Server{
 		int _port;
 		vector<int> _clients;
 		mutex _mutex;
-		//bool isExit = false;
-		//int bufsize = 1024;
-		//char buffer[bufsize];
 		 
 		struct sockaddr_in _server_addr;
 		socklen_t _size;

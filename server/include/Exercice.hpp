@@ -9,11 +9,16 @@
 #include <string>
 #include <stdio.h>
 #include <sys/stat.h>
+#include <vector>
+#include <sstream>
+#include <iostream>
 
 
 using namespace std;
 
 string sendExercice(string path);
+
+void prepareHomework(string path, string exo);
 
 /*
 class Exercice{

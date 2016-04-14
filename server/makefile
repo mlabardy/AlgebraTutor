@@ -4,7 +4,7 @@ LDFLAGS=
 EXEC= server
 SRC= ./src/
 INCL= -I./include/$(wildcard *.h)
-OBJ= Exercice.o Server.o
+OBJ= Exercice.o Client.o
 
 
 all: $(EXEC) clean

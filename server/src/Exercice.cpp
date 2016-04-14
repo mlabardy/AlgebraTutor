@@ -45,7 +45,8 @@ string sendExercice(string path){
 	ifstream exo ( path );
 
 	if( !exo.good() ){
-		return "";
+		cerr << "Exercice not found" << endl;
+		exit(0);
 	}
 	
 	if( exo.is_open() ){
@@ -56,4 +57,22 @@ string sendExercice(string path){
 	}
 	exo.close();
 	return exercice;
+}
+
+void prepareHomework(string path, string exo){
+    string buf;
+    stringstream ss(exo);
+
+    vector<string> tokens; 
+
+    ofstream file;
+	
+	file.open( path );
+	while( getline (ss,buf) ){
+	    if( buf.find("?") != string::npos ){ 
+		  	file << buf.substr(0,buf.find("?"));
+		  	file << "==\n";
+	    }
+	}
+	file.close();
 }

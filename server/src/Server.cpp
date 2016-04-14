@@ -20,12 +20,12 @@ Server::Server(int port):_socketServer(),_port(port),_clients(),_mutex(),_server
 void Server::start(){
     if ((bind(_socketServer, (struct sockaddr*)&_server_addr,sizeof(_server_addr))) < 0){
         cerr << "Error binding connection, the socket has already been established..." << endl;
-        exit(1);
+        exit(EXIT_FAILURE);
     }
 
     if( listen(_socketServer, 0) == -1){
         cerr << strerror(errno) << endl;
-        exit(1);
+        exit(EXIT_FAILURE);
     }
 
     _size = sizeof(_server_addr);
@@ -39,8 +39,6 @@ void Server::acceptClient(){
     int fd;
     while(true){
         fd = accept(_socketServer, (struct sockaddr *)&_server_addr,&_size);
-
-        send(fd, "Connection established\n", sizeof("Connection established\n"), 0);
 
         _mutex.lock();
         _clients.push_back( fd );
